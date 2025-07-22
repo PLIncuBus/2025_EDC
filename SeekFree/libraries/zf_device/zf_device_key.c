@@ -48,6 +48,7 @@
 
 #include "zf_device_key.h"
 
+
 static uint32               scanner_period = 0;                                 // 按键的扫描周期
 static uint32               key_press_time[KEY_NUMBER];                         // 按键信号持续时长
 static key_state_enum       key_state[KEY_NUMBER];                              // 按键状态
@@ -79,12 +80,13 @@ void key_scanner (void)
             if((KEY_LONG_PRESS != key_state[i]) && (KEY_MAX_SHOCK_PERIOD / scanner_period <= key_press_time[i]))
             {
                 key_state[i] = KEY_SHORT_PRESS;
+								key_press_time[i] = 0;
             }
             else if(KEY_MAX_SHOCK_PERIOD / scanner_period > key_press_time[i])
             {
                 key_state[i] = KEY_RELEASE;
-            }
-						key_press_time[i] = 0;
+								key_press_time[i] = 0;
+            }	
         }
     }
 }

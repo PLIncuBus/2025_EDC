@@ -77,7 +77,7 @@ typedef enum                                                                    
 typedef enum                                                                    // 枚举 SPI SCK 引脚 此枚举定义不允许用户修改
 {
     // SPI0 引脚 SCK
-    SPI0_SCK_A6         = ((SPI_0 << SPI_INDEX_OFFSET) | (GPIO_AF3  << SPI_PIN_AF_OFFSET) | (A6 )),
+    SPI0_SCK_A618         = ((SPI_0 << SPI_INDEX_OFFSET) | (GPIO_AF3  << SPI_PIN_AF_OFFSET) | (A6 )),
     SPI0_SCK_A11        = ((SPI_0 << SPI_INDEX_OFFSET) | (GPIO_AF3  << SPI_PIN_AF_OFFSET) | (A11)),
     SPI0_SCK_A12        = ((SPI_0 << SPI_INDEX_OFFSET) | (GPIO_AF3  << SPI_PIN_AF_OFFSET) | (A12)),
     SPI0_SCK_B18        = ((SPI_0 << SPI_INDEX_OFFSET) | (GPIO_AF3  << SPI_PIN_AF_OFFSET) | (B18)),

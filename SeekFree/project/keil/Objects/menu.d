@@ -129,4 +129,6 @@
   ..\..\libraries\zf_device\zf_device_key.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
-  ..\..\libraries\zf_components\seekfree_assistant_interface.h
+  ..\..\libraries\zf_components\seekfree_assistant_interface.h \
+  ..\code\Hardware\IMU.h ..\code\Algorithm\MyMath.h \
+  ..\code\Application\Menu.h

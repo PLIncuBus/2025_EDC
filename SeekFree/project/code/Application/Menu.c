@@ -9,30 +9,37 @@ static void Menu_Behaviour(void);
 static void Menu_Display(void);
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
+Menu_Info_t Hardware_Info_Menu[1];
 void Task1(void);
 void Task2(void);
 void Task3(void);
 void Task4(void);
+void IMU_Show(void);
 
 /*****第一级主菜单BEGIN*****/
 
-Menu_Info_t Main_Menu[2] = {    
-    {   2      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    },
-    {   2      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    },
+Menu_Info_t Main_Menu[3] = {    
+    {   3      ,	 "Info"   ,   Type_SubMenu    ,   NULL    ,Hardware_Info_Menu,   NULL , Idle_Menu  },
+    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , Idle_Menu  },
+    {   3      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    , Idle_Menu  },
 };
 /*****第一级主菜单END*****/
 
 /*****第二级菜单BEGIN******/
 
 Menu_Info_t Task_Menu[4] = {
-    {   4      ,   "Task1"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   Task1   },
-    {   4      ,   "Task2"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   Task2   },
-    {   4      ,   "Task3"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   Task3   },
-    {   4      ,   "Task4"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   Task4   },
+    {   4      ,   "Task1"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task1     ,  Idle_Menu},
+    {   4      ,   "Task2"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task2     ,  Idle_Menu},
+    {   4      ,   "Task3"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task3     ,  Idle_Menu},
+    {   4      ,   "Task4"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task4     ,  Idle_Menu},
 };
 
 Menu_Info_t PID_Menu[1] = {
-    {   1      ,   "Motor"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL   },
+    {   1      ,   "Motor"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL   	 ,  Idle_Menu},
+};
+
+Menu_Info_t Hardware_Info_Menu[1] = {
+    {   1      ,   "IMU"   ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Show  ,  Idle_Menu},
 };
 
 /*****第二级菜单END******/
@@ -41,7 +48,6 @@ Menu_Info_t PID_Menu[1] = {
 //test
 void Task1(void)
 {
-		Menu_Clear();
     Menu_ShowStr(0,0,"Task1");
 }
 void Task2(void)
@@ -56,6 +62,16 @@ void Task4(void)
 {
     Menu_ShowStr(0,0,"Task4");
 }
+void IMU_Show(void)
+{
+    Menu_ShowStr(0,0,"YawAngle");
+    Menu_ShowFloat(0,16,Angle_Yaw,3,3);
+	  Menu_ShowStr(0,32,"Roll");
+    Menu_ShowFloat(0,48,roll,3,3);
+		Menu_ShowStr(0,64,"Pitch");
+		Menu_ShowFloat(0,80,pitch,3,3);
+
+}
 
 
 /**
@@ -64,6 +80,8 @@ void Task4(void)
  */
 void Menu_Process(void)
 {
+    //按键扫描
+    key_scanner();
     //获取按键接口
     Menu_Button_Interface();
     //菜单行为
@@ -152,17 +170,41 @@ static void Menu_Behaviour(void)
                 Cur_Menu_index = 0;
             }
         }
+				//实时显示参数
+				else if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu)
+				{
+				if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
+        else{
+						 Menu_Clear();
+						 Cur_Menu[Cur_Menu_index].State = Proc_Menu;
+						
+						 
+						}
+				}
     }
 
     //返回行为
     else if(Menu_Button[Menu_Back])
     {
+				Cur_Menu[Cur_Menu_index].State = Idle_Menu;
         if(Cur_Menu[Cur_Menu_index].Father == NULL);
         else{
             Cur_Menu = Cur_Menu[Cur_Menu_index].Father;
             Cur_Menu_index = 0;
         }
     }
+		
+		
+		
+		
+		//实时显示参数
+		if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu && Cur_Menu[Cur_Menu_index].State == Proc_Menu)
+		{
+				if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
+        else{
+             Cur_Menu[Cur_Menu_index].Menu_Fun();
+        }
+		}
 }
 
 

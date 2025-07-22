@@ -64,21 +64,26 @@
 #if IMU963RA_USE_SOFT_IIC                                                       // 这两段 颜色正常的才是正确的 颜色灰的就是没有用的
 //====================================================软件 IIC 驱动====================================================
 #define IMU963RA_SOFT_IIC_DELAY                     ( 10  )                     // 软件 IIC 的时钟延时周期 数值越小 IIC 通信速率越快
-#define IMU963RA_SCL_PIN                            ( B23 )                    // 软件 IIC SCL 引脚 连接 IMU963RA 的 SCL 引脚
+#define IMU963RA_SCL_PIN                            ( B21 )                    // 软件 IIC SCL 引脚 连接 IMU963RA 的 SCL 引脚
 #define IMU963RA_SDA_PIN                            ( B22 )                    // 软件 IIC SDA 引脚 连接 IMU963RA 的 SDA 引脚
 //====================================================软件 IIC 驱动====================================================
 #else
 
 //====================================================硬件 SPI 驱动====================================================
 #define IMU963RA_SPI_SPEED                           ( 8 * 1000 * 1000 )         // 硬件 SPI 速率
-#define IMU963RA_SPI                                 ( SPI_1         )            // 硬件 SPI 号
-#define IMU963RA_SPC_PIN                             ( SPI1_SCK_B23  )     		// 硬件 SPI SCK 引脚
-#define IMU963RA_SDI_PIN                             ( SPI1_MOSI_B22 )        	// 硬件 SPI MOSI 引脚
-#define IMU963RA_SDO_PIN                             ( SPI1_MISO_B21 )       		// 硬件 SPI MISO 引脚
+//#define IMU963RA_SPI                                 ( SPI_1         )            // 硬件 SPI 号
+//#define IMU963RA_SPC_PIN                             ( SPI1_SCK_B23  )     		// 硬件 SPI SCK 引脚
+//#define IMU963RA_SDI_PIN                             ( SPI1_MOSI_B22 )        	// 硬件 SPI MOSI 引脚
+//#define IMU963RA_SDO_PIN                             ( SPI1_MISO_B21 )       		// 硬件 SPI MISO 引脚
+
+#define IMU963RA_SPI                                 ( SPI_0         )            // 硬件 SPI 号
+#define IMU963RA_SPC_PIN                             ( SPI0_SCK_B18  )     		// 硬件 SPI SCK 引脚
+#define IMU963RA_SDI_PIN                             ( SPI0_MOSI_B17 )        	// 硬件 SPI MOSI 引脚
+#define IMU963RA_SDO_PIN                             ( SPI0_MISO_B19 )       		// 硬件 SPI MISO 引脚
 //====================================================硬件 SPI 驱动====================================================
 #endif
 
-#define IMU963RA_CS_PIN                             (B19)                    	// CS 片选引脚
+#define IMU963RA_CS_PIN                             (A21)                    	// CS 片选引脚
 #define IMU963RA_CS(x)                              (x? (gpio_high(IMU963RA_CS_PIN)): (gpio_low(IMU963RA_CS_PIN)))
 
 typedef enum

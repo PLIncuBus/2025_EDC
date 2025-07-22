@@ -1043,6 +1043,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Algorithm\Linear_Interpolation.h</FilePath>
             </File>
+            <File>
+              <FileName>MyMath.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Algorithm\MyMath.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyMath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Algorithm\MyMath.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

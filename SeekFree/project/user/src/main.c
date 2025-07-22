@@ -31,6 +31,7 @@
 
 #include "zf_common_headfile.h"
 #include "Menu.h"
+#include "IMU.h"
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
 // 第二步 project->clean  等待下方进度条走完
@@ -40,23 +41,38 @@
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
 
 // **************************** 代码区域 ****************************
+static void _20HZ_Callback(uint32 state, void *ptr);
+
 
 int main (void)
 {
     clock_init(SYSTEM_CLOCK_80M);   // 时钟配置及系统初始化<务必保留>
     debug_init();					// 调试串口信息初始化
-	// 此处编写用户代码 例如外设初始化代码等
-		Menu_Init(5);
+	  // 此处编写用户代码 例如外设初始化代码等
+
+    //菜单初始化  参数：中断频率
+		Menu_Init(20);
+    //IMU初始化   参数：中断频率,陀螺仪静置时间
+    IMU_Init(20,2000);
+    // 10HZ定时器中断初始化
+    pit_ms_init( PIT_TIM_A1 , 20 , _20HZ_Callback , NULL ); 
+
+
 
     // 此处编写用户代码 例如外设初始化代码等
     while(true)
     {
         // 此处编写需要循环执行的代码
-				key_scanner();
-				Menu_Process();
+				
 
 
         // 此处编写需要循环执行的代码
     }
 }
 
+
+void _20HZ_Callback(uint32 state, void *ptr)
+{
+    Menu_Process();
+    IMU_Attitude_Process();
+}

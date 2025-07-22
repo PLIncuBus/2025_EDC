@@ -3,6 +3,7 @@
         "zf_common_headfile.h": "c",
         "zf_device_tft180.h": "c",
         "systemclock.h": "c",
-        "path_planning.h": "c"
+        "path_planning.h": "c",
+        "imu.h": "c"
     }
 }

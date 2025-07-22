@@ -1,4 +1,4 @@
-./objects/main.o: ..\user\src\main.c \
+./objects/math.o: ..\code\Algorithm\Math.c ..\code\Algorithm\Math.h \
   ..\..\libraries\zf_common\zf_common_headfile.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
@@ -42,8 +42,7 @@
   ..\..\libraries\sdk\ti\devices\msp\peripherals\m0p\hw_sysctl.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\m0p\sysctl\hw_sysctl_mspm0g1x0x_g3x0x.h \
   ..\..\libraries\sdk\ti\driverlib\driverlib.h \
-  ..\..\libraries\sdk\ti\driverlib\dl_adc12.h \
-  D:\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
+  ..\..\libraries\sdk\ti\driverlib\dl_adc12.h ..\code\Algorithm\math.h \
   ..\..\libraries\sdk\ti\driverlib\dl_common.h \
   ..\..\libraries\sdk\ti\driverlib\m0p\dl_factoryregion.h \
   ..\..\libraries\sdk\ti\driverlib\m0p\dl_core.h \
@@ -129,6 +128,4 @@
   ..\..\libraries\zf_device\zf_device_key.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
-  ..\..\libraries\zf_components\seekfree_assistant_interface.h \
-  ..\code\Application\Menu.h ..\code\Hardware\IMU.h \
-  ..\code\Algorithm\MyMath.h
+  ..\..\libraries\zf_components\seekfree_assistant_interface.h
