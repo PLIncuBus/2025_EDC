@@ -63,38 +63,38 @@
 //====================================================软件 SPI 驱动==================================================
 #else
 //====================================================硬件 SPI 驱动==================================================
-// #define IPS114_SPI_SPEED                ( 30 * 1000 * 1000 )                        // 硬件 SPI 速率
-// #define IPS114_SPI                      ( SPI_0            )                    // 硬件 SPI 号
-// #define IPS114_SCL_PIN                  ( SPI0_SCK_A12      )                       // 硬件 SPI SCK 引脚
-// #define IPS114_SDA_PIN                  ( SPI0_MOSI_A9     )                        // 硬件 SPI MOSI 引脚
-// #define IPS114_SDA_IN_PIN               (SPI_MISO_NULL	)                       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
-// //====================================================硬件 SPI 驱动==================================================
-// #endif
+ #define IPS114_SPI_SPEED                ( 30 * 1000 * 1000 )                        // 硬件 SPI 速率
+ #define IPS114_SPI                      ( SPI_0            )                    // 硬件 SPI 号
+ #define IPS114_SCL_PIN                  ( SPI0_SCK_A12      )                       // 硬件 SPI SCK 引脚
+ #define IPS114_SDA_PIN                  ( SPI0_MOSI_A9     )                        // 硬件 SPI MOSI 引脚
+ #define IPS114_SDA_IN_PIN               (SPI_MISO_NULL	)                       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
+ //====================================================硬件 SPI 驱动==================================================
+ #endif
 
-// #define IPS114_RST_PIN                  ( A7 )                                    // 液晶复位引脚定义
-// #define IPS114_DC_PIN                   ( A15  )                                  // 液晶命令位引脚定义
-// #define IPS114_CS_PIN                   ( A8  )                                   // CS 片选引脚
-// #define IPS114_BLK_PIN                  ( A13 )                                   // 液晶背光引脚定义
-
-
-#define IPS114_SPI_SPEED                ( 30 * 1000 * 1000 )                        // 硬件 SPI 速率
-#define IPS114_SPI                      ( SPI_1            )                    // 硬件 SPI 号
-#define IPS114_SCL_PIN                  ( SPI1_SCK_B9      )                       // 硬件 SPI SCK 引脚
-#define IPS114_SDA_PIN                  ( SPI1_MOSI_B8     )                        // 硬件 SPI MOSI 引脚
-#define IPS114_SDA_IN_PIN               (SPI_MISO_NULL	)                       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
-//====================================================硬件 SPI 驱动==================================================
-#endif
-
-//#define IPS114_RST_PIN                  ( A7 )                                    // 液晶复位引脚定义
-//#define IPS114_DC_PIN                   ( A15  )                                  // 液晶命令位引脚定义
-//#define IPS114_CS_PIN                   ( A8  )                                   // CS 片选引脚
-//#define IPS114_BLK_PIN                  ( A13 )                                   // 液晶背光引脚定义
+ #define IPS114_RST_PIN                  ( A7 )                                    // 液晶复位引脚定义
+ #define IPS114_DC_PIN                   ( A15  )                                  // 液晶命令位引脚定义
+ #define IPS114_CS_PIN                   ( A8  )                                   // CS 片选引脚
+ #define IPS114_BLK_PIN                  ( A13 )                                   // 液晶背光引脚定义
 
 
-#define IPS114_RST_PIN                  ( B10 )                                    // 液晶复位引脚定义
-#define IPS114_DC_PIN                   ( B11  )                                  // 液晶命令位引脚定义
-#define IPS114_CS_PIN                   ( B14  )                                   // CS 片选引脚
-#define IPS114_BLK_PIN                  ( B26 )                                   // 液晶背光引脚定义
+//#define IPS114_SPI_SPEED                ( 30 * 1000 * 1000 )                        // 硬件 SPI 速率
+//#define IPS114_SPI                      ( SPI_1            )                    // 硬件 SPI 号
+//#define IPS114_SCL_PIN                  ( SPI1_SCK_B9      )                       // 硬件 SPI SCK 引脚
+//#define IPS114_SDA_PIN                  ( SPI1_MOSI_B8     )                        // 硬件 SPI MOSI 引脚
+//#define IPS114_SDA_IN_PIN               (SPI_MISO_NULL	)                       // 定义SPI_MISO引脚  IPS没有MISO引脚，但是这里任然需要定义，在spi的初始化时需要使用
+////====================================================硬件 SPI 驱动==================================================
+//#endif
+
+////#define IPS114_RST_PIN                  ( A7 )                                    // 液晶复位引脚定义
+////#define IPS114_DC_PIN                   ( A15  )                                  // 液晶命令位引脚定义
+////#define IPS114_CS_PIN                   ( A8  )                                   // CS 片选引脚
+////#define IPS114_BLK_PIN                  ( A13 )                                   // 液晶背光引脚定义
+
+
+//#define IPS114_RST_PIN                  ( B10 )                                    // 液晶复位引脚定义
+//#define IPS114_DC_PIN                   ( B11  )                                  // 液晶命令位引脚定义
+//#define IPS114_CS_PIN                   ( B14  )                                   // CS 片选引脚
+//#define IPS114_BLK_PIN                  ( B26 )                                   // 液晶背光引脚定义
 
 
 

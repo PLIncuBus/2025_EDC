@@ -4,6 +4,7 @@
         "zf_device_tft180.h": "c",
         "systemclock.h": "c",
         "path_planning.h": "c",
-        "imu.h": "c"
+        "imu.h": "c",
+        "math.h": "c"
     }
 }

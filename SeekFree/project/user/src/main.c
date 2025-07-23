@@ -53,7 +53,7 @@ int main (void)
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间
-    IMU_Init(20,2000);
+    IMU_Init(20,10000);
     // 10HZ定时器中断初始化
     pit_ms_init( PIT_TIM_A1 , 20 , _20HZ_Callback , NULL ); 
 

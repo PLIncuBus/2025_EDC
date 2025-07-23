@@ -96,7 +96,7 @@ void Menu_Process(void)
  */
 void Menu_Init(uint8_t Timer)
 {
-    ips114_set_dir(IPS114_CROSSWISE);
+    ips114_set_dir(IPS114_PORTAIT);
     ips114_set_color(RGB565_RED, RGB565_BLACK);
     ips114_init();
     ips114_clear();
