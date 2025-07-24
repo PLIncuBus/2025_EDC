@@ -17,28 +17,32 @@ static float delta_T = 0.010; // 采样周期ms 这个要和中断周期对应�
 
 #if (IMU_Type == 1)
 
-
-void JY61P_uart_rx_interrupt_Callback(uint32 state, void *ptr);
+void JY61P_Callback(uint32 state, void *ptr);
 struct Angle YawAngle;
 /**
  * @brief jy61p初始化
  * 
  */
+soft_iic_info_struct JY61P_iic_struct;
 void JY61P_Init(uint8_t Timer , uint16_t Offset_Time)
-{
-    uart_init(JY61P_UART_INDEX,JY61P_UART_BAUNDRATE,JY61P_UART_TX_PIN,JY61P_UART_RX_PIN);
+{		
+		#if(JY61P_Mode == 1)
+		soft_iic_init(&JY61P_iic_struct,JY61P_DEV_ADDR, JY61P_SOFT_IIC_DELAY, JY61P_SCL_PIN, JY61P_SDA_PIN);
+    #elif(JY61P_Mode == 0)
+		uart_init(JY61P_UART_INDEX,JY61P_UART_BAUNDRATE,JY61P_UART_TX_PIN,JY61P_UART_RX_PIN);
     uart_set_interrupt_config(JY61P_UART_INDEX, UART_INTERRUPT_CONFIG_RX_ENABLE);		// 使能串口接收中断
     interrupt_set_priority(JY61P_UART_PRIORITY, 0);  
-    uart_set_callback(JY61P_UART_INDEX, JY61P_uart_rx_interrupt_Callback, NULL);			    // 定义中断接收函数
+    uart_set_callback(JY61P_UART_INDEX, JY61P_Callback, NULL);			    // 定义中断接收函数
+		#endif
 }
-
+#if(JY61P_Mode == 0)
 /**
  * @brief JY61P串口回调函数
  * 
  * @param state 
  * @param ptr 
  */
-void JY61P_uart_rx_interrupt_Callback(uint32 state, void *ptr)
+void JY61P_Callback(uint32 state, void *ptr)
 {
 	uint8_t RxData;
     static uint8_t Serial_RxPacket[20];
@@ -71,11 +75,26 @@ void JY61P_uart_rx_interrupt_Callback(uint32 state, void *ptr)
         }
     }
 }
+
+#endif
+
+#if(JY61P_Mode == 1)
+uint16_t JY61P_iic_buff;
+void JY61P_IIC(){
+	JY61P_iic_buff = soft_iic_read_16bit_register(&JY61P_iic_struct,JY61P_ANGLE_ADDR);
+		YawAngle.Angle[2] = (int16_t)soft_iic_read_16bit_register(&JY61P_iic_struct,JY61P_ANGLE_ADDR);
+}
+
+#endif
 /**
  * @brief jy61p解算
  * 
  */
 void JY61P_Analysis_Process(void){
+	#if(JY61P_Mode == 1)
+		JY61P_IIC();
+//		YawAngle.Angle[2] = (int16_t)JY61P_iic_buff;
+	#endif
     Angle_Yaw = (float)YawAngle.Angle[2]/32768*180; 
 }
 

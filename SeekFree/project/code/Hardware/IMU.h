@@ -12,9 +12,11 @@ typedef enum{
 }IMU_Type_enum;
 
 
-#define IMU_Type 1
-
+#define IMU_Type 0
+#define JY61P_Mode 1
 #if(IMU_Type == 1)
+
+
 
 struct Angle
 {
@@ -22,7 +24,11 @@ struct Angle
 	short T;
 };
 
-
+#define JY61P_SOFT_IIC_DELAY          (100)                      
+#define JY61P_SCL_PIN                 (A1)
+#define JY61P_SDA_PIN							    (A0)
+#define JY61P_DEV_ADDR                (0x50) 
+#define JY61P_ANGLE_ADDR							(0x3F)
 #define JY61P_UART_INDEX              (UART_1)
 #define JY61P_UART_BAUNDRATE          (115200)
 #define JY61P_UART_TX_PIN             (UART1_TX_A8)

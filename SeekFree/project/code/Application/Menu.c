@@ -65,7 +65,7 @@ void Task4(void)
 void IMU_Show(void)
 {
     Menu_ShowStr(0,0,"YawAngle");
-    Menu_ShowFloat(0,16,Angle_Yaw,3,3);
+    Menu_ShowFloat(0,16,Angle_Yaw,3,5);
 	  Menu_ShowStr(0,32,"Roll");
     Menu_ShowFloat(0,48,roll,3,3);
 		Menu_ShowStr(0,64,"Pitch");
