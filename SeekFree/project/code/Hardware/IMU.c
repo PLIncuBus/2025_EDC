@@ -132,7 +132,7 @@ void JY61P_Analysis_Process(void){
  {
 
      //数据获取
- 		imu963ra_get_gyro();
+ 		 imu963ra_get_gyro();
      imu963ra_get_acc(); 
     
 

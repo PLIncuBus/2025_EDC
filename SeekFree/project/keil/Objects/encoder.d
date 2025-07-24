@@ -1,4 +1,5 @@
-./objects/main.o: ..\user\src\main.c \
+./objects/encoder.o: ..\code\Hardware\Encoder.c \
+  ..\code\Hardware\Encoder.h \
   ..\..\libraries\zf_common\zf_common_headfile.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
@@ -129,7 +130,4 @@
   ..\..\libraries\zf_device\zf_device_key.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
-  ..\..\libraries\zf_components\seekfree_assistant_interface.h \
-  ..\code\Application\Menu.h ..\code\Hardware\IMU.h \
-  ..\code\Algorithm\MyMath.h ..\code\Hardware\Encoder.h \
-  ..\code\Hardware\Motor.h
+  ..\..\libraries\zf_components\seekfree_assistant_interface.h

@@ -9,13 +9,13 @@ static void Menu_Behaviour(void);
 static void Menu_Display(void);
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
-Menu_Info_t Hardware_Info_Menu[1];
+Menu_Info_t Hardware_Info_Menu[2];
 void Task1(void);
 void Task2(void);
 void Task3(void);
 void Task4(void);
-void IMU_Show(void);
-
+void IMU_Info_Show(void);
+void Chassis_Info_Show(void);
 /*****第一级主菜单BEGIN*****/
 
 Menu_Info_t Main_Menu[3] = {    
@@ -38,8 +38,10 @@ Menu_Info_t PID_Menu[1] = {
     {   1      ,   "Motor"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL   	 ,  Idle_Menu},
 };
 
-Menu_Info_t Hardware_Info_Menu[1] = {
-    {   1      ,   "IMU"   ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Show  ,  Idle_Menu},
+Menu_Info_t Hardware_Info_Menu[2] = {
+    {   2      ,   "IMU"   ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show  ,  Idle_Menu},
+    {   2      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,  Idle_Menu},
+
 };
 
 /*****第二级菜单END******/
@@ -48,7 +50,7 @@ Menu_Info_t Hardware_Info_Menu[1] = {
 //test
 void Task1(void)
 {
-    Menu_ShowStr(0,0,"Task1");
+    Motor_Cmd(10,10);
 }
 void Task2(void)
 {
@@ -62,17 +64,24 @@ void Task4(void)
 {
     Menu_ShowStr(0,0,"Task4");
 }
-void IMU_Show(void)
+void IMU_Info_Show(void)
 {
     Menu_ShowStr(0,0,"YawAngle");
     Menu_ShowFloat(0,16,Angle_Yaw,3,5);
-	  Menu_ShowStr(0,32,"Roll");
+	Menu_ShowStr(0,32,"Roll");
     Menu_ShowFloat(0,48,roll,3,3);
-		Menu_ShowStr(0,64,"Pitch");
-		Menu_ShowFloat(0,80,pitch,3,3);
+	Menu_ShowStr(0,64,"Pitch");
+	Menu_ShowFloat(0,80,pitch,3,3);
 
 }
+void Chassis_Info_Show(void)
+{
+    Menu_ShowStr(0,0,"Encoder1");
+    Menu_ShowInt(100,0,Encoder_Count_Get(Encoder1),5);
+    Menu_ShowStr(0,16,"Encoder2");
+    Menu_ShowInt(100,16,Encoder_Count_Get(Encoder2),5);
 
+}
 
 /**
  * @brief 菜单运行
@@ -129,24 +138,32 @@ static void Menu_Behaviour(void)
     //上行行为
    if(Menu_Button[Menu_Up])
    {
+		 if(Cur_Menu[Cur_Menu_index].State == Proc_Menu){
+		 }
+		 else{
         if((Cur_Menu_index - 1) < 0 ){
             Cur_Menu_index = Cur_Menu[Cur_Menu_index].MenuLen - 1;
         }
         else{
             Cur_Menu_index -- ;
         }
+			}
 
    }
 
     //下行行为
     else if(Menu_Button[Menu_Down])
     {
+				if(Cur_Menu[Cur_Menu_index].State == Proc_Menu){
+				}
+				else{
         if((Cur_Menu_index + 1)  >= Cur_Menu[Cur_Menu_index].MenuLen){
             Cur_Menu_index = 0;
         }
         else{
             Cur_Menu_index ++ ;
         }
+			}
 
     }
    
@@ -171,16 +188,18 @@ static void Menu_Behaviour(void)
             }
         }
 				//实时显示参数
-				else if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu)
-				{
-				if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
-        else{
-						 Menu_Clear();
-						 Cur_Menu[Cur_Menu_index].State = Proc_Menu;
-						
-						 
-						}
-				}
+		else if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu)
+		{
+			if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
+            else{
+				Menu_Clear();
+				Cur_Menu[Cur_Menu_index].State = Proc_Menu;		 
+			}
+		}
+        else if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu)
+        {
+            
+        }
     }
 
     //返回行为

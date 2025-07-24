@@ -131,4 +131,5 @@
   ..\..\libraries\zf_components\seekfree_assistant.h \
   ..\..\libraries\zf_components\seekfree_assistant_interface.h \
   ..\code\Hardware\IMU.h ..\code\Algorithm\MyMath.h \
-  ..\code\Application\Menu.h
+  ..\code\Application\Menu.h ..\code\Hardware\Encoder.h \
+  ..\code\Hardware\Motor.h

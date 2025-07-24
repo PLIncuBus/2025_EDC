@@ -3,6 +3,8 @@
 
 #include "zf_common_headfile.h"
 #include "IMU.h"
+#include "Encoder.h"
+#include "Motor.h"
 
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float
