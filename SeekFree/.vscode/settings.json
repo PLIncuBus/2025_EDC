@@ -5,6 +5,7 @@
         "systemclock.h": "c",
         "path_planning.h": "c",
         "imu.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "limits": "c"
     }
 }

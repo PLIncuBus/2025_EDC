@@ -130,4 +130,5 @@
   ..\..\libraries\zf_device\zf_device_key.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
-  ..\..\libraries\zf_components\seekfree_assistant_interface.h
+  ..\..\libraries\zf_components\seekfree_assistant_interface.h \
+  ..\code\Algorithm\PID.h ..\code\Hardware\Encoder.h

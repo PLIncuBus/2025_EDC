@@ -1053,6 +1053,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Algorithm\MyMath.h</FilePath>
             </File>
+            <File>
+              <FileName>PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Algorithm\PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Algorithm\PID.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

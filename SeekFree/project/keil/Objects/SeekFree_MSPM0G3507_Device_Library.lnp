@@ -78,6 +78,7 @@
 ".\objects\chassis_control.o"
 ".\objects\linear_interpolation.o"
 ".\objects\mymath.o"
+".\objects\pid.o"
 ".\objects\systemclock.o"
 ".\objects\imu.o"
 ".\objects\encoder.o"

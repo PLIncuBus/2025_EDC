@@ -30,10 +30,10 @@
   *                 PID_DELTA: 差分PID
   * @param[in]      PID: 0: kp, 1: ki, 2:kd
   * @param[in]      max_out: pid最大输出
-  * @param[in]      max_iout: pid最大积分输出
+  * @param[in]      max_iout: pid最大积分输出	
   * @retval         none
   */
-void PID_init(pid_type_def *pid, uint8_t mode, const fp32 PID[3], fp32 max_out, fp32 max_iout)
+void PID_init(pid_type_def *pid, uint8_t mode, const float PID[3], float max_out, float max_iout)
 {
     if (pid == NULL || PID == NULL)
     {

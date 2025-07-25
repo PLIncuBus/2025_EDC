@@ -18,18 +18,18 @@ typedef struct{
     
     float vx_set;
     float angle_set;
-    int16_t *motor_encoder[2]; 
-    pid_type_def *motor_speed_pid[2];
+    int16_t motor_encoder[2]; 
+    pid_type_def motor_speed_pid[2];
 
 }Differential_Wheel_Info_t; 
 
-extern float motor1_speed_pid_kp = 2;
-extern float motor1_speed_pid_ki = 0;
-extern float motor1_speed_pid_kd = 0; 
-extern float motor2_speed_pid_kp = 2;
-extern float motor2_speed_pid_ki = 0;
-extern float motor2_speed_pid_kd = 0; 
-extern Differential_Wheel_Info_t *Differential_Wheel;
+extern float motor1_speed_pid_kp;
+extern float motor1_speed_pid_ki;
+extern float motor1_speed_pid_kd; 
+extern float motor2_speed_pid_kp;
+extern float motor2_speed_pid_ki;
+extern float motor2_speed_pid_kd; 
+extern Differential_Wheel_Info_t Differential_Wheel_Info;
 
 
 void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init);

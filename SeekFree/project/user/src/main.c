@@ -1,3 +1,11 @@
+/*
+ * @Author: PLIncuBus wewean@yeah.net
+ * @Date: 2025-07-20 15:14:04
+ * @LastEditors: PLIncuBus wewean@yeah.net
+ * @LastEditTime: 2025-07-25 16:47:56
+ * @FilePath: \SeekFree\project\user\src\main.c
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /*********************************************************************************************************************
 * MSPM0G3507 Opensource Library 即（MSPM0G3507 开源库）是一个基于官方 SDK 接口的第三方开源库
 * Copyright (c) 2022 SEEKFREE 逐飞科技
@@ -59,7 +67,7 @@ int main (void)
 
 
     //应用层初始化
-    Chassis_Init(&Differential_Wheel);
+    Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间

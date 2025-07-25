@@ -1,4 +1,4 @@
-./objects/imu.o: ..\code\Hardware\IMU.c ..\code\Hardware\IMU.h \
+./objects/pid.o: ..\code\Algorithm\PID.c ..\code\Algorithm\PID.h \
   ..\..\libraries\zf_common\zf_common_headfile.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
@@ -129,8 +129,4 @@
   ..\..\libraries\zf_device\zf_device_key.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
-  ..\..\libraries\zf_components\seekfree_assistant_interface.h \
-  ..\code\Algorithm\MyMath.h ..\code\Application\Menu.h \
-  ..\code\Hardware\IMU.h ..\code\Hardware\Encoder.h \
-  ..\code\Hardware\Motor.h ..\code\Application\Chassis_Control.h \
-  ..\code\Algorithm\PID.h
+  ..\..\libraries\zf_components\seekfree_assistant_interface.h

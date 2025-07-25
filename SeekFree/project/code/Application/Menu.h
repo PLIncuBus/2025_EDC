@@ -5,6 +5,7 @@
 #include "IMU.h"
 #include "Encoder.h"
 #include "Motor.h"
+#include "Chassis_Control.h"
 
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float
@@ -41,6 +42,13 @@ typedef enum{
 		Proc_Menu,
 }Menu_State_enum;
 
+typedef struct _Menu_Param_Info_t{
+  float step;
+  float max;
+  float min;
+  float *param;
+}Menu_Param_Info_t;
+
 typedef struct Menu_Info_t{
     uint8_t MenuLen;
     uint8_t string[7];
@@ -48,6 +56,7 @@ typedef struct Menu_Info_t{
     struct Menu_Info_t *Father;
     struct Menu_Info_t *Child;
     void (*Menu_Fun)();
+    Menu_Param_Info_t Param_Info;
 		Menu_State_enum State;
 		
 }Menu_Info_t;

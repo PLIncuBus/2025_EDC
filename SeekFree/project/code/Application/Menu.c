@@ -7,9 +7,11 @@ uint8_t Menu_Button[Button_Sum];
 static void Menu_Button_Interface(void);
 static void Menu_Behaviour(void);
 static void Menu_Display(void);
+Menu_Info_t Motor_PID_Menu[2];
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
 Menu_Info_t Hardware_Info_Menu[2];
+Menu_Info_t Motor_PID_SET_Menu[3];
 void Task1(void);
 void Task2(void);
 void Task3(void);
@@ -19,34 +21,128 @@ void Chassis_Info_Show(void);
 /*****第一级主菜单BEGIN*****/
 
 Menu_Info_t Main_Menu[3] = {    
-    {   3      ,	 "Info"   ,   Type_SubMenu    ,   NULL    ,Hardware_Info_Menu,   NULL , Idle_Menu  },
-    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , Idle_Menu  },
-    {   3      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    , Idle_Menu  },
+    {   3      ,   "Info"   ,   Type_SubMenu    ,   NULL    ,Hardware_Info_Menu,   NULL , .Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu  },
+    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu  },
+    {   3      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL }, 
+        Idle_Menu  },
 };
 /*****第一级主菜单END*****/
 
 /*****第二级菜单BEGIN******/
 
 Menu_Info_t Task_Menu[4] = {
-    {   4      ,   "Task1"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task1     ,  Idle_Menu},
-    {   4      ,   "Task2"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task2     ,  Idle_Menu},
-    {   4      ,   "Task3"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task3     ,  Idle_Menu},
-    {   4      ,   "Task4"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task4     ,  Idle_Menu},
+    {   4      ,   "Task1"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task1     ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+    {   4      ,   "Task2"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task2     ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+    {   4      ,   "Task3"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task3     ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+    {   4      ,   "Task4"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task4     ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
 };
 
 Menu_Info_t PID_Menu[1] = {
-    {   1      ,   "Motor"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL   	 ,  Idle_Menu},
+    {   1      ,   "Motor"  ,   Type_SubMenu    ,  Main_Menu ,   Motor_PID_Menu    ,   NULL   	 ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
 };
 
 Menu_Info_t Hardware_Info_Menu[2] = {
-    {   2      ,   "IMU"   ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show  ,  Idle_Menu},
-    {   2      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,  Idle_Menu},
+    {   2      ,   "IMU"  ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+    {   2      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
 
 };
 
 /*****第二级菜单END******/
 
+/*****第三级菜单BEGIN******/
 
+Menu_Info_t Motor_PID_Menu[2] = {
+
+        {   2      ,   "Speed"    ,  Type_SubMenu   , PID_Menu ,  Motor_PID_SET_Menu    ,   NULL ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+        {   2      ,   "Position" , Type_SubMenu    , PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+};
+
+/*****第三级菜单END******/
+
+/*****第四级菜单BEGIN******/
+
+Menu_Info_t Motor_PID_SET_Menu[3] = {
+
+        {   3      ,   "KP"    ,  Type_ParMenu   , Motor_PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0.01,
+        .max = 4,
+        .min = 0,
+        .param = &motor1_speed_pid_kp},
+         Idle_Menu},
+        {   3      ,   "KI" ,    Type_ParMenu    , Motor_PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0.01,
+        .max = 4,
+        .min = 0,
+        .param = &motor1_speed_pid_ki },
+         Idle_Menu},
+        {   3      ,   "KD"    ,  Type_ParMenu   , Motor_PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0.01,
+        .max = 4,
+        .min = 0,
+        .param = &motor1_speed_pid_kd },
+         Idle_Menu},
+};
+
+/*****第四级菜单END******/
 //test
 void Task1(void)
 {
@@ -83,6 +179,7 @@ void Chassis_Info_Show(void)
 
 }
 
+
 /**
  * @brief 菜单运行
  * @note  运行在主函数或定时器中断
@@ -110,6 +207,7 @@ void Menu_Init(uint8_t Timer)
     ips114_init();
     ips114_clear();
     key_init(Timer);
+
 }
 
 /**
@@ -131,7 +229,11 @@ static void Menu_Button_Interface(void)
 static Menu_Info_t *Cur_Menu = Main_Menu;
 static Menu_Info_t *Last_Cur_Menu = NULL;
 static uint8_t Last_Cur_Menu_index = 0;
+static int16_t Last_Cur_Menu_Param_Step = 0;
 static uint8_t Cur_Menu_index = 0;
+static int16_t Cur_Menu_Param_Step = 0;			
+static uint8_t Menu_Back_Cnt = 0;
+static float 	Cur_Menu_Param_base = 0;
 static void Menu_Behaviour(void)
 {
 		
@@ -139,6 +241,9 @@ static void Menu_Behaviour(void)
    if(Menu_Button[Menu_Up])
    {
 		 if(Cur_Menu[Cur_Menu_index].State == Proc_Menu){
+            if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu){
+                Cur_Menu_Param_Step ++;
+            }
 		 }
 		 else{
         if((Cur_Menu_index - 1) < 0 ){
@@ -147,6 +252,7 @@ static void Menu_Behaviour(void)
         else{
             Cur_Menu_index -- ;
         }
+				Menu_Back_Cnt = 0;
 			}
 
    }
@@ -155,6 +261,9 @@ static void Menu_Behaviour(void)
     else if(Menu_Button[Menu_Down])
     {
 				if(Cur_Menu[Cur_Menu_index].State == Proc_Menu){
+                     if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu){
+                    Cur_Menu_Param_Step --;
+                     }
 				}
 				else{
         if((Cur_Menu_index + 1)  >= Cur_Menu[Cur_Menu_index].MenuLen){
@@ -163,6 +272,7 @@ static void Menu_Behaviour(void)
         else{
             Cur_Menu_index ++ ;
         }
+				Menu_Back_Cnt = 0;
 			}
 
     }
@@ -188,28 +298,38 @@ static void Menu_Behaviour(void)
             }
         }
 				//实时显示参数
-		else if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu)
-		{
-			if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
-            else{
-				Menu_Clear();
-				Cur_Menu[Cur_Menu_index].State = Proc_Menu;		 
-			}
-		}
+				else if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu)
+				{
+					if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
+								else{
+						Menu_Clear();
+						Cur_Menu[Cur_Menu_index].State = Proc_Menu;		 
+					}
+				}
+        //参数设置
         else if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu)
         {
-            
+            Cur_Menu[Cur_Menu_index].State = Proc_Menu;
+						Cur_Menu_Param_base = *Cur_Menu[Cur_Menu_index].Param_Info.param;
         }
+				Menu_Back_Cnt = 0;
+				
     }
 
     //返回行为
     else if(Menu_Button[Menu_Back])
     {
+
 				Cur_Menu[Cur_Menu_index].State = Idle_Menu;
-        if(Cur_Menu[Cur_Menu_index].Father == NULL);
+        Cur_Menu_Param_Step = 0;
+				if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu && Menu_Back_Cnt == 0){
+					Menu_Back_Cnt ++;
+				}
+        else if(Cur_Menu[Cur_Menu_index].Father == NULL) Menu_Back_Cnt = 0;
         else{
             Cur_Menu = Cur_Menu[Cur_Menu_index].Father;
             Cur_Menu_index = 0;
+						Menu_Back_Cnt = 0;
         }
     }
 		
@@ -219,10 +339,24 @@ static void Menu_Behaviour(void)
 		//实时显示参数
 		if(Cur_Menu[Cur_Menu_index].type == Type_ShoMenu && Cur_Menu[Cur_Menu_index].State == Proc_Menu)
 		{
-				if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
-        else{
-             Cur_Menu[Cur_Menu_index].Menu_Fun();
-        }
+            if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
+            else{
+                Cur_Menu[Cur_Menu_index].Menu_Fun();
+            }
+		}
+		//参数设置
+    if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu && Cur_Menu[Cur_Menu_index].State == Proc_Menu)
+		{
+			if(Last_Cur_Menu_Param_Step != Cur_Menu_Param_Step){
+            *Cur_Menu[Cur_Menu_index].Param_Info.param  = Cur_Menu_Param_base + Cur_Menu_Param_Step*Cur_Menu[Cur_Menu_index].Param_Info.step;
+						if(*Cur_Menu[Cur_Menu_index].Param_Info.param > Cur_Menu[Cur_Menu_index].Param_Info.max){
+								*Cur_Menu[Cur_Menu_index].Param_Info.param = Cur_Menu[Cur_Menu_index].Param_Info.max;
+						}
+						else if(*Cur_Menu[Cur_Menu_index].Param_Info.param < Cur_Menu[Cur_Menu_index].Param_Info.min){
+								*Cur_Menu[Cur_Menu_index].Param_Info.param = Cur_Menu[Cur_Menu_index].Param_Info.min;
+						}          
+			}
+       Menu_ShowFloat(100,16*Cur_Menu_index,*Cur_Menu[Cur_Menu_index].Param_Info.param,3,5);     
 		}
 }
 
@@ -232,7 +366,9 @@ static void Menu_Behaviour(void)
  * 
  */
 static void Menu_Display(void)
-{
+{    
+
+		Last_Cur_Menu_Param_Step = Cur_Menu_Param_Step;
     if(Cur_Menu == Last_Cur_Menu ){
         if(Cur_Menu_index == Last_Cur_Menu_index ){
             return;
@@ -251,7 +387,8 @@ static void Menu_Display(void)
             Menu_ShowStr(8,i*16,(const char *)Cur_Menu[i].string);
         }   
     }
-    Last_Cur_Menu_index = Cur_Menu_index;
-    Last_Cur_Menu = Cur_Menu;
 
+		Last_Cur_Menu_index = Cur_Menu_index;
+    Last_Cur_Menu = Cur_Menu;
 }
+
