@@ -124,7 +124,7 @@ Menu_Info_t Motor_PID_SET_Menu[3] = {
 
         {   3      ,   "KP"    ,  Type_ParMenu   , Motor_PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
         .step = 0.01,
-        .max = 4,
+        .max = 30,
         .min = 0,
         .param = &motor1_speed_pid_kp},
          Idle_Menu},

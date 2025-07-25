@@ -14,7 +14,7 @@ void Encoder_Init(void)
     exti_init(ENCODER2_POSITIVE, EXTI_TRIGGER_FALLING , Encoder2_EXTI_Callback, NULL);                            
     gpio_init(ENCODER2_NEGATIVE, GPI, GPIO_HIGH, GPI_PULL_UP);
 	
-//		interrupt_set_priority(ENCODER_EXTI, 0); 
+
 }
 
 /**
@@ -36,10 +36,10 @@ void Encoder1_EXTI_Callback(uint32 state, void *ptr)
 void Encoder2_EXTI_Callback(uint32 state, void *ptr)
 {
     if(gpio_get_level(ENCODER2_NEGATIVE) == 1){
-        Encoder_count[Encoder2]--;
+        Encoder_count[Encoder2]++;
     }
     else{
-        Encoder_count[Encoder2]++;
+        Encoder_count[Encoder2]--;
     }
 
 }

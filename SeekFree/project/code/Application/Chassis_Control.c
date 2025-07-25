@@ -8,11 +8,11 @@
  */
 #include "Chassis_Control.h"
 
-float motor1_speed_pid_kp = 2;
-float motor1_speed_pid_ki = 0;
+float motor1_speed_pid_kp = 1.25;
+float motor1_speed_pid_ki = 0.45;
 float motor1_speed_pid_kd = 0; 
-float motor2_speed_pid_kp = 2;
-float motor2_speed_pid_ki = 0;
+float motor2_speed_pid_kp = 1.25;
+float motor2_speed_pid_ki = 0.45;
 float motor2_speed_pid_kd = 0; 
 
 
@@ -40,7 +40,7 @@ void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init)
 
 
     for(uint8_t i = 0; i < 2;i ++){
-        PID_init(&_Chassis_Init->motor_speed_pid[i], PID_POSITION, motor_speed_pid[i],motor_speed_pid_max_out,motor_speed_pid_max_iout);
+        PID_init(&_Chassis_Init->motor_speed_pid[i], PID_DELTA, motor_speed_pid[i],motor_speed_pid_max_out,motor_speed_pid_max_iout);
     }
 
 }
@@ -55,6 +55,10 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
 {
     _Chassis_Update->motor_encoder[0] = (float)Encoder_Count_Get(Encoder1);
     _Chassis_Update->motor_encoder[1] = (float)Encoder_Count_Get(Encoder2);
+		Encoder_count[0] = 0;
+		Encoder_count[1] = 0;
+		
+	
 
 }
 
@@ -65,18 +69,14 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
  */
 static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loop)
 {
-
-    _Chassis_Control_Loop->motor_speed_pid[0].Kp = motor1_speed_pid_kp;
-    _Chassis_Control_Loop->motor_speed_pid[0].Ki = motor1_speed_pid_ki;
-    _Chassis_Control_Loop->motor_speed_pid[0].Kd = motor1_speed_pid_kd;
-    _Chassis_Control_Loop->motor_speed_pid[1].Kp = motor1_speed_pid_kp;
-    _Chassis_Control_Loop->motor_speed_pid[1].Ki = motor1_speed_pid_ki;
-    _Chassis_Control_Loop->motor_speed_pid[1].Kd = motor1_speed_pid_kd;
+		Chassis_Init(_Chassis_Control_Loop);
+	
 
     for(uint8_t i = 0 ;i < 2; i ++ )
     {
-        PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->vx_set);
-    }
+        PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->vx_set);		
+		}
+		Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out,_Chassis_Control_Loop->motor_speed_pid[1].out);
     
 }
 /**

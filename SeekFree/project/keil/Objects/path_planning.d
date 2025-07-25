@@ -133,4 +133,5 @@
   ..\..\libraries\zf_components\seekfree_assistant_interface.h \
   ..\code\Algorithm\Linear_Interpolation.h \
   ..\code\Application\Chassis_Control.h ..\code\Algorithm\PID.h \
-  ..\code\Hardware\Encoder.h ..\code\Hardware\SystemClock.h
+  ..\code\Hardware\Encoder.h ..\code\Hardware\Motor.h \
+  ..\code\Hardware\SystemClock.h

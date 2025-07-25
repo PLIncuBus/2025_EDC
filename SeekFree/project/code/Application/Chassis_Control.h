@@ -4,6 +4,7 @@
 #include "zf_common_headfile.h"
 #include "PID.h"
 #include "Encoder.h"
+#include "Motor.h"
 
 typedef enum{
     Differential_Wheel,

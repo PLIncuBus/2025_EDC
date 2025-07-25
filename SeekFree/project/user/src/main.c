@@ -43,6 +43,7 @@
 #include "Encoder.h"
 #include "Motor.h"
 #include "Chassis_Control.h"
+#include "UpperMonitor.h"
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
 // 第二步 project->clean  等待下方进度条走完
@@ -67,11 +68,13 @@ int main (void)
 
 
     //应用层初始化
+		
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间
     IMU_Init(20,2000);
+		UpperMonitor_Init();
     // 10HZ定时器中断初始化
     pit_ms_init( PIT_TIM_A1 , 20 , _20HZ_Callback , NULL ); 
 
@@ -80,7 +83,7 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-				
+
 
 
         // 此处编写需要循环执行的代码
@@ -92,4 +95,7 @@ void _20HZ_Callback(uint32 state, void *ptr)
 {
     Menu_Process();
     IMU_Attitude_Process();
+    UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
+		Chassis_Proceed(&Differential_Wheel_Info);
+    
 }

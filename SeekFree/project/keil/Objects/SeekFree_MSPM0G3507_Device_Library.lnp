@@ -76,6 +76,7 @@
 ".\objects\menu.o"
 ".\objects\path_planning.o"
 ".\objects\chassis_control.o"
+".\objects\uppermonitor.o"
 ".\objects\linear_interpolation.o"
 ".\objects\mymath.o"
 ".\objects\pid.o"

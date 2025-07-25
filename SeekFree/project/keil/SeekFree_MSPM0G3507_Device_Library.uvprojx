@@ -1028,6 +1028,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Application\Chassis_Control.h</FilePath>
             </File>
+            <File>
+              <FileName>UpperMonitor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Application\UpperMonitor.c</FilePath>
+            </File>
+            <File>
+              <FileName>UpperMonitor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Application\UpperMonitor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

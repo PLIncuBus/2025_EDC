@@ -131,4 +131,5 @@
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
   ..\..\libraries\zf_components\seekfree_assistant_interface.h \
-  ..\code\Algorithm\PID.h ..\code\Hardware\Encoder.h
+  ..\code\Algorithm\PID.h ..\code\Hardware\Encoder.h \
+  ..\code\Hardware\Motor.h
