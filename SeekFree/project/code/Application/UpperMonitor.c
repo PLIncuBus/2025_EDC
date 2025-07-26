@@ -73,7 +73,7 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
     #if(Chassis_Def == AGV_Handle_Typedef)
         //单环速度环
         #if (UpperMonitor_Motor_PID_Loop_Def == Single_Velocity_Loop) 
-        Usart_Send_Buff[0] = 6;UpperMonitor_Step_Signal_Sim((float *)Step_Signal,sizeof(Step_Signal)/sizeof(float),Step_Signal_repeat_cnt);
+        Usart_Send_Buff[0] = 5;//UpperMonitor_Step_Signal_Sim((float *)Step_Signal,sizeof(Step_Signal)/sizeof(float),Step_Signal_repeat_cnt);
         Differential_Wheel_Info.vx_set = Usart_Send_Buff[0];
         Usart_Send_Buff[1] = Differential_Wheel_Info.motor_encoder[1];   
         

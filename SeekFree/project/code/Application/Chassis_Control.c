@@ -69,14 +69,13 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
  */
 static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loop)
 {
-		Chassis_Init(_Chassis_Control_Loop);
-	
+//		Chassis_Init(_Chassis_Control_Loop);
 
     for(uint8_t i = 0 ;i < 2; i ++ )
     {
         PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->vx_set);		
 		}
-		Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out,_Chassis_Control_Loop->motor_speed_pid[1].out);
+		Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out,_Chassis_Control_Loop->motor_speed_pid[1].out);//
     
 }
 /**
