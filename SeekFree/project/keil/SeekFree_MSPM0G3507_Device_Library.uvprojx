@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>__MSPM0G3507__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries\sdk\third_party\CMSIS\Core\Include;..\..\libraries\sdk;..\..\libraries\sdk\ti_config;..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user\inc;..\code\Application;..\code\Algorithm;..\code\Hardware</IncludePath>
+              <IncludePath>..\..\libraries\sdk\third_party\CMSIS\Core\Include;..\..\libraries\sdk;..\..\libraries\sdk\ti_config;..\..\libraries\zf_common;..\..\libraries\zf_components;..\..\libraries\zf_device;..\..\libraries\zf_driver;..\user\inc;..\code\Application;..\code\Algorithm;..\code\Hardware;..\..\libraries\sdk\ti\driverlib\m0p\sysctl;..\code\BSP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -993,6 +993,76 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\sdk\ti\driverlib\dl_wwdt.c</FilePath>
             </File>
+            <File>
+              <FileName>dl_sysctl_mspm0c110x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0c110x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0c110x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0c110x.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0g1x0x_g3x0x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0g1x0x_g3x0x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0g1x0x_g3x0x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0g1x0x_g3x0x.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0gx51x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0gx51x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0gx51x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0gx51x.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0h321x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0h321x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0h321x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0h321x.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l11xx_l13xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l11xx_l13xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l11xx_l13xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l11xx_l13xx.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l111x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l111x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l111x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l111x.h</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l122x_l222x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l122x_l222x.c</FilePath>
+            </File>
+            <File>
+              <FileName>dl_sysctl_mspm0l122x_l222x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\sdk\ti\driverlib\m0p\sysctl\dl_sysctl_mspm0l122x_l222x.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1117,6 +1187,31 @@
               <FileName>Motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\code\Hardware\Motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>phototube.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Hardware\phototube.c</FilePath>
+            </File>
+            <File>
+              <FileName>phototube.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Hardware\phototube.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BSP</GroupName>
+          <Files>
+            <File>
+              <FileName>BSP_I2C.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\BSP\BSP_I2C.c</FilePath>
+            </File>
+            <File>
+              <FileName>BSP_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\BSP\BSP_I2C.h</FilePath>
             </File>
           </Files>
         </Group>

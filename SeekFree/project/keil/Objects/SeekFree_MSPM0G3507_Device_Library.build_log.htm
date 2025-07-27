@@ -22,15 +22,22 @@ Dialog DLL:      TARMCM1.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\µçÈü_project\2025_EDC\SeekFree\project\keil\SeekFree_MSPM0G3507_Device_Library.uvprojx
-Project File Date:  07/25/2025
+Project File Date:  07/28/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'D:\Keil5\ARM\ARMCLANG\Bin'
 Build target 'SeekFree_MSPM0G3507_Device_Library'
-compiling Chassis_Control.c...
+../code/Hardware/phototube.c(70): warning: incompatible pointer types passing 'uint16_t *' (aka 'unsigned short *') to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+    mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
+                                                                     ^~~~~~~~~~~~~~~~~
+../code/BSP\BSP_I2C.h(13): note: passing argument to parameter 'data' here
+                    unsigned char *data);
+                                   ^
+1 warning generated.
+compiling phototube.c...
 linking...
-Program Size: Code=34556 RO-data=3800 RW-data=904 ZI-data=3048  
-".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=37596 RO-data=3808 RW-data=904 ZI-data=3216  
+".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 

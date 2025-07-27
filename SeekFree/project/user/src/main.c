@@ -44,6 +44,9 @@
 #include "Motor.h"
 #include "Chassis_Control.h"
 #include "UpperMonitor.h"
+#include "phototube.h"
+
+
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
 // 第二步 project->clean  等待下方进度条走完
@@ -61,11 +64,14 @@ int main (void)
     clock_init(SYSTEM_CLOCK_80M);   // 时钟配置及系统初始化<务必保留>
     debug_init();					// 调试串口信息初始化
 	  // 此处编写用户代码 例如外设初始化代码等
+
+    //BSP初始化
+    SYSCFG_DL_I2C_0_init();
 	
     //硬件初始化
     Encoder_Init();
 		Motor_Init();
-
+		phototube_Init();
 
     //应用层初始化
     Chassis_Init(&Differential_Wheel_Info);
@@ -82,9 +88,7 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-				Differential_Wheel_Info.vx_set = 0;
-//				Differential_Wheel_Info.vz_set = 10;
-				Differential_Wheel_Info.angle_set = 0;
+
 
 
 
@@ -98,6 +102,6 @@ void _50HZ_Callback(uint32 state, void *ptr)
     Menu_Process();
     IMU_Attitude_Process();
     UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
-		Chassis_Proceed(&Differential_Wheel_Info);
-//    
+		Chassis_Proceed(&Differential_Wheel_Info); 
+		phototube_proceed();
 }

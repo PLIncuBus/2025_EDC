@@ -41,7 +41,6 @@
 #define ti_msp_dl_config_h
 
 #define CONFIG_MSPM0G350X
-#define CONFIG_MSPM0G3507
 
 #if defined(__ti_version__) || defined(__TI_COMPILER_VERSION__)
 #define SYSCONFIG_WEAK __attribute__((weak))
@@ -87,6 +86,22 @@ extern "C" {
 
 
 
+
+/* Defines for I2C_0 */
+#define I2C_0_INST                                                          I2C1
+#define I2C_0_INST_IRQHandler                                    I2C1_IRQHandler
+#define I2C_0_INST_INT_IRQN                                        I2C1_INT_IRQn
+#define I2C_0_BUS_SPEED_HZ                                                400000
+#define GPIO_I2C_0_SDA_PORT                                                GPIOB
+#define GPIO_I2C_0_SDA_PIN                                         DL_GPIO_PIN_3
+#define GPIO_I2C_0_IOMUX_SDA                                     (IOMUX_PINCM16)
+#define GPIO_I2C_0_IOMUX_SDA_FUNC                      IOMUX_PINCM16_PF_I2C1_SDA
+#define GPIO_I2C_0_SCL_PORT                                                GPIOB
+#define GPIO_I2C_0_SCL_PIN                                         DL_GPIO_PIN_2
+#define GPIO_I2C_0_IOMUX_SCL                                     (IOMUX_PINCM15)
+#define GPIO_I2C_0_IOMUX_SCL_FUNC                      IOMUX_PINCM15_PF_I2C1_SCL
+
+
 /* Defines for VREF */
 #define VREF_VOLTAGE_MV                                                     3300
 #define GPIO_VREF_VREFPOS_PORT                                             GPIOA
@@ -126,6 +141,7 @@ void SYSCFG_DL_init(void);
 void SYSCFG_DL_initPower(void);
 void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
+void SYSCFG_DL_I2C_0_init(void);
 void SYSCFG_DL_VREF_init(void);
 
 void SYSCFG_DL_SYSTICK_init(void);

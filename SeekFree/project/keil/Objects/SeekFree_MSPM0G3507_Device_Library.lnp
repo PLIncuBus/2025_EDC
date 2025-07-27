@@ -73,6 +73,13 @@
 ".\objects\dl_uart.o"
 ".\objects\dl_vref.o"
 ".\objects\dl_wwdt.o"
+".\objects\dl_sysctl_mspm0c110x.o"
+".\objects\dl_sysctl_mspm0g1x0x_g3x0x.o"
+".\objects\dl_sysctl_mspm0gx51x.o"
+".\objects\dl_sysctl_mspm0h321x.o"
+".\objects\dl_sysctl_mspm0l11xx_l13xx.o"
+".\objects\dl_sysctl_mspm0l111x.o"
+".\objects\dl_sysctl_mspm0l122x_l222x.o"
 ".\objects\menu.o"
 ".\objects\path_planning.o"
 ".\objects\chassis_control.o"
@@ -84,6 +91,8 @@
 ".\objects\imu.o"
 ".\objects\encoder.o"
 ".\objects\motor.o"
+".\objects\phototube.o"
+".\objects\bsp_i2c.o"
 --strict --scatter ".\mspm0g3507.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

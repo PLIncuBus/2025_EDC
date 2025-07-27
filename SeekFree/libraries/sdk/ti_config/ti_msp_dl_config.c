@@ -50,6 +50,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_GPIO_init();
     /* Module-Specific Initializations*/
     SYSCFG_DL_SYSCTL_init();
+    SYSCFG_DL_I2C_0_init();
     SYSCFG_DL_VREF_init();
     SYSCFG_DL_SYSTICK_init();
 }
@@ -58,11 +59,13 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 {
     DL_GPIO_reset(GPIOA);
     DL_GPIO_reset(GPIOB);
+    DL_I2C_reset(I2C_0_INST);
     DL_VREF_reset(VREF);
 
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
+    DL_I2C_enablePower(I2C_0_INST);
     DL_VREF_enablePower(VREF);
 
     delay_cycles(POWER_STARTUP_DELAY);
@@ -75,6 +78,17 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralAnalogFunction(GPIO_HFXOUT_IOMUX);
     DL_GPIO_initPeripheralAnalogFunction(GPIO_LFXIN_IOMUX);
     DL_GPIO_initPeripheralAnalogFunction(GPIO_LFXOUT_IOMUX);
+
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_0_IOMUX_SDA,
+        GPIO_I2C_0_IOMUX_SDA_FUNC, DL_GPIO_INVERSION_DISABLE,
+        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
+        DL_GPIO_WAKEUP_DISABLE);
+    DL_GPIO_initPeripheralInputFunctionFeatures(GPIO_I2C_0_IOMUX_SCL,
+        GPIO_I2C_0_IOMUX_SCL_FUNC, DL_GPIO_INVERSION_DISABLE,
+        DL_GPIO_RESISTOR_NONE, DL_GPIO_HYSTERESIS_DISABLE,
+        DL_GPIO_WAKEUP_DISABLE);
+    DL_GPIO_enableHiZ(GPIO_I2C_0_IOMUX_SDA);
+    DL_GPIO_enableHiZ(GPIO_I2C_0_IOMUX_SCL);
 
     DL_GPIO_initDigitalOutputFeatures(LED_A14_PIN_14_IOMUX,
 		 DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_DOWN,
@@ -111,128 +125,6 @@ static const DL_SYSCTL_LFCLKConfig gLFCLKConfig = {
     .monitor  = false,
     .xt1Drive = DL_SYSCTL_LFXT_DRIVE_STRENGTH_HIGHEST,
 };
-
-
-///////////////////////////////////////////////////////////////
-
-
-void DL_SYSCTL_setHFCLKSourceHFXTParams (DL_SYSCTL_HFXT_RANGE range, uint32_t startupTime, bool monitorEnable)
-{
-    uint32_t register_temp = SYSCTL->SOCLOCK.HFCLKCLKCFG;
-
-    register_temp &= ~(SYSCTL_HFCLKCLKCFG_HFXTRSEL_MASK | SYSCTL_HFCLKCLKCFG_HFCLKFLTCHK_MASK);
-
-    switch(range)
-    {
-        case DL_SYSCTL_HFXT_RANGE_4_8_MHZ  :    register_temp |= (SYSCTL_HFCLKCLKCFG_HFXTRSEL_RANGE4TO8);   break;
-        case DL_SYSCTL_HFXT_RANGE_8_16_MHZ :    register_temp |= (SYSCTL_HFCLKCLKCFG_HFXTRSEL_RANGE8TO16);  break;
-        case DL_SYSCTL_HFXT_RANGE_16_32_MHZ:    register_temp |= (SYSCTL_HFCLKCLKCFG_HFXTRSEL_RANGE16TO32); break;
-        case DL_SYSCTL_HFXT_RANGE_32_48_MHZ:    register_temp |= (SYSCTL_HFCLKCLKCFG_HFXTRSEL_RANGE32TO48); break;
-    }
-    register_temp |= (monitorEnable) ? (SYSCTL_HFCLKCLKCFG_HFCLKFLTCHK_ENABLE) : (SYSCTL_HFCLKCLKCFG_HFCLKFLTCHK_DISABLE);
-
-    SYSCTL->SOCLOCK.HFCLKCLKCFG = register_temp;
-
-	SYSCTL->SOCLOCK.HSCLKEN |= SYSCTL_HSCLKEN_HFXTEN_ENABLE;								// 必须启动 否则频率不准
-		
-    SYSCTL->SOCLOCK.HSCLKEN =   SYSCTL_HSCLKEN_SYSPLLEN_ENABLE | SYSCTL_HSCLKEN_USEEXTHFCLK_ENABLE;
-    SYSCTL->SOCLOCK.HSCLKEN |=  SYSCTL_HSCLKCFG_HSCLKSEL_HFCLKCLK;
-
-
-
-
-}
-
-
-
-
-
-void DL_SYSCTL_configSYSPLL (const DL_SYSCTL_SYSPLLConfig *config)
-{
-    uint32_t register_temp = 0;
-	
-	
-			 SYSCTL->SOCLOCK.HSCLKEN &= ~(SYSCTL_HSCLKEN_SYSPLLEN_MASK);
-
-    {
-        register_temp = SYSCTL->SOCLOCK.SYSPLLCFG0;
-
-        register_temp   &= ~(SYSCTL_SYSPLLCFG0_SYSPLLREF_MASK   | SYSCTL_SYSPLLCFG0_MCLK2XVCO_MASK  
-                        |   SYSCTL_SYSPLLCFG0_ENABLECLK0_MASK   | SYSCTL_SYSPLLCFG0_ENABLECLK1_MASK | SYSCTL_SYSPLLCFG0_ENABLECLK2X_MASK
-                        |   SYSCTL_SYSPLLCFG0_RDIVCLK0_MASK     | SYSCTL_SYSPLLCFG0_RDIVCLK1_MASK   | SYSCTL_SYSPLLCFG0_RDIVCLK2X_MASK  );
-        register_temp   |=  config->rDivClk2x   ;
-        register_temp   |=  config->rDivClk1    ;
-        register_temp   |=  config->rDivClk0    ;
-        register_temp   |=  config->enableCLK2x ;
-        register_temp   |=  config->enableCLK1  ;
-        register_temp   |=  config->enableCLK0  ;
-        register_temp   |=  config->sysPLLMCLK  ;
-        register_temp   |=  config->sysPLLRef   ;
-
-        SYSCTL->SOCLOCK.SYSPLLCFG0 = register_temp;
-    }
-		
-
-    {
-        register_temp = SYSCTL->SOCLOCK.SYSPLLCFG1;
-
-        register_temp &= ~(SYSCTL_SYSPLLCFG1_PDIV_MASK | SYSCTL_SYSPLLCFG1_QDIV_MASK);
-        register_temp   |=  (config->qDiv << SYSCTL_SYSPLLCFG1_QDIV_OFS );
-        register_temp   |=  (config->pDiv);
-
-        SYSCTL->SOCLOCK.SYSPLLCFG1 = register_temp;
-    }
-		
-				{
-    SYSCTL->SOCLOCK.SYSPLLPARAM0 =
-        *(volatile uint32_t *) ((uint32_t) config->inputFreq);
-    SYSCTL->SOCLOCK.SYSPLLPARAM1 =
-        *(volatile uint32_t *) ((uint32_t) config->inputFreq + (uint32_t) 0x4);
-		}
-
-
-			SYSCTL->SOCLOCK.HSCLKEN |= SYSCTL_HSCLKEN_SYSPLLEN_ENABLE;
-
-    while ((DL_SYSCTL_getClockStatus() & SYSCTL_CLKSTATUS_SYSPLLGOOD_MASK) !=
-           DL_SYSCTL_CLK_STATUS_SYSPLL_GOOD) {
-        ;
-						 }
-						 
-						 
-
-
-}
-
-void DL_SYSCTL_setLFCLKSourceLFXT (const DL_SYSCTL_LFCLKConfig *config)
-{
-    uint32_t register_temp = SYSCTL->SOCLOCK.LFCLKCFG;
-
-    register_temp &= ~(SYSCTL_LFCLKCFG_XT1DRIVE_MASK | SYSCTL_LFCLKCFG_MONITOR_MASK | SYSCTL_LFCLKCFG_LOWCAP_MASK);
-    register_temp   |=  (config->lowCap) ? (SYSCTL_LFCLKCFG_LOWCAP_ENABLE) : (SYSCTL_LFCLKCFG_LOWCAP_DISABLE);
-    register_temp   |=  (config->monitor) ? (SYSCTL_LFCLKCFG_MONITOR_ENABLE) : (SYSCTL_LFCLKCFG_MONITOR_DISABLE);
-    register_temp   |=  (config->xt1Drive);
-
-    SYSCTL->SOCLOCK.LFCLKCFG = register_temp;
-
-
-
-
-}
-
-
-
-
-void DL_SYSCTL_switchMCLKfromSYSOSCtoHSCLK (DL_SYSCTL_HSCLK_SOURCE source)
-{
-
-    SYSCTL->SOCLOCK.HSCLKCFG = (uint32_t) source;
-    SYSCTL->SOCLOCK.MCLKCFG |= SYSCTL_MCLKCFG_USEHSCLK_ENABLE;
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////
-
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
 {
 
@@ -257,6 +149,42 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
 
 }
 
+
+static const DL_I2C_ClockConfig gI2C_0ClockConfig = {
+    .clockSel = DL_I2C_CLOCK_BUSCLK,
+    .divideRatio = DL_I2C_CLOCK_DIVIDE_1,
+};
+
+SYSCONFIG_WEAK void SYSCFG_DL_I2C_0_init(void) {
+
+    DL_I2C_setClockConfig(I2C_0_INST,
+        (DL_I2C_ClockConfig *) &gI2C_0ClockConfig);
+    DL_I2C_setAnalogGlitchFilterPulseWidth(I2C_0_INST,
+        DL_I2C_ANALOG_GLITCH_FILTER_WIDTH_50NS);
+    DL_I2C_enableAnalogGlitchFilter(I2C_0_INST);
+
+    /* Configure Controller Mode */
+    DL_I2C_resetControllerTransfer(I2C_0_INST);
+    /* Set frequency to 400000 Hz*/
+    DL_I2C_setTimerPeriod(I2C_0_INST, 9);
+    DL_I2C_setControllerTXFIFOThreshold(I2C_0_INST, DL_I2C_TX_FIFO_LEVEL_EMPTY);
+    DL_I2C_setControllerRXFIFOThreshold(I2C_0_INST, DL_I2C_RX_FIFO_LEVEL_BYTES_1);
+    DL_I2C_enableControllerClockStretching(I2C_0_INST);
+
+    /* Configure Interrupts */
+    DL_I2C_enableInterrupt(I2C_0_INST,
+                           DL_I2C_INTERRUPT_CONTROLLER_ARBITRATION_LOST |
+                           DL_I2C_INTERRUPT_CONTROLLER_NACK |
+                           DL_I2C_INTERRUPT_CONTROLLER_RXFIFO_TRIGGER |
+                           DL_I2C_INTERRUPT_CONTROLLER_RX_DONE |
+                           DL_I2C_INTERRUPT_CONTROLLER_TX_DONE);
+
+
+    /* Enable module */
+    DL_I2C_enableController(I2C_0_INST);
+
+
+}
 
 
 static const DL_VREF_Config gVREFConfig = {

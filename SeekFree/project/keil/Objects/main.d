@@ -134,4 +134,5 @@
   ..\code\Algorithm\MyMath.h ..\code\Hardware\Encoder.h \
   ..\code\Hardware\Motor.h ..\code\Application\Chassis_Control.h \
   ..\code\Algorithm\PID.h ..\code\Application\Chassis_Control.h \
-  ..\code\Application\UpperMonitor.h
+  ..\code\Application\UpperMonitor.h ..\code\Hardware\phototube.h \
+  ..\code\BSP\BSP_I2C.h
