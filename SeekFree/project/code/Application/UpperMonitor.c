@@ -30,11 +30,13 @@ void UpperMonitor_Cmd_Send(UpperMonitor_Handle_Typedef *UpperMonitor_Cmd_Send)
  */
 void UpperMonitor_Init(void)
 {
+	#if (IMU_Type != 1 && JY61P_Mode != 0)
     uart_init(UpperMonitor_UART_INDEX,UpperMonitor_UART_BAUNDRATE,UpperMonitor_UART_TX_PIN,UpperMonitor_UART_RX_PIN);
 //    uart_set_interrupt_config(UpperMonitor_UART_INDEX, UART_INTERRUPT_CONFIG_RX_ENABLE);		// 使能串口接收中断
 //    interrupt_set_priority(UpperMonitor_UART_PRIORITY, 0);  
 //    uart_set_callback(UpperMonitor_UART_INDEX, UpperMonitor_Callback, NULL);			    // 定义中断接收函数
-}
+	#endif
+	}
 
 #if (UpperMonitor_Mode == 0)
 
@@ -73,8 +75,8 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
     #if(Chassis_Def == AGV_Handle_Typedef)
         //单环速度环
         #if (UpperMonitor_Motor_PID_Loop_Def == Single_Velocity_Loop) 
-        Usart_Send_Buff[0] = 5;//UpperMonitor_Step_Signal_Sim((float *)Step_Signal,sizeof(Step_Signal)/sizeof(float),Step_Signal_repeat_cnt);
-        Differential_Wheel_Info.vx_set = Usart_Send_Buff[0];
+        Usart_Send_Buff[0] = Differential_Wheel_Info.target[1];//UpperMonitor_Step_Signal_Sim((float *)Step_Signal,sizeof(Step_Signal)/sizeof(float),Step_Signal_repeat_cnt);
+//        Differential_Wheel_Info.vx_set = Usart_Send_Buff[0];
         Usart_Send_Buff[1] = Differential_Wheel_Info.motor_encoder[1];   
         
         //双环内环速度环

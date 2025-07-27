@@ -12,7 +12,7 @@ typedef enum{
 }IMU_Type_enum;
 
 
-#define IMU_Type 0
+#define IMU_Type 1
 #define JY61P_Mode 1
 #if(IMU_Type == 1)
 

@@ -173,9 +173,9 @@ void IMU_Info_Show(void)
 void Chassis_Info_Show(void)
 {
     Menu_ShowStr(0,0,"Encoder1");
-    Menu_ShowInt(100,0,Encoder_Count_Get(Encoder1),5);
+    Menu_ShowInt(100,0,Encoder_count[0],5);
     Menu_ShowStr(0,16,"Encoder2");
-    Menu_ShowInt(100,16,Encoder_Count_Get(Encoder2),5);
+    Menu_ShowInt(100,16,Encoder_count[1],5);
 
 }
 

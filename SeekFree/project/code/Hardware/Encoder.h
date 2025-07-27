@@ -3,11 +3,11 @@
 
 #include "zf_common_headfile.h"
 
-#define ENCODER2_POSITIVE    (B18)
-#define ENCODER2_NEGATIVE    (B17)
+#define ENCODER1_POSITIVE    (B18)
+#define ENCODER1_NEGATIVE    (B17)
 
-#define ENCODER1_POSITIVE    (A27)
-#define ENCODER1_NEGATIVE    (A26)
+#define ENCODER2_POSITIVE    (A27)
+#define ENCODER2_NEGATIVE    (A26)
 
 
 

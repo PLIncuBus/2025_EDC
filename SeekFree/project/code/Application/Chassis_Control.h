@@ -5,6 +5,7 @@
 #include "PID.h"
 #include "Encoder.h"
 #include "Motor.h"
+#include "IMU.h"
 
 typedef enum{
     Differential_Wheel,
@@ -12,15 +13,18 @@ typedef enum{
     None,
 }ChassisMode_enum;
 
-
+#define DIFFRERENTIAL_WHEEL_BASE 1.18
 #define Chassis_mode Differential_Wheel
 
 typedef struct{
     
     float vx_set;
+		float vz_set;
+		float target[2];
     float angle_set;
     int16_t motor_encoder[2]; 
     pid_type_def motor_speed_pid[2];
+    pid_type_def motor_angle_pid;
 
 }Differential_Wheel_Info_t; 
 

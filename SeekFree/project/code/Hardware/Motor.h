@@ -10,7 +10,7 @@
 #define MOTOR1_DIR_PIN               (B13 )
 #define MOTOR1_PWM               (PWM_TIM_A0_CH1_B12)
 
-#define Motor1_DIR								0
+#define Motor1_DIR								1
 #define Motor2_DIR								1
 
 

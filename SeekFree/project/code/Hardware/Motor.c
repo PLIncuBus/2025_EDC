@@ -26,7 +26,7 @@ void Motor_Cmd(int16_t motor1,int16_t motor2)
 				gpio_set_level(MOTOR1_DIR_PIN,Motor1_DIR);
 				pwm_set_duty(MOTOR1_PWM, motor1 * (PWM_DUTY_MAX / 100)); 
 		}
-		else{
+		else if(motor1 < 0){
 				gpio_set_level(MOTOR1_DIR_PIN,!Motor1_DIR);
 				pwm_set_duty(MOTOR1_PWM, -motor1 * (PWM_DUTY_MAX / 100));
 		}
@@ -35,7 +35,7 @@ void Motor_Cmd(int16_t motor1,int16_t motor2)
 				gpio_set_level(MOTOR2_DIR_PIN,Motor2_DIR);
 				pwm_set_duty(MOTOR2_PWM, motor2 * (PWM_DUTY_MAX / 100));
 		}
-		else{
+		else if(motor2 < 0){
 				gpio_set_level(MOTOR2_DIR_PIN,!Motor2_DIR);
 				pwm_set_duty(MOTOR2_PWM, -motor2 * (PWM_DUTY_MAX / 100));
 		}

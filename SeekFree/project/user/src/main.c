@@ -2,7 +2,7 @@
  * @Author: PLIncuBus wewean@yeah.net
  * @Date: 2025-07-20 15:14:04
  * @LastEditors: PLIncuBus wewean@yeah.net
- * @LastEditTime: 2025-07-25 16:47:56
+ * @LastEditTime: 2025-07-26 17:39:55
  * @FilePath: \SeekFree\project\user\src\main.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -53,7 +53,7 @@
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
 
 // **************************** 代码区域 ****************************
-static void _20HZ_Callback(uint32 state, void *ptr);
+static void _50HZ_Callback(uint32 state, void *ptr);
 
 
 int main (void)
@@ -68,21 +68,23 @@ int main (void)
 
 
     //应用层初始化
-		
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间
     IMU_Init(20,2000);
 		UpperMonitor_Init();
-    // 10HZ定时器中断初始化
-    pit_ms_init( PIT_TIM_A1 , 20 , _20HZ_Callback , NULL ); 
+    // 50HZ定时器中断初始化
+    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
 
 
     // 此处编写用户代码 例如外设初始化代码等
     while(true)
     {
         // 此处编写需要循环执行的代码
+				Differential_Wheel_Info.vx_set = 0;
+//				Differential_Wheel_Info.vz_set = 10;
+				Differential_Wheel_Info.angle_set = 0;
 
 
 
@@ -91,11 +93,11 @@ int main (void)
 }
 
 
-void _20HZ_Callback(uint32 state, void *ptr)
+void _50HZ_Callback(uint32 state, void *ptr)
 {
     Menu_Process();
     IMU_Attitude_Process();
     UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 		Chassis_Proceed(&Differential_Wheel_Info);
-    
+//    
 }

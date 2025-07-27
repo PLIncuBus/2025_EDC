@@ -3,6 +3,7 @@
 
 #include "zf_common_headfile.h"
 #include "Chassis_Control.h"
+#include "IMU.h"
 
 //-0-VOFA   -1
 #define UpperMonitor_Mode 0

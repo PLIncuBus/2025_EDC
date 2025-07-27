@@ -28,6 +28,7 @@ void JY61P_Init(uint8_t Timer , uint16_t Offset_Time)
 {		
 		#if(JY61P_Mode == 1)
 		soft_iic_init(&JY61P_iic_struct,JY61P_DEV_ADDR, JY61P_SOFT_IIC_DELAY, JY61P_SCL_PIN, JY61P_SDA_PIN);
+		system_delay_ms(2000);
     #elif(JY61P_Mode == 0)
 		uart_init(JY61P_UART_INDEX,JY61P_UART_BAUNDRATE,JY61P_UART_TX_PIN,JY61P_UART_RX_PIN);
     uart_set_interrupt_config(JY61P_UART_INDEX, UART_INTERRUPT_CONFIG_RX_ENABLE);		// 使能串口接收中断
@@ -132,7 +133,7 @@ void JY61P_Analysis_Process(void){
  {
 
      //数据获取
- 		 imu963ra_get_gyro();
+    imu963ra_get_gyro();
      imu963ra_get_acc(); 
     
 

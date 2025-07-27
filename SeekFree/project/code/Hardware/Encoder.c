@@ -13,7 +13,6 @@ void Encoder_Init(void)
 
     exti_init(ENCODER2_POSITIVE, EXTI_TRIGGER_FALLING , Encoder2_EXTI_Callback, NULL);                            
     gpio_init(ENCODER2_NEGATIVE, GPI, GPIO_HIGH, GPI_PULL_UP);
-	
 
 }
 
