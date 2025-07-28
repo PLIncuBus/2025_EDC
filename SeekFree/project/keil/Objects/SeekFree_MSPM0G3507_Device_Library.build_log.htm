@@ -27,17 +27,33 @@ Project File Date:  07/28/2025
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'D:\Keil5\ARM\ARMCLANG\Bin'
 Build target 'SeekFree_MSPM0G3507_Device_Library'
-../code/Hardware/phototube.c(70): warning: incompatible pointer types passing 'uint16_t *' (aka 'unsigned short *') to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
-    mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
-                                                                     ^~~~~~~~~~~~~~~~~
-../code/BSP\BSP_I2C.h(13): note: passing argument to parameter 'data' here
-                    unsigned char *data);
-                                   ^
+compiling zf_driver_pit.c...
+compiling main.c...
+compiling Path_Planning.c...
+../code/Application/UpperMonitor.c(21): warning: incompatible pointer types passing 'uint8_t (*)[100]' to parameter of type 'const uint8 *' (aka 'const unsigned char *') [-Wincompatible-pointer-types]
+                                uart_write_buffer(UpperMonitor_UART_INDEX,&UpperMonitor_Cmd_Send->Usart_Send_Buff,UpperMonitor_Cmd_Send->Usart_Send_Index);
+                                                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/zf_driver\zf_driver_uart.h(168): note: passing argument to parameter 'buff' here
+void uart_write_buffer (uart_index_enum uart_index, const uint8 *buff, uint32 len);
+                                                                 ^
 1 warning generated.
-compiling phototube.c...
+compiling UpperMonitor.c...
+compiling IMU.c...
+compiling Chassis_Control.c...
+../code/Application/Menu.c(31): warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+                                                                                                                             ^
+../code/Application/Menu.c(31): note: previous initialization is here
+    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+                                                                                                     ^~~~~~~~
+../code/Application/Menu.c(118): warning: initializer-string for char array is too long [-Wexcess-initializers]
+        {   2      ,   "Position" , Type_SubMenu    , PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+                       ^~~~~~~~~~
+2 warnings generated.
+compiling Menu.c...
 linking...
-Program Size: Code=37596 RO-data=3808 RW-data=904 ZI-data=3216  
-".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=38060 RO-data=3816 RW-data=1920 ZI-data=3144  
+".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

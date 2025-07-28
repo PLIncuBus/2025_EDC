@@ -7,10 +7,31 @@ static void Path_Planning_Solve_Li5th_Node(Path_Plan_Li5_t *node);
 static float Path_Planning_Control(Path_Plan_Quene_t *li5_path,Path_Plan_Out_t choose_out_type);
 
 #if (Chassis_mode == Differential_Wheel)
-
-    static Path_Plan_Li5_t Diff_node_x_speed[] = {{.task = NULL},
+//     float time;                     //节点时间
+//		 float dis;                      //节点位移
+//     float vel;                      //节点速度
+//     float acc;                      //节点加速度
+//     void * task;                    //节点任务
+    static Path_Plan_Li5_t Diff_node_x_speed[] = {{0.0f, 0.0f, 0.0f, 0.0f, NULL},
+																									{2000.0f,45000.0f,10.0f,0.0f,NULL},
+																									{3000.0f,45000.0f, 0.0f, 0.0f, NULL},
+																									{5000.0f,90000.0f, 10.0f, 0.0f, NULL},
+																									{6000.0f,90000.0f, 0.0f, 0.0f, NULL},
+																									{8000.0f,135000.0f, 10.0f, 0.0f, NULL},
+																									{9000.0f,135000.0f, 0.0f, 0.0f, NULL},
+																									{11000.0f,180000.0f, 10.0f, 0.0f, NULL},
+																									
+																										
                                             {.task = &end_quene}};
-    static Path_Plan_Li5_t Diff_node_w_speed[] = {{.task = NULL},
+    static Path_Plan_Li5_t Diff_node_w_speed[] = {{0.0f, 0.0f, 0.0f, 0.0f, NULL},
+																									{2000.0f,0.0f,0.0f,0.0f,NULL},
+																									{3000.0f,-90.0f,0.0f,0.0f,NULL},
+																									{5000.0f, -90.0f, 0.0f, 0.0f, NULL},
+																									{6000.0f, -180.0f, 0.0f, 0.0f, NULL},
+																									{8000.0f, -180.0f, 0.0f, 0.0f, NULL},
+																									{9000.0f, -270.0f, 0.0f, 0.0f, NULL},
+																									{11000.0f, -270.0f, 0.0f, 0.0f, NULL},
+																									
                                             {.task = &end_quene}};
 
     static Path_Plan_Quene_t Diff_x_speed = {.quene = Diff_node_x_speed,
@@ -65,7 +86,7 @@ void Path_Planning_Init(void)
 void Path_Planning_Publish(Differential_Wheel_Info_t * _Path_Planning_Publish)
 {
     _Path_Planning_Publish->vx_set    = Path_Planning_Control(&Diff_x_speed,out_type_speed);
-    _Path_Planning_Publish->angle_set = Path_Planning_Control(&Diff_w_dis,out_type_speed);      
+    _Path_Planning_Publish->angle_set = Path_Planning_Control(&Diff_w_dis,out_type_displacement);      
 }
 
 /**

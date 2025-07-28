@@ -133,6 +133,8 @@
   ..\code\Application\Menu.h ..\code\Hardware\IMU.h \
   ..\code\Algorithm\MyMath.h ..\code\Hardware\Encoder.h \
   ..\code\Hardware\Motor.h ..\code\Application\Chassis_Control.h \
-  ..\code\Algorithm\PID.h ..\code\Application\Chassis_Control.h \
-  ..\code\Application\UpperMonitor.h ..\code\Hardware\phototube.h \
-  ..\code\BSP\BSP_I2C.h
+  ..\code\Algorithm\PID.h ..\code\Hardware\phototube.h \
+  ..\code\BSP\BSP_I2C.h ..\code\Application\Chassis_Control.h \
+  ..\code\Application\UpperMonitor.h ..\code\Application\Path_Planning.h \
+  ..\code\Algorithm\Linear_Interpolation.h \
+  ..\code\Hardware\SystemClock.h

@@ -3,8 +3,8 @@
 
 #include "zf_common_headfile.h"
 
-#define PIT_CH                  (PIT_TIM_A0 )                                      		// 使用的周期中断编号 如果修改 需要同步对应修改周期中断编号与 isr.c 中的调用
-#define PIT_PRIORITY            (TIMA0_INT_IRQn)  
+#define PIT_CH                  (PIT_TIM_G0 )                                      		// 使用的周期中断编号 如果修改 需要同步对应修改周期中断编号与 isr.c 中的调用
+#define PIT_PRIORITY            (TIMG0_INT_IRQn)  
 #define SYSTEMCLOCK_FREQ        (10) 
 
 

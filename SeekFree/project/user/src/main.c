@@ -45,6 +45,7 @@
 #include "Chassis_Control.h"
 #include "UpperMonitor.h"
 #include "phototube.h"
+#include "Path_Planning.h"
 
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
@@ -74,12 +75,15 @@ int main (void)
 		phototube_Init();
 
     //应用层初始化
+		
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间
     IMU_Init(20,2000);
 		UpperMonitor_Init();
+		SystemClock_Interrupt_Init();
+		Path_Planning_Init();
     // 50HZ定时器中断初始化
     pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
 
@@ -88,7 +92,8 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-
+			
+						
 
 
 
@@ -104,4 +109,6 @@ void _50HZ_Callback(uint32 state, void *ptr)
     UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 		Chassis_Proceed(&Differential_Wheel_Info); 
 		phototube_proceed();
+		Cha_error = (float)readTrackDate(gray_state.state)/23.5;
+//		Path_Planning_Publish(&Differential_Wheel_Info);
 }

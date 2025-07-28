@@ -39,12 +39,12 @@ typedef union
 extern float gray_status[2],gray_status_backup[2][20];
 extern uint32_t gray_status_worse;
 extern _gray_state gray_state; 
-
+extern float Cha_error;
 
 
 
 void phototube_Init(void);
 void phototube_proceed(void);
-
+int16_t  readTrackDate(uint16_t dat);
 
 #endif

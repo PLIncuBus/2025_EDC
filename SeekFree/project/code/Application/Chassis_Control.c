@@ -22,6 +22,10 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
+float motor_tube_pid_kp = 6;
+float motor_tube_pid_ki = 0;
+float motor_tube_pid_kd = 0;
+
 static void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve);
 Differential_Wheel_Info_t Differential_Wheel_Info;
 
@@ -47,6 +51,13 @@ void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init)
     motor_angle_pid[0] = motor_angle_pid_kp;
     motor_angle_pid[1] = motor_angle_pid_ki;
     motor_angle_pid[2] = motor_angle_pid_kd;
+	
+	
+		float motor_tube_pid[3];
+
+    motor_tube_pid[0] = motor_tube_pid_kp;
+    motor_tube_pid[1] = motor_tube_pid_ki;
+    motor_tube_pid[2] = motor_tube_pid_kd;
 
 
     //PID限幅
@@ -55,9 +66,14 @@ void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init)
 
     const float motor_angle_pid_max_out = 40;
     const float motor_angle_pid_max_iout = 40;
+		
+		const float motor_tube_pid_max_out = 40;
+    const float motor_tube_pid_max_iout = 40;
 
     PID_init(&_Chassis_Init->motor_angle_pid, PID_POSITION, motor_angle_pid,motor_angle_pid_max_out,motor_angle_pid_max_iout);
-    for(uint8_t i = 0; i < 2;i ++){
+    PID_init(&_Chassis_Init->motor_tube_pid, PID_POSITION, motor_tube_pid,motor_tube_pid_max_out,motor_tube_pid_max_iout);
+
+		for(uint8_t i = 0; i < 2;i ++){
         PID_init(&_Chassis_Init->motor_speed_pid[i], PID_POSITION, motor_speed_pid[i],motor_speed_pid_max_out,motor_speed_pid_max_iout);
 		
     }
@@ -74,6 +90,7 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
 {
     //速度Update
     static float Last_Angle_Yaw ;
+		static float Last_Angle_set ;
     _Chassis_Update->motor_encoder[0] = (float)Encoder_Count_Get(Encoder1);
     _Chassis_Update->motor_encoder[1] = (float)Encoder_Count_Get(Encoder2);
 		Encoder_count[0] = 0;
@@ -86,6 +103,12 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
     else if(Angle_Yaw - Last_Angle_Yaw < -179){
         Angle_Yaw += 360;
     }
+//		if(Differential_Wheel_Info.angle_set - Last_Angle_set > 179){
+//				Differential_Wheel_Info.angle_set -= 360;
+//		}
+//		else if(Differential_Wheel_Info.angle_set - Last_Angle_set < -179){
+//				Differential_Wheel_Info.angle_set += 360;
+//		}
     Last_Angle_Yaw = Angle_Yaw;
 	
 }
@@ -111,9 +134,14 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
     _Chassis_Control_Loop->motor_angle_pid.Ki = motor_angle_pid_ki;
     _Chassis_Control_Loop->motor_angle_pid.Kd = motor_angle_pid_kd;
 	
-
+		if(_Chassis_Control_Loop->mode == track){
+			PID_calc(&_Chassis_Control_Loop->motor_tube_pid,Cha_error,0);
+			_Chassis_Control_Loop->vz_set = _Chassis_Control_Loop->motor_tube_pid.out;
+		}
+		else{
 		PID_calc(&_Chassis_Control_Loop->motor_angle_pid,(int)Angle_Yaw,_Chassis_Control_Loop->angle_set);
-		_Chassis_Control_Loop->vz_set = _Chassis_Control_Loop->motor_angle_pid.out;
+		_Chassis_Control_Loop->vz_set = _Chassis_Control_Loop->motor_angle_pid.out;}
+	
 	
 		Chassis_Kinematics_Solve(_Chassis_Control_Loop);
 	

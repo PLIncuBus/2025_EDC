@@ -10,7 +10,7 @@ static void Menu_Display(void);
 Menu_Info_t Motor_PID_Menu[2];
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
-Menu_Info_t Hardware_Info_Menu[2];
+Menu_Info_t Hardware_Info_Menu[3];
 Menu_Info_t Motor_PID_SET_Menu[3];
 void Task1(void);
 void Task2(void);
@@ -18,6 +18,7 @@ void Task3(void);
 void Task4(void);
 void IMU_Info_Show(void);
 void Chassis_Info_Show(void);
+void Tube_Info_Show(void);
 /*****第一级主菜单BEGIN*****/
 
 Menu_Info_t Main_Menu[3] = {    
@@ -80,14 +81,20 @@ Menu_Info_t PID_Menu[1] = {
          Idle_Menu},
 };
 
-Menu_Info_t Hardware_Info_Menu[2] = {
-    {   2      ,   "IMU"  ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show ,.Param_Info = {
+Menu_Info_t Hardware_Info_Menu[3] = {
+    {   3      ,   "IMU"  ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   2      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,.Param_Info = {
+    {   3      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+		{   3      ,  "Tube",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Tube_Info_Show,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -177,6 +184,11 @@ void Chassis_Info_Show(void)
     Menu_ShowStr(0,16,"Encoder2");
     Menu_ShowInt(100,16,Encoder_count[1],5);
 
+}
+void Tube_Info_Show(void)
+{
+	  Menu_ShowStr(0,0,"Cha_Error");
+    Menu_ShowFloat(0,16,Cha_error,2,4);
 }
 
 

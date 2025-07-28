@@ -133,4 +133,5 @@
   ..\..\libraries\zf_components\seekfree_assistant_interface.h \
   ..\code\Algorithm\PID.h ..\code\Hardware\Encoder.h \
   ..\code\Hardware\Motor.h ..\code\Hardware\IMU.h \
-  ..\code\Algorithm\MyMath.h ..\code\Application\Menu.h
+  ..\code\Algorithm\MyMath.h ..\code\Application\Menu.h \
+  ..\code\Hardware\phototube.h ..\code\BSP\BSP_I2C.h

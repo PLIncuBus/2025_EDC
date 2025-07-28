@@ -6,6 +6,7 @@
 #include "Encoder.h"
 #include "Motor.h"
 #include "Chassis_Control.h"
+#include "phototube.h"
 
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float

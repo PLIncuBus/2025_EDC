@@ -5,6 +5,8 @@ _gray_state gray_state;
 //只需要的到gray_status[0]的值就是线的位置
 float gray_status[2]={0},gray_status_backup[2][20]={0};//灰度传感器状态与历史值
 uint32_t gray_status_worse=0;	//灰度管异常状态计数器
+float Cha_error;
+int16_t result;
 
 
 
@@ -64,10 +66,48 @@ void gpio_input_check_channel_12_linewidth_20mm(void)
 	}	
 }
 
+int16_t  readTrackDate(uint16_t dat)
+{
+    
+    if (dat == 0xFFFF) {
+        return 0;  
+    }
+
+    char x1 = 0, x2 = 0;
+    for (uint8_t i = 0; i < 12; i++)  
+    {
+        if (x1 == 0)  
+        {
+            if ((dat & (1 << i)) != 0)  
+            {
+                x1 = i * 4 + 1;     
+            }
+        }
+        else  
+        {
+            if ((dat & (1 << i)) == 0)  
+            {
+                x2 = (i - 1) * 4 + 1;
+                break;
+            }
+        }
+    }
+
+    if (x1 != 0 && x2 == 0) 
+    {
+        x2 = (12) * 4 + 1;  
+    }
+
+    return (24.5-((x1 + x2) / 2.0f));  
+		
+}
+
 
 void phototube_proceed(void)
 {
+	
     mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
-		gray_state.state = gray_state.state; 
-		gpio_input_check_channel_12_linewidth_20mm();
+//		result =  gray_state.state;
+//		gpio_input_check_channel_12_linewidth_20mm();
+//		Cha_error = readTrackDate(gray_state.state);
 }
