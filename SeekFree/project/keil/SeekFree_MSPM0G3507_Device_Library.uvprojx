@@ -1198,6 +1198,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Hardware\phototube.h</FilePath>
             </File>
+            <File>
+              <FileName>StepMotor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Hardware\StepMotor.c</FilePath>
+            </File>
+            <File>
+              <FileName>StepMotor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Hardware\StepMotor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

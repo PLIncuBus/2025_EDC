@@ -46,7 +46,7 @@
 #include "UpperMonitor.h"
 #include "phototube.h"
 #include "Path_Planning.h"
-
+#include "StepMotor.h"
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
@@ -58,6 +58,8 @@
 
 // **************************** 代码区域 ****************************
 static void _50HZ_Callback(uint32 state, void *ptr);
+
+
 
 
 int main (void)
@@ -73,7 +75,7 @@ int main (void)
     Encoder_Init();
 		Motor_Init();
 		phototube_Init();
-
+    StepMotor_Init();
     //应用层初始化
 		
     Chassis_Init(&Differential_Wheel_Info);
@@ -86,14 +88,14 @@ int main (void)
 		Path_Planning_Init();
     // 50HZ定时器中断初始化
     pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
-
+		
 
     // 此处编写用户代码 例如外设初始化代码等
     while(true)
     {
         // 此处编写需要循环执行的代码
-			
-						
+
+
 
 
 
@@ -104,11 +106,15 @@ int main (void)
 
 void _50HZ_Callback(uint32 state, void *ptr)
 {
-    Menu_Process();
-    IMU_Attitude_Process();
-    UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
+   Menu_Process();
+   IMU_Attitude_Process();
+   UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 //		Chassis_Proceed(&Differential_Wheel_Info); 
 		phototube_proceed();
 		Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-//		Path_Planning_Publish(&Differential_Wheel_Info);
+		Path_Planning_Publish(&Differential_Wheel_Info);
+		StepMotor_SetPosition(0x01,1000,100,0);
+		system_delay_ms(10);
+		StepMotor_SetPosition(0x02,2000,100,0);
+
 }
