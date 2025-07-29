@@ -12,7 +12,12 @@ float StepMotor_position_error=0;//处理后的位置式误差
 uint8_t StepMotor_fifo_get_data[64];
 fifo_struct StepMotor_uart_data_fifo;
 uint32 StepMotor_fifo_data_count = 0;
-
+Gimbal_Data gimbal_data=
+{
+	.Target_Pitch=0,
+	.Target_Yaw=0,
+	
+};
 void StepMotor_JiaoZhun(void);
 void StepMotor_Enable(uint8_t Motor_Num);
 void StepMotor_Disable(uint8_t Motor_Num);
@@ -23,7 +28,7 @@ void StepMotor_Get_position_error(void);
 void StepMotor_Read_Current(void);
 void StepMotor_Set_PID(uint32_t KP, uint32_t KI, uint32_t KD);
 void StepMotor_SetSpeed(uint8_t Motor_Num,int16_t Speed, uint8_t Acc);
-void StepMotor_SetPosition(uint8_t Motor_Num,uint32_t Pulse, int16_t Speed, uint8_t Acc);
+
 void StepMotor_Send(void);
 void StepMotor_Callback(uint32 state, void *ptr);
 
@@ -203,38 +208,90 @@ void StepMotor_SetSpeed(uint8_t Motor_Num,int16_t Speed, uint8_t Acc)
 // Acc   0---255 (0代表关闭梯形加减速)
 // Pulse 3200脉冲一圈
 // 绝对脉冲
-void StepMotor_SetPosition(uint8_t Motor_Num,uint32_t Pulse, int16_t Speed, uint8_t Acc)
+void StepMotor_SetPosition(uint8_t Motor_Num, float Angle, int16_t Speed, uint8_t Acc)
 {
-      uint16_t Speed_Temp = My_ABS(Speed);
-      uint8_t Direction;
-      StepMotor_Data[0] = Motor_Num;
-      StepMotor_Data[1] = 0xFD;
-      if (Speed >= 0)
-			{
-          Direction = 1;
-			}
-      else
-			{
-          Direction = 0;
-      }
+	 uint8_t Direction;
+		 if (Angle >= 0)
+    {
+        Direction = 1;
+    }
+    else
+    {
+        Direction = 0;
+    }
+		Angle=My_ABS(Angle);
+		uint32_t Pulse=(uint32_t)((float)Angle/360 *3200);
+    uint8_t command_data[13]; 
+    uint16_t Speed_Temp = My_ABS(Speed);
+   
 
-      StepMotor_Data[2] = Direction;
-      StepMotor_Data[3] = Speed_Temp >> 8;
-      StepMotor_Data[4] = (Speed_Temp << 8) >> 8;
-      StepMotor_Data[5] = Acc;
-      StepMotor_Data[6] = Pulse >> 24;
-      StepMotor_Data[7] = (Pulse << 8) >> 24;
-      StepMotor_Data[8] = (Pulse << 16) >> 24;
-      StepMotor_Data[9] = (Pulse << 24) >> 24;
-      StepMotor_Data[10] = 0x01;
-      StepMotor_Data[11] = 0x00;
-      StepMotor_Data[12] = 0x6B;
-			uart_write_buffer(StepMotor_UART_INDEX,StepMotor_Data,13);
-//      fifo_write_buffer(&StepMotor_uart_data_fifo,StepMotor_Data,13);
-      
+    command_data[0] = Motor_Num;
+    command_data[1] = 0xFD;
+   
 
+    command_data[2] = Direction;
+    
+    command_data[3] = (uint8_t)(Speed_Temp >> 8);   // 速度高8位
+    command_data[4] = (uint8_t)(Speed_Temp);        // 速度低8位
+    
+    command_data[5] = Acc;
+
+    command_data[6] = (uint8_t)(Pulse >> 24); // 脉冲第1个字节
+    command_data[7] = (uint8_t)(Pulse >> 16); // 脉冲第2个字节
+    command_data[8] = (uint8_t)(Pulse >> 8);  // 脉冲第3个字节
+    command_data[9] = (uint8_t)(Pulse);       // 脉冲第4个字节
+
+    command_data[10] = 0x01;
+    command_data[11] = 0x00;
+    command_data[12] = 0x6B;
+
+    uart_write_buffer(StepMotor_UART_INDEX, command_data, 13);
+}
+void Gimbal_Set_Angle(float Yaw ,float Pitch )
+{
+		StepMotor_SetPosition(0x01,Yaw,100,0);  //yaw
+		for(uint16_t i=0;i<400;i++);
+		StepMotor_SetPosition(0x02,Pitch,100,0);	//pitch
 }
 
+
+// Flash 位置定义（你可以根据需要选择 sector_num 和 page_num）
+#define GIMBAL_FLASH_SECTOR    0
+#define GIMBAL_FLASH_PAGE      0
+
+// 保存 gimbal_data 到 Flash
+void save_gimbal_to_flash()
+{
+	
+    // 将 gimbal_data 拷贝到 union 缓冲区
+//    flash_union_buffer[0].float_type = gimbal_data.Current_Yaw;
+//    flash_union_buffer[1].float_type = gimbal_data.Current_Pitch;
+//    flash_union_buffer[2].float_type = gimbal_data.Target_Yaw;
+//    flash_union_buffer[3].float_type = gimbal_data.Target_Pitch;
+
+		flash_union_buffer[0].float_type = 10.0;
+    flash_union_buffer[1].float_type =10.0;
+    flash_union_buffer[2].float_type =10.0;
+    flash_union_buffer[3].float_type =10.0;
+
+    // 写入 Flash
+    flash_write_page_from_buffer(GIMBAL_FLASH_SECTOR, GIMBAL_FLASH_PAGE);
+   
+}
+
+// 从 Flash 读取 gimbal_data
+void load_gimbal_from_flash()
+{
+    // 从 Flash 读取到缓冲区
+    flash_read_page_to_buffer(GIMBAL_FLASH_SECTOR, GIMBAL_FLASH_PAGE);
+
+    // 从缓冲区赋值给 gimbal_data
+    gimbal_data.Current_Yaw    = flash_union_buffer[0].float_type;
+    gimbal_data.Current_Pitch  = flash_union_buffer[1].float_type;
+    gimbal_data.Target_Yaw     = flash_union_buffer[2].float_type;
+    gimbal_data.Target_Pitch   = flash_union_buffer[3].float_type;
+
+}
 ///**
 // * @brief 发送
 // * 

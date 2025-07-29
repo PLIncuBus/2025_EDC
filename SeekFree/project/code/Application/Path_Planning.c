@@ -1,7 +1,13 @@
 #include "Path_Planning.h"
 
 char end_quene = 1;
-
+void test()
+{
+		while(1)
+		{
+			Menu_Process();
+		}
+}
 
 static void Path_Planning_Solve_Li5th_Node(Path_Plan_Li5_t *node);
 static float Path_Planning_Control(Path_Plan_Quene_t *li5_path,Path_Plan_Out_t choose_out_type);
@@ -12,15 +18,16 @@ static float Path_Planning_Control(Path_Plan_Quene_t *li5_path,Path_Plan_Out_t c
 //     float vel;                      //节点速度
 //     float acc;                      //节点加速度
 //     void * task;                    //节点任务
-    static Path_Plan_Li5_t Diff_node_x_speed[] = {{0.0f, 0.0f, 0.0f, 0.0f, NULL},
-																									{2000.0f,45000.0f,10.0f,0.0f,NULL},
-																									{3000.0f,45000.0f, 0.0f, 0.0f, NULL},
-																									{5000.0f,90000.0f, 10.0f, 0.0f, NULL},
-																									{6000.0f,90000.0f, 0.0f, 0.0f, NULL},
-																									{8000.0f,135000.0f, 10.0f, 0.0f, NULL},
-																									{9000.0f,135000.0f, 0.0f, 0.0f, NULL},
-																									{11000.0f,180000.0f, 10.0f, 0.0f, NULL},
-																									
+    static Path_Plan_Li5_t Diff_node_x_speed[] = {	{.task=&test},
+//																									{0.0f, 0.0f, 0.0f, 0.0f, NULL},
+//																									{2000.0f,45000.0f,10.0f,0.0f,NULL},
+//																									{3000.0f,45000.0f, 0.0f, 0.0f, NULL},
+//																									{5000.0f,90000.0f, 10.0f, 0.0f, NULL},
+//																									{6000.0f,90000.0f, 0.0f, 0.0f, NULL},
+//																									{8000.0f,135000.0f, 10.0f, 0.0f, NULL},
+//																									{9000.0f,135000.0f, 0.0f, 0.0f, NULL},
+//																									{11000.0f,180000.0f, 10.0f, 0.0f, NULL},
+//																									
 																										
                                             {.task = &end_quene}};
     static Path_Plan_Li5_t Diff_node_w_speed[] = {{0.0f, 0.0f, 0.0f, 0.0f, NULL},

@@ -10,6 +10,7 @@ static void Menu_Display(void);
 Menu_Info_t Motor_PID_Menu[2];
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
+Menu_Info_t GIMBAL_Menu[3];
 Menu_Info_t Hardware_Info_Menu[3];
 Menu_Info_t Motor_PID_SET_Menu[3];
 void Task1(void);
@@ -21,20 +22,26 @@ void Chassis_Info_Show(void);
 void Tube_Info_Show(void);
 /*****第一级主菜单BEGIN*****/
 
-Menu_Info_t Main_Menu[3] = {    
-    {   3      ,   "Info"   ,   Type_SubMenu    ,   NULL    ,Hardware_Info_Menu,   NULL , .Param_Info = {
+Menu_Info_t Main_Menu[4] = {    
+    {   4      ,   "Info"   ,   Type_SubMenu    ,   NULL    ,Hardware_Info_Menu,   NULL , .Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
         Idle_Menu  },
-    {   3      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+    {   4      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
         Idle_Menu  },
-    {   3      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    ,.Param_Info = {
+    {   4      ,   "PID"    ,   Type_SubMenu    ,   NULL    ,   PID_Menu    ,   NULL    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL }, 
+        Idle_Menu  },
+		{   4      ,   "GIM"    ,   Type_SubMenu    ,   NULL    ,   GIMBAL_Menu    ,   NULL    ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -102,7 +109,28 @@ Menu_Info_t Hardware_Info_Menu[3] = {
          Idle_Menu},
 
 };
-
+Menu_Info_t GIMBAL_Menu[3] = {
+    {   3      ,   "YAW"  ,   Type_ParMenu    ,  Main_Menu ,   NULL    ,   NULL   	 ,.Param_Info = {
+        .step = 0.1,
+        .max = 3000,
+        .min = -3000,
+        .param = &gimbal_data.Target_Yaw },
+         Idle_Menu},
+	 {   3      ,   "PITCH"  ,   Type_ParMenu    ,  Main_Menu ,   NULL    ,   NULL   	 ,.Param_Info = {
+        .step = 0.1,
+        .max = 3000,
+        .min = -3000,
+        .param = &gimbal_data.Target_Pitch},
+         Idle_Menu},
+//	 {   3      ,   "SAVE"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   save_gimbal_to_flash  	 ,.Param_Info = {
+//        .step = 0,
+//        .max = 0,
+//        .min = 0,
+//        .param = NULL},
+//         Idle_Menu},
+				 
+				 
+};
 /*****第二级菜单END******/
 
 /*****第三级菜单BEGIN******/

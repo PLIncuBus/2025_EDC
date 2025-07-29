@@ -7,7 +7,7 @@
 #include "Motor.h"
 #include "Chassis_Control.h"
 #include "phototube.h"
-
+#include "StepMotor.h"
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float
 #define 		Menu_ShowInt				 ips114_show_int
