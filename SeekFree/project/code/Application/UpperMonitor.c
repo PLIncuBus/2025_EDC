@@ -3,6 +3,7 @@
 
 
 void UpperMonitor_Callback (uint32 state, void *ptr);
+void VisionMonitor_Callback (uint32 state, void *ptr);
 UpperMonitor_Handle_Typedef UpperMonitor_Handle;
 
 
@@ -36,7 +37,11 @@ void UpperMonitor_Init(void)
 //    interrupt_set_priority(UpperMonitor_UART_PRIORITY, 0);  
 //    uart_set_callback(UpperMonitor_UART_INDEX, UpperMonitor_Callback, NULL);			    // 定义中断接收函数
 	#endif
-	}
+    uart_init(VisionMonitor_UART_INDEX,VisionMonitor_UART_BAUNDRATE,VisionMonitor_UART_TX_PIN,VisionMonitor_UART_RX_PIN);
+    uart_set_interrupt_config(VisionMonitor_UART_INDEX, UART_INTERRUPT_CONFIG_RX_ENABLE);		// 使能串口接收中断
+    interrupt_set_priority(VisionMonitor_UART_PRIORITY, 0);  
+    uart_set_callback(VisionMonitor_UART_INDEX, VisionMonitor_Callback, NULL);	
+}
 
 #if (UpperMonitor_Mode == 0)
 
@@ -97,8 +102,78 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
     #endif   
 }
 
+void VisionMonitor_parse_rect_data(const char *data)
+{
+    uint16_t values[18] = {0};
+	char buffer[128];
+	strncpy(buffer, data, sizeof(buffer) - 1);
+	buffer[sizeof(buffer) - 1] = '\0';
+
+	char *token = strtok(buffer, ",");
+	int count = 0;
+
+	while (token != NULL && count < 18) {
+		values[count++] = (uint16_t)atoi(token);
+		token = strtok(NULL, ",");
+	}
+
+	if (count != 18) {
+		// printf("Error: Received %d values, expected 18.\r\n", count);
+		return;
+	}
+
+}
+
+
 
 #endif
+
+/**
+ * @brief 回调函数
+ * 
+ * @param state 
+ * @param ptr 
+ */
+uint8_t Vision_TxPacket[4]; // 定义发送数据包数组，数据包格式：FF 01 02 03 04 FE
+uint8_t Vision_RxPacket[64]; // 定义接收数据包数组
+uint8_t Vision_RxFlag;       // 定义接收数据包标志位
+void VisionMonitor_Callback(uint32 state, void *ptr)
+{
+    static uint8_t RxState = 0;   // 定义表示当前状态机状态的静态变量
+    static uint8_t pRxPacket = 0; // 定义表示当前接收数据位置的静态变量
+    // 接发送过来的数据保存在变量中
+    uint8_t RxData ;
+    uart_read_byte(
+        VisionMonitor_UART_INDEX,&RxData); // 读取数据寄存器，存放在接收的数据变量
+    if (RxState == 0) {
+      if (RxData == '@' && Vision_RxFlag == 0) // 如果数据确实是包头
+      {
+        RxState = 1;   // 置下一个状态
+        pRxPacket = 0; // 数据包的位置归零
+      }
+    } else if (RxState == 1) // 收到包尾
+    {
+      if (RxData == '#') {
+        RxState = 2;
+      } else {
+        Vision_RxPacket[pRxPacket] = RxData; // 将数据存入数据包数组的指定位置
+        pRxPacket++;                         // 数据包的位置自增
+      }
+    }
+    /*当前状态为2，接收数据包第二个包尾*/
+    else if (RxState == 2) {
+      if (RxData == '$') // 如果数据确实是包尾部
+      {
+        RxState = 0; // 状态归0
+        Vision_RxPacket[pRxPacket] = '\0';        
+				// printf("Serial_RxPacket: %s\r\n", Serial_RxPacket);
+        Vision_RxFlag = 1; // 接收数据包标志位置1，成功接收一个数据包
+      }
+    }
+  
+
+}
+
 
 /**
  * @brief 回调函数

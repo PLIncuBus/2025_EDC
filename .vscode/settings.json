@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "dl_common.h": "c"
+        "dl_common.h": "c",
+        "chassis_control.h": "c"
     }
 }

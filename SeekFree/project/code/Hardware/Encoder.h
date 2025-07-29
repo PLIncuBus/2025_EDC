@@ -1,3 +1,11 @@
+/*
+ * @Author: PLIncuBus wewean@yeah.net
+ * @Date: 2025-07-24 19:55:32
+ * @LastEditors: PLIncuBus wewean@yeah.net
+ * @LastEditTime: 2025-07-29 01:41:22
+ * @FilePath: \2025_EDC\SeekFree\project\code\Hardware\Encoder.h
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #ifndef __ENCODER_H
 #define __ENCODER_H
 
@@ -7,7 +15,7 @@
 #define ENCODER1_NEGATIVE    (B17)
 
 #define ENCODER2_POSITIVE    (A27)
-#define ENCODER2_NEGATIVE    (A26)
+#define ENCODER2_NEGATIVE    (B11)
 
 
 

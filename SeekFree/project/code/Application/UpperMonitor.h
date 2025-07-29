@@ -1,3 +1,11 @@
+/*
+ * @Author: PLIncuBus wewean@yeah.net
+ * @Date: 2025-07-25 19:25:11
+ * @LastEditors: PLIncuBus wewean@yeah.net
+ * @LastEditTime: 2025-07-29 01:36:49
+ * @FilePath: \2025_EDC\SeekFree\project\code\Application\UpperMonitor.h
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #ifndef __UPPERMONITOR_H
 #define __UPPERMONITOR_H
 
@@ -12,6 +20,12 @@
 #define UpperMonitor_UART_TX_PIN            (UART0_TX_A0)
 #define UpperMonitor_UART_RX_PIN            (UART0_RX_A1)
 #define UpperMonitor_UART_PRIORITY          (UART0_INT_IRQn)
+
+#define VisionMonitor_UART_INDEX            (UART_2) 
+#define VisionMonitor_UART_BAUNDRATE        (115200)
+#define VisionMonitor_UART_TX_PIN           (UART2_TX_B15)
+#define VisionMonitor_UART_RX_PIN           (UART2_RX_B16)
+#define VisionMonitor_UART_PRIORITY         (UART2_INT_IRQn)
 
 /**
  * @brief           上位机发送拼接函数

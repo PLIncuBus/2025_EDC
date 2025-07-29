@@ -107,7 +107,7 @@ void _50HZ_Callback(uint32 state, void *ptr)
     Menu_Process();
     IMU_Attitude_Process();
     UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
-		Chassis_Proceed(&Differential_Wheel_Info); 
+//		Chassis_Proceed(&Differential_Wheel_Info); 
 		phototube_proceed();
 		Cha_error = (float)readTrackDate(gray_state.state)/23.5;
 //		Path_Planning_Publish(&Differential_Wheel_Info);
