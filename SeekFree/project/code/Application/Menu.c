@@ -11,8 +11,11 @@ Menu_Info_t Motor_PID_Menu[2];
 Menu_Info_t Task_Menu[4];
 Menu_Info_t PID_Menu[1];
 Menu_Info_t GIMBAL_Menu[3];
-Menu_Info_t Hardware_Info_Menu[3];
+Menu_Info_t Hardware_Info_Menu[4];
 Menu_Info_t Motor_PID_SET_Menu[3];
+Menu_Info_t Task1_Menu[2];
+Menu_Info_t Task1_Choose_Menu[1];
+
 void Task1(void);
 void Task2(void);
 void Task3(void);
@@ -20,6 +23,7 @@ void Task4(void);
 void IMU_Info_Show(void);
 void Chassis_Info_Show(void);
 void Tube_Info_Show(void);
+void Task1_Circle_Info_Show(void);
 /*****第一级主菜单BEGIN*****/
 
 Menu_Info_t Main_Menu[4] = {    
@@ -53,25 +57,25 @@ Menu_Info_t Main_Menu[4] = {
 /*****第二级菜单BEGIN******/
 
 Menu_Info_t Task_Menu[4] = {
-    {   4      ,   "Task1"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task1     ,.Param_Info = {
+    {   4      ,   "Task1"  ,   Type_SubMenu    ,  Main_Menu ,   Task1_Menu    ,   NULL     ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
         Idle_Menu},
-    {   4      ,   "Task2"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task2     ,.Param_Info = {
+    {   4      ,   "Task2"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL     ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   4      ,   "Task3"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task3     ,.Param_Info = {
+    {   4      ,   "Task3"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL    ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   4      ,   "Task4"  ,   Type_ShoMenu    ,  Main_Menu ,   NULL    ,   Task4     ,.Param_Info = {
+    {   4      ,   "Task4"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL    ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -88,25 +92,32 @@ Menu_Info_t PID_Menu[1] = {
          Idle_Menu},
 };
 
-Menu_Info_t Hardware_Info_Menu[3] = {
-    {   3      ,   "IMU"  ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show ,.Param_Info = {
+Menu_Info_t Hardware_Info_Menu[4] = {
+    {   4      ,   "IMU"  ,    Type_ShoMenu    ,  Main_Menu ,   NULL    ,   IMU_Info_Show ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   3      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,.Param_Info = {
+    {   4      ,  "Chasis",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Chassis_Info_Show,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
-		{   3      ,  "Tube",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Tube_Info_Show,.Param_Info = {
+		{   4      ,  "Tube",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Tube_Info_Show,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
          Idle_Menu},
+        {   4      ,  "Cir",    Type_ShoMenu    ,  Main_Menu ,   NULL    , Task1_Circle_Info_Show,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+         Idle_Menu},
+
 
 };
 Menu_Info_t GIMBAL_Menu[3] = {
@@ -122,14 +133,32 @@ Menu_Info_t GIMBAL_Menu[3] = {
         .min = -3000,
         .param = &gimbal_data.Target_Pitch},
          Idle_Menu},
-//	 {   3      ,   "SAVE"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   save_gimbal_to_flash  	 ,.Param_Info = {
-//        .step = 0,
-//        .max = 0,
-//        .min = 0,
-//        .param = NULL},
-//         Idle_Menu},
+	 {   3      ,   "SAVE"  ,   Type_BehMenu    ,  Main_Menu ,   NULL    ,   save_gimbal_to_flash  	 ,.Param_Info = {
+       .step = 0,
+       .max = 0,
+       .min = 0,
+       .param = NULL},
+        Idle_Menu},
 				 
 				 
+};
+
+
+
+Menu_Info_t Task1_Menu[2] = {
+        {   2      ,   "Cho"  ,   Type_SubMenu    ,  Task_Menu ,   Task1_Choose_Menu    ,   NULL    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+        {   2      ,   "Pro"  ,   Type_BehMenu    ,  Task_Menu ,  NULL     ,   Task1_Process    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+
 };
 /*****第二级菜单END******/
 
@@ -148,6 +177,15 @@ Menu_Info_t Motor_PID_Menu[2] = {
         .max = 0,
         .min = 0,
         .param = NULL },
+         Idle_Menu},
+};
+
+Menu_Info_t Task1_Choose_Menu[1] = {
+        {   3      ,   "Loop"    ,  Type_ParMenu   , Task1_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 1,
+        .max = 5,
+        .min = 0,
+        .param = &Task1_Loop_Num},
          Idle_Menu},
 };
 
@@ -178,23 +216,7 @@ Menu_Info_t Motor_PID_SET_Menu[3] = {
 };
 
 /*****第四级菜单END******/
-//test
-void Task1(void)
-{
-    Motor_Cmd(10,10);
-}
-void Task2(void)
-{
-    Menu_ShowStr(0,0,"Task2");
-}
-void Task3(void)
-{
-    Menu_ShowStr(0,0,"Task3");
-}
-void Task4(void)
-{
-    Menu_ShowStr(0,0,"Task4");
-}
+
 void IMU_Info_Show(void)
 {
     Menu_ShowStr(0,0,"YawAngle");
@@ -211,6 +233,10 @@ void Chassis_Info_Show(void)
     Menu_ShowInt(100,0,Encoder_count[0],5);
     Menu_ShowStr(0,16,"Encoder2");
     Menu_ShowInt(100,16,Encoder_count[1],5);
+		Menu_ShowStr(0,32,"Encoder1_Sum");
+		Menu_ShowInt(100,32,Encoder_count_sum[0],5);
+		Menu_ShowStr(0,48,"Encoder2_Sum");
+		Menu_ShowInt(100,48,Encoder_count_sum[1],5);
 
 }
 void Tube_Info_Show(void)
@@ -218,7 +244,10 @@ void Tube_Info_Show(void)
 	  Menu_ShowStr(0,0,"Cha_Error");
     Menu_ShowFloat(0,16,Cha_error,2,4);
 }
-
+void Task1_Circle_Info_Show(void)
+{
+    Menu_ShowInt(0,0,Task1_Loop_Num,5);
+}
 
 /**
  * @brief 菜单运行
@@ -273,7 +302,7 @@ static int16_t Last_Cur_Menu_Param_Step = 0;
 static uint8_t Cur_Menu_index = 0;
 static int16_t Cur_Menu_Param_Step = 0;			
 static uint8_t Menu_Back_Cnt = 0;
-static float 	Cur_Menu_Param_base = 0;
+float 	Cur_Menu_Param_base = 0;
 static void Menu_Behaviour(void)
 {
 		

@@ -17,6 +17,7 @@ typedef enum{
 typedef enum{
 	track,
 	angle,
+	stop,
 	
 }Chassis_mode_enum;
 
@@ -30,6 +31,7 @@ typedef struct{
 		float target[2];
     float angle_set;
     int16_t motor_encoder[2]; 
+		int32_t motor_encoder_sum[2];
     pid_type_def motor_speed_pid[2];
     pid_type_def motor_angle_pid;
 		pid_type_def motor_tube_pid;

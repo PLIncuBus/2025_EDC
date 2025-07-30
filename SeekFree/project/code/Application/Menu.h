@@ -8,6 +8,8 @@
 #include "Chassis_Control.h"
 #include "phototube.h"
 #include "StepMotor.h"
+#include "Task.h"
+
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float
 #define 		Menu_ShowInt				 ips114_show_int

@@ -60,8 +60,6 @@
 static void _50HZ_Callback(uint32 state, void *ptr);
 
 
-#define FLASH_SECTION_INDEX       (0)                                 // 存储数据用的扇区
-#define FLASH_PAGE_INDEX          (0)                                 // 存储数据用的页码 倒数第一个页码
 
 int main (void)
 {
@@ -89,9 +87,8 @@ int main (void)
 		Path_Planning_Init();
     // 50HZ定时器中断初始化
     pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
-		
-//		load_gimbal_from_flash();
-//save_gimbal_to_flash();
+		Differential_Wheel_Info.mode = track;
+
 
 
 
@@ -99,7 +96,7 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-
+Differential_Wheel_Info.vx_set = 8;
         // 此处编写需要循环执行的代码
     }
 }
@@ -109,12 +106,12 @@ void _50HZ_Callback(uint32 state, void *ptr)
 {
 	
 			Menu_Process();
-	//   IMU_Attitude_Process();
+			IMU_Attitude_Process();
 			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
-	//		Chassis_Proceed(&Differential_Wheel_Info); 
+			Chassis_Proceed(&Differential_Wheel_Info); 
 			phototube_proceed();
 			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-			Path_Planning_Publish(&Differential_Wheel_Info);
+//			Path_Planning_Publish(&Differential_Wheel_Info);
 
 
 			Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);

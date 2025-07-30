@@ -29,6 +29,7 @@ typedef enum{
 extern int16_t Encoder_count[Encoder_Sum];
 void Encoder_Init(void);
 int16_t Encoder_Count_Get(Encoder_enum index);
+extern int32_t Encoder_count_sum[Encoder_Sum];
 
 #endif
 

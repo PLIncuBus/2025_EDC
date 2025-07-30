@@ -21,13 +21,16 @@ void Encoder_Init(void)
  * 
  */
 int16_t Encoder_count[Encoder_Sum];
+int32_t Encoder_count_sum[Encoder_Sum];
 void Encoder1_EXTI_Callback(uint32 state, void *ptr)
 {
     if(gpio_get_level(ENCODER1_NEGATIVE) == 1){
         Encoder_count[Encoder1]++;
+				Encoder_count_sum[Encoder1]++;
     }
     else if(gpio_get_level(ENCODER1_NEGATIVE) == 0){
         Encoder_count[Encoder1]--;
+				Encoder_count_sum[Encoder1]--;
     }
 
 }
@@ -36,9 +39,11 @@ void Encoder2_EXTI_Callback(uint32 state, void *ptr)
 {
     if(gpio_get_level(ENCODER2_NEGATIVE) == 1){
         Encoder_count[Encoder2]--;
+			Encoder_count_sum[Encoder2]--;
     }
     else{
         Encoder_count[Encoder2]++;
+			Encoder_count_sum[Encoder2]++;
     }
 
 }

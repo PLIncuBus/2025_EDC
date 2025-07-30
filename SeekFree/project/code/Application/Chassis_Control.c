@@ -95,6 +95,8 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
     _Chassis_Update->motor_encoder[1] = (float)Encoder_Count_Get(Encoder2);
 		Encoder_count[0] = 0;
 		Encoder_count[1] = 0;
+		_Chassis_Update->motor_encoder_sum[0] = Encoder_count_sum[Encoder1];
+		_Chassis_Update->motor_encoder_sum[1] = Encoder_count_sum[Encoder2];
     
     //角度Update
     if(Angle_Yaw -  Last_Angle_Yaw > 179 ){
@@ -148,9 +150,13 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
     for(uint8_t i = 0 ;i < 2; i ++ )
     {
         PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->target[i]);		
-	}
-
-    Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);
+		}
+		if(_Chassis_Control_Loop->mode == stop){
+			Motor_Cmd(0,0);
+		}
+		else{
+    Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);}
+	
 //_Chassis_Control_Loop->motor_angle_pid.out + -	_Chassis_Control_Loop->motor_angle_pid.out +_Chassis_Control_Loop->motor_speed_pid[0].out
     
 }
