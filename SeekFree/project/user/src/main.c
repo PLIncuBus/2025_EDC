@@ -73,7 +73,7 @@ int main (void)
     //硬件初始化
     Encoder_Init();
 		Motor_Init();
-		phototube_Init();
+//		phototube_Init();
     StepMotor_Init();
     //应用层初始化
 		
@@ -81,7 +81,7 @@ int main (void)
     //菜单初始化  参数：中断频率
 		Menu_Init(20);
     //IMU初始化   参数：中断频率,陀螺仪静置时间
-    IMU_Init(20,2000);
+//    IMU_Init(20,2000);
 		UpperMonitor_Init();
 		SystemClock_Interrupt_Init();
 		Path_Planning_Init();
@@ -108,13 +108,19 @@ void _50HZ_Callback(uint32 state, void *ptr)
 			Menu_Process();
 			IMU_Attitude_Process();
 			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
+
 			Chassis_Proceed(&Differential_Wheel_Info); 
 			phototube_proceed();
 			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
+
+	//		Chassis_Proceed(&Differential_Wheel_Info); 
+//			phototube_proceed();
+//			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
+
 //			Path_Planning_Publish(&Differential_Wheel_Info);
 
 
-			Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
-
+//			Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
+			
 
 }
