@@ -6,7 +6,7 @@ void UpperMonitor_Callback (uint32 state, void *ptr);
 void VisionMonitor_Callback (uint32 state, void *ptr);
 UpperMonitor_Handle_Typedef UpperMonitor_Handle;
 
-
+extern uint8_t Vision_RxFlag; 
 
 /**
  * @brief           上位机数据发送
@@ -104,23 +104,34 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
 
 void VisionMonitor_parse_rect_data(const char *data)
 {
-    uint16_t values[18] = {0};
-	char buffer[128];
-	strncpy(buffer, data, sizeof(buffer) - 1);
-	buffer[sizeof(buffer) - 1] = '\0';
+	
+		if(Vision_RxFlag==0)
+	{	
+			
+		
+			uint16_t values[6] = {0};
+			char buffer[128];
+			strncpy(buffer, data, sizeof(buffer) - 1);
+			buffer[sizeof(buffer) - 1] = '\0';
 
-	char *token = strtok(buffer, ",");
-	int count = 0;
+			char *token = strtok(buffer, ",");
+			int count = 0;
 
-	while (token != NULL && count < 18) {
-		values[count++] = (uint16_t)atoi(token);
-		token = strtok(NULL, ",");
+			while (token != NULL && count < 6) {
+				values[count++] = (uint16_t)atoi(token);
+				token = strtok(NULL, ",");
+			}
+
+		if (count != 6) {
+			return;
+		}
+		
+		//values 赋值
+		
+		Vision_RxFlag=1;
+	
 	}
-
-	if (count != 18) {
-		// printf("Error: Received %d values, expected 18.\r\n", count);
-		return;
-	}
+   
 
 }
 
@@ -135,14 +146,14 @@ void VisionMonitor_parse_rect_data(const char *data)
  * @param ptr 
  */
 uint8_t Vision_TxPacket[4]; // 定义发送数据包数组，数据包格式：FF 01 02 03 04 FE
-uint8_t Vision_RxPacket[64]; // 定义接收数据包数组
+uint16_t Vision_RxPacket[64]; // 定义接收数据包数组
 uint8_t Vision_RxFlag;       // 定义接收数据包标志位
 void VisionMonitor_Callback(uint32 state, void *ptr)
 {
     static uint8_t RxState = 0;   // 定义表示当前状态机状态的静态变量
     static uint8_t pRxPacket = 0; // 定义表示当前接收数据位置的静态变量
     // 接发送过来的数据保存在变量中
-    uint8_t RxData ;
+    uint16_t RxData ;
     uart_read_byte(
         VisionMonitor_UART_INDEX,&RxData); // 读取数据寄存器，存放在接收的数据变量
     if (RxState == 0) {

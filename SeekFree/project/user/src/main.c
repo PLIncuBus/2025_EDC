@@ -112,7 +112,8 @@ void _50HZ_Callback(uint32 state, void *ptr)
 			Chassis_Proceed(&Differential_Wheel_Info); 
 			phototube_proceed();
 			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-
+			
+			VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
 	//		Chassis_Proceed(&Differential_Wheel_Info); 
 //			phototube_proceed();
 //			Cha_error = (float)readTrackDate(gray_state.state)/23.5;

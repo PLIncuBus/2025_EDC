@@ -28,9 +28,23 @@ Project File Date:  07/30/2025
 *** Using Compiler 'V6.22', folder: 'F:\keil\ARM\ARMCLANG\Bin'
 Build target 'SeekFree_MSPM0G3507_Device_Library'
 compiling main.c...
+../code/Application/UpperMonitor.c(22): warning: incompatible pointer types passing 'uint8_t (*)[100]' (aka 'unsigned char (*)[100]') to parameter of type 'const uint8 *' (aka 'const unsigned char *') [-Wincompatible-pointer-types]
+   22 |                                 uart_write_buffer(UpperMonitor_UART_INDEX,&UpperMonitor_Cmd_Send->Usart_Send_Buff,UpperMonitor_Cmd_Send->Usart_Send_Index);
+      |                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../libraries/zf_driver\zf_driver_uart.h(168): note: passing argument to parameter 'buff' here
+  168 | void uart_write_buffer (uart_index_enum uart_index, const uint8 *buff, uint32 len);
+      |                                                                  ^
+../code/Application/UpperMonitor.c(158): warning: incompatible pointer types passing 'uint16_t *' (aka 'unsigned short *') to parameter of type 'uint8 *' (aka 'unsigned char *') [-Wincompatible-pointer-types]
+  158 |         VisionMonitor_UART_INDEX,&RxData); // 读取数据寄存器，存放在接收的数据变量
+      |                                  ^~~~~~~
+../../libraries/zf_driver\zf_driver_uart.h(188): note: passing argument to parameter 'data' here
+  188 | uint8 uart_read_byte (uart_index_enum uart_index, uint8 *data);
+      |                                                          ^
+2 warnings generated.
+compiling UpperMonitor.c...
 linking...
-Program Size: Code=43416 RO-data=4068 RW-data=1952 ZI-data=4336  
-".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=44204 RO-data=4072 RW-data=1952 ZI-data=4408  
+".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
