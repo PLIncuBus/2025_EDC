@@ -200,7 +200,7 @@ void StepMotor_SetSpeed(uint8_t Motor_Num,int16_t Speed, uint8_t Acc)
       StepMotor_Data[5] = Acc;
       StepMotor_Data[6] = 0x00;
       StepMotor_Data[7] = 0x6B;
-			StepMotor_SetSpeed_flag=1;
+			uart_write_buffer(StepMotor_UART_INDEX, StepMotor_Data, 8);
 
 }
 
@@ -250,8 +250,16 @@ void StepMotor_SetPosition(uint8_t Motor_Num, float Angle, int16_t Speed, uint8_
 void Gimbal_Set_Angle(float Yaw ,float Pitch )
 {
 		StepMotor_SetPosition(0x01,Yaw,100,0);  //yaw
-		for(uint16_t i=0;i<400;i++);
+		system_delay_ms(10);
 		StepMotor_SetPosition(0x02,Pitch,100,0);	//pitch
+		system_delay_ms(10);
+}
+void Gimbal_Set_Speed(int16_t Yaw ,int16_t Pitch )
+{
+		StepMotor_SetSpeed(0x01,Yaw,0);  //yaw
+		system_delay_ms(10);
+		StepMotor_SetSpeed(0x02,Pitch,0);	//pitch
+		system_delay_ms(10);
 }
 
 

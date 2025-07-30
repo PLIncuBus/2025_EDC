@@ -32,7 +32,7 @@ void UpperMonitor_Cmd_Send(UpperMonitor_Handle_Typedef *UpperMonitor_Cmd_Send)
 void UpperMonitor_Init(void)
 {
 	#if (IMU_Type != 1 && JY61P_Mode != 0)
-    uart_init(UpperMonitor_UART_INDEX,UpperMonitor_UART_BAUNDRATE,UpperMonitor_UART_TX_PIN,UpperMonitor_UART_RX_PIN);
+//    uart_init(UpperMonitor_UART_INDEX,UpperMonitor_UART_BAUNDRATE,UpperMonitor_UART_TX_PIN,UpperMonitor_UART_RX_PIN);
 //    uart_set_interrupt_config(UpperMonitor_UART_INDEX, UART_INTERRUPT_CONFIG_RX_ENABLE);		// 使能串口接收中断
 //    interrupt_set_priority(UpperMonitor_UART_PRIORITY, 0);  
 //    uart_set_callback(UpperMonitor_UART_INDEX, UpperMonitor_Callback, NULL);			    // 定义中断接收函数

@@ -11,6 +11,7 @@ typedef enum{
     StepMotor_Control_set_mode,
     StepMotor_Control_Vision_mode,
     StepMotor_Control_Cal_mode,
+		StepMotor_Control_Auto_Aim_mode,
 }StepMotor_Control_enum;
 
 
@@ -28,6 +29,6 @@ extern StepMotor_Control_Info_t StepMotor_Control;
 extern int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
 void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init);
 void StepMotor_Control_Proceed(StepMotor_Control_Info_t *_StepMotor_Control_Proceed);
-
+void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop);
 
 #endif

@@ -27,27 +27,14 @@ Project File Date:  07/30/2025
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'D:\Keil5\ARM\ARMCLANG\Bin'
 Build target 'SeekFree_MSPM0G3507_Device_Library'
-compiling Task.c...
-compiling Encoder.c...
-compiling main.c...
-compiling Chassis_Control.c...
-../code/Hardware/phototube.c(73): warning: implicit conversion from 'double' to 'int16_t' (aka 'short') changes value from 23.5 to 23 [-Wliteral-conversion]
-        return 23.5;  
-        ~~~~~~ ^~~~
-../code/Hardware/phototube.c(97): warning: implicit conversion from 'double' to 'int16_t' (aka 'short') changes value from 23.5 to 23 [-Wliteral-conversion]
-                return 23.5;}
-                ~~~~~~ ^~~~
-../code/Hardware/phototube.c(107): warning: incompatible pointer types passing 'uint16_t *' (aka 'unsigned short *') to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
-    mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
-                                                                     ^~~~~~~~~~~~~~~~~
-../code/BSP\BSP_I2C.h(13): note: passing argument to parameter 'data' here
-                    unsigned char *data);
-                                   ^
-3 warnings generated.
-compiling phototube.c...
+../code/Application/StepMotor_Control.c(11): warning: excess elements in array initializer [-Wexcess-initializers]
+float Task2_Cal_Target[0] = {1,1};
+                             ^
+1 warning generated.
+compiling StepMotor_Control.c...
 linking...
-Program Size: Code=46708 RO-data=4232 RW-data=2236 ZI-data=4564  
-".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=46200 RO-data=4156 RW-data=2236 ZI-data=4324  
+".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 

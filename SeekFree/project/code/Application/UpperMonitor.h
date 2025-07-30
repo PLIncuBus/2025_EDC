@@ -51,7 +51,7 @@ typedef struct
 
 }UpperMonitor_Handle_Typedef;
 
-
+extern uint16_t RxData ;
 extern uint16_t Vision_values[6];
 extern UpperMonitor_Handle_Typedef UpperMonitor_Handle;
 extern uint8_t Vision_RxPacket[64]; // 定义接收数据包数组

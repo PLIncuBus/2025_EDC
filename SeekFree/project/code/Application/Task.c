@@ -14,7 +14,7 @@ void Task1_Process(void)
 {
     static uint8_t loop;
 	Differential_Wheel_Info.vx_set = 8;
-		if(1){
+		if(Encoder_count_sum[Encoder1] > 2000 && (int)(Angle_Yaw < 90)){
 			loop ++;
 		}
 		if(loop >= Task1_Loop_Num){

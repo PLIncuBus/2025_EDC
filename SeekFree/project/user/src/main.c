@@ -59,9 +59,9 @@
 
 // **************************** 代码区域 ****************************
 static void _50HZ_Callback(uint32 state, void *ptr);
-
-
-
+static void _20MS_Callback(uint32 state, void *ptr);
+static void _20MS_1_Callback(uint32 state, void *ptr);
+static uint8_t _10MS_Flag,_20MS_Flag = 0;
 int main (void)
 {
     clock_init(SYSTEM_CLOCK_80M);   // 时钟配置及系统初始化<务必保留>
@@ -82,8 +82,10 @@ int main (void)
 		UpperMonitor_Init();    
     
 	// 50HZ定时器中断初始化
-    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
-		SystemClock_Interrupt_Init();
+//    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
+//		pit_ms_init( PIT_TIM_G12,  20,_20MS_Callback,NULL);
+//		pit_ms_init( PIT_TIM_G8,  20,_20MS_1_Callback,NULL);
+//		SystemClock_Interrupt_Init();
     //应用层初始化
 		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
@@ -95,7 +97,7 @@ int main (void)
 		Path_Planning_Init();
 
 		Differential_Wheel_Info.mode = track;
-
+		StepMotor_Control.mode = StepMotor_Control_Vision_mode;
 
 
 
@@ -103,33 +105,51 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-//				Differential_Wheel_Info.vx_set = 8;
+					
+					Menu_Process();
+					IMU_Attitude_Process();			
+					phototube_proceed();
+					Cha_error = (float)readTrackDate(gray_state.state)/23.5;
+					 
+
+						//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
+					Chassis_Proceed(&Differential_Wheel_Info);
+					StepMotor_Control_Proceed(&StepMotor_Control);
+//				Differential_Wheel_Info.vx_set = 5;
         // 此处编写需要循环执行的代码
     }
 }
 
+//void _20MS_Callback(uint32 state, void *ptr)
+//{
 
-void _50HZ_Callback(uint32 state, void *ptr)
-{
+//	
+
+//}
+//void _50HZ_Callback(uint32 state, void *ptr)
+//{
+//		static loop = 0;
+//	_10MS_Flag = 1;
+//	if(loop > 1){
+//		_20MS_Flag =1;
+//		loop = 0;
+//	}
 	
-			Menu_Process();
-			IMU_Attitude_Process();
-			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
-
-			Chassis_Proceed(&Differential_Wheel_Info); 
-			phototube_proceed();
-			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-			StepMotor_Control_Proceed(&StepMotor_Control);
-
-
-	//		Chassis_Proceed(&Differential_Wheel_Info); 
+//			Menu_Process();
+//			IMU_Attitude_Process();			
 //			phototube_proceed();
 //			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
+//			Chassis_Proceed(&Differential_Wheel_Info); 
+
 
 //			Path_Planning_Publish(&Differential_Wheel_Info);
-
-
-			// Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
+// Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
 			
 
-}
+//}
+
+//void _20MS_1_Callback(uint32 state, void *ptr)
+//{
+////	    
+//	
+//}

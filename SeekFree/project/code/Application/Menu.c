@@ -291,6 +291,7 @@ void Tube_Info_Show(void)
 void Task1_Circle_Info_Show(void)
 {
     Menu_ShowInt(0,0,Task1_Loop_Num,5);
+	Menu_ShowInt(0,16,RxData,5);
 }
 
 /**

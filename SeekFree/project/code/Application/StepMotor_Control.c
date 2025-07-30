@@ -1,14 +1,16 @@
 #include "StepMotor_Control.h"
-
+float errorx,errory;
 StepMotor_Control_Info_t StepMotor_Control;
 int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
-float yaw_speed_pid_kp = 1;
+float yaw_speed_pid_kp = 0.1;
 float yaw_speed_pid_ki = 0;
 float yaw_speed_pid_kd = 0; 
-float pitch_speed_pid_kp = 1;
+float pitch_speed_pid_kp = 0.07;
 float pitch_speed_pid_ki = 0;
 float pitch_speed_pid_kd = 0;
 float Task2_Cal_Target[0] = {1,1};
+#define Vision_Error_DeadLine 50
+
 
 void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init)
 {
@@ -21,7 +23,7 @@ void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init)
     StepMotor_speed_pid[1][2] =  pitch_speed_pid_kd;  
 
     //PID限幅
-    const float StepMotor_speed_pid_max_out = 60;
+    const float StepMotor_speed_pid_max_out = 20;
     const float StepMotor_speed_pid_max_iout = 60;
 
     for(uint8_t i = 0; i < 2;i ++){
@@ -31,6 +33,8 @@ void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init)
 }
 static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 {
+		static uint16_t Last_Vision_Target[2]; 
+		static uint16_t Last_Vision_Big_Target[2];
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
 		//values 赋值
 		StepMotor_Control.Vision_Big_Target[0] = Vision_values[0];
@@ -39,13 +43,28 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		StepMotor_Control.Vision_Target[1]     = Vision_values[3];
 		StepMotor_Control.Vision_Now[0]        = Vision_values[4];
 		StepMotor_Control.Vision_Now[1]        = Vision_values[5];
+		
+		if(StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0){
+			for(uint8_t i = 0;i < 2; i ++){
+			StepMotor_Control.Vision_Target[i] = Last_Vision_Big_Target[i];}//Last_Vision_Target[i];}
+		}
+//		if(StepMotor_Control.Vision_Target[0] == 0 && StepMotor_Control.Vision_Target[1] == 0){
+//						
+//			_StepMotor_Update->mode = StepMotor_Control_Auto_Aim_mode;
+//		}
+
+		for(uint8_t j = 0;j < 2; j ++){
+		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
+		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
+		}
+	
 }
 
-static void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
+void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
 {
     for(uint8_t i = 0 ;i < 2; i ++ )
     {
-        PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Now[i],(float)_StepMotor_Control_Loop->Vision_Target[i]);		
+        PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Now[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
 	}
 
 	if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
@@ -59,25 +78,17 @@ static void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_
 		}
 		out[0] = out[0] + _StepMotor_Control_Loop->speed_pid[0].out;
 		out[1] = out[1] + _StepMotor_Control_Loop->speed_pid[1].out;
-		StepMotor_SetPosition(0x01,out[0],100,0);
-		StepMotor_SetPosition(0x02,out[1],100,0);
+
 	}
 	else{
-	//  float errorx = StepMotor_Control.Vision_Target[0] - StepMotor_Control.Vision_Now[0];
-	// float errory = StepMotor_Control.Vision_Target[1] - StepMotor_Control.Vision_Now[1];
-	// if(errorx > 0 ){
-	// StepMotor_SetPosition(0x01,1,100,0);}
-	// else {
-	// 	StepMotor_SetPosition(0x01,-1,100,0);
-	// }
-	// 	if(errory > 0 ){
-	// StepMotor_SetPosition(0x02,1,100,0);}
-	// else {
-	// 	StepMotor_SetPosition(0x02,-1,100,0);
-	// }
-	}	
+	 Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
+	 }
 
-}
+}	
+
+
+
+
 
 void StepMotor_Control_Proceed(StepMotor_Control_Info_t *_StepMotor_Control_Proceed)
 {
