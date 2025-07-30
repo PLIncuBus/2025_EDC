@@ -10,13 +10,13 @@
       <TargetName>SeekFree_MSPM0G3507_Device_Library</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MSPM0G3507</Device>
           <Vendor>Texas Instruments</Vendor>
-          <PackID>TexasInstruments.MSPM0G1X0X_G3X0X_DFP.1.3.1</PackID>
+          <PackID>TexasInstruments.MSPM0G1X0X_G3X0X_DFP.1.3.0</PackID>
           <PackURL>https://software-dl.ti.com/msp430/esd/MSPM0-CMSIS/MSPM0G1X0X_G3X0X/latest/exports/</PackURL>
           <Cpu>IRAM(0x20000000,0x00008000) IRAM2(0x20200000,0x00008000) IROM(0x00000000,0x00020000) IROM2(0x00400000,0x00020000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -186,7 +186,6 @@
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
-            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
@@ -1119,6 +1118,16 @@
               <FileType>5</FileType>
               <FilePath>..\code\Application\Task.h</FilePath>
             </File>
+            <File>
+              <FileName>StepMotor_Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Application\StepMotor_Control.c</FilePath>
+            </File>
+            <File>
+              <FileName>StepMotor_Control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Application\StepMotor_Control.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1218,6 +1227,16 @@
               <FileName>StepMotor.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\code\Hardware\StepMotor.h</FilePath>
+            </File>
+            <File>
+              <FileName>Laser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\Hardware\Laser.h</FilePath>
+            </File>
+            <File>
+              <FileName>Laser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\Hardware\Laser.c</FilePath>
             </File>
           </Files>
         </Group>

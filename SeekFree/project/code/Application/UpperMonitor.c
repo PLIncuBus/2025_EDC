@@ -101,15 +101,15 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
 
     #endif   
 }
-
+uint16_t Vision_values[6] = {0};
 void VisionMonitor_parse_rect_data(const char *data)
 {
 	
-		if(Vision_RxFlag==0)
+		if(Vision_RxFlag==1)
 	{	
 			
 		
-			uint16_t values[6] = {0};
+			
 			char buffer[128];
 			strncpy(buffer, data, sizeof(buffer) - 1);
 			buffer[sizeof(buffer) - 1] = '\0';
@@ -118,17 +118,18 @@ void VisionMonitor_parse_rect_data(const char *data)
 			int count = 0;
 
 			while (token != NULL && count < 6) {
-				values[count++] = (uint16_t)atoi(token);
+				Vision_values[count++] = (uint16_t)atoi(token);
 				token = strtok(NULL, ",");
 			}
 
-		if (count != 6) {
+		if (count != 6) {Vision_RxFlag=0;
 			return;
 		}
 		
-		//values 赋值
+
 		
-		Vision_RxFlag=1;
+		
+		Vision_RxFlag=0;
 	
 	}
    
@@ -146,18 +147,19 @@ void VisionMonitor_parse_rect_data(const char *data)
  * @param ptr 
  */
 uint8_t Vision_TxPacket[4]; // 定义发送数据包数组，数据包格式：FF 01 02 03 04 FE
-uint16_t Vision_RxPacket[64]; // 定义接收数据包数组
+uint8_t Vision_RxPacket[64]; // 定义接收数据包数组
 uint8_t Vision_RxFlag;       // 定义接收数据包标志位
+uint16_t RxData ;
 void VisionMonitor_Callback(uint32 state, void *ptr)
 {
     static uint8_t RxState = 0;   // 定义表示当前状态机状态的静态变量
     static uint8_t pRxPacket = 0; // 定义表示当前接收数据位置的静态变量
     // 接发送过来的数据保存在变量中
-    uint16_t RxData ;
+//    uint16_t RxData ;
     uart_read_byte(
         VisionMonitor_UART_INDEX,&RxData); // 读取数据寄存器，存放在接收的数据变量
-    if (RxState == 0) {
-      if (RxData == '@' && Vision_RxFlag == 0) // 如果数据确实是包头
+    if (RxState == 0 && Vision_RxFlag == 0) {
+      if (RxData == '@' ) // 如果数据确实是包头&& Vision_RxFlag == 0
       {
         RxState = 1;   // 置下一个状态
         pRxPacket = 0; // 数据包的位置归零

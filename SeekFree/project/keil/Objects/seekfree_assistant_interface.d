@@ -1,7 +1,14 @@
 ./objects/seekfree_assistant_interface.o: \
   ..\..\libraries\zf_components\seekfree_assistant_interface.c \
   ..\..\libraries\zf_common\zf_common_typedef.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\..\libraries\zf_common\zf_common_fifo.h \
+  ..\..\libraries\zf_common\zf_common_typedef.h \
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_driver\zf_driver_uart.h \
   ..\..\libraries\sdk\ti_config\ti_msp_dl_config.h \
@@ -9,6 +16,12 @@
   ..\..\libraries\sdk\ti\devices\DeviceFamily.h \
   ..\..\libraries\sdk\ti\devices\msp\m0p\mspm0g350x.h \
   ..\..\libraries\sdk\third_party\CMSIS\Core\Include\core_cm0plus.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_version.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_compiler.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_armclang.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\mpu_armv7.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_adc12.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_aes.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_comp.h \
@@ -37,10 +50,12 @@
   ..\..\libraries\sdk\ti\devices\msp\peripherals\m0p\sysctl\hw_sysctl_mspm0g1x0x_g3x0x.h \
   ..\..\libraries\sdk\ti\driverlib\driverlib.h \
   ..\..\libraries\sdk\ti\driverlib\dl_adc12.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\math.h \
   ..\..\libraries\sdk\ti\driverlib\dl_common.h \
   ..\..\libraries\sdk\ti\driverlib\m0p\dl_factoryregion.h \
   ..\..\libraries\sdk\ti\driverlib\m0p\dl_core.h \
   ..\..\libraries\sdk\ti\driverlib\dl_aes.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
   ..\..\libraries\sdk\ti\driverlib\dl_aesadv.h \
   ..\..\libraries\sdk\ti\driverlib\dl_comp.h \
   ..\..\libraries\sdk\ti\driverlib\dl_crc.h \

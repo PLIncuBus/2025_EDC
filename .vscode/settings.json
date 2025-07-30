@@ -2,6 +2,9 @@
     "files.associations": {
         "dl_common.h": "c",
         "chassis_control.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "zf_common_headfile.h": "c",
+        "uppermonitor.h": "c",
+        "stepmotor_control.h": "c"
     }
 }

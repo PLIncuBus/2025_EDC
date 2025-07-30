@@ -9,6 +9,7 @@
 #include "phototube.h"
 #include "StepMotor.h"
 #include "Task.h"
+#include "UpperMonitor.h"
 
 #define     Menu_ShowStr         ips114_show_string
 #define     Menu_ShowFloat       ips114_show_float

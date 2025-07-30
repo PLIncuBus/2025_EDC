@@ -85,6 +85,7 @@
 ".\objects\chassis_control.o"
 ".\objects\uppermonitor.o"
 ".\objects\task.o"
+".\objects\stepmotor_control.o"
 ".\objects\linear_interpolation.o"
 ".\objects\mymath.o"
 ".\objects\pid.o"
@@ -94,6 +95,7 @@
 ".\objects\motor.o"
 ".\objects\phototube.o"
 ".\objects\stepmotor.o"
+".\objects\laser.o"
 ".\objects\bsp_i2c.o"
 --strict --scatter ".\mspm0g3507.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

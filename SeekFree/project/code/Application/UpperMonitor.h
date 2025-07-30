@@ -13,6 +13,7 @@
 #include "Chassis_Control.h"
 #include "IMU.h"
 
+
 //-0-VOFA   -1
 #define UpperMonitor_Mode 0
 #define UpperMonitor_UART_INDEX             (UART_0)         
@@ -49,8 +50,11 @@ typedef struct
     uint8_t Usart_Send_Index;
 
 }UpperMonitor_Handle_Typedef;
+
+
+extern uint16_t Vision_values[6];
 extern UpperMonitor_Handle_Typedef UpperMonitor_Handle;
-extern uint16_t Vision_RxPacket[64]; // 定义接收数据包数组
+extern uint8_t Vision_RxPacket[64]; // 定义接收数据包数组
 void UpperMonitor_Init(void);
 void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_Handle_Motor_PID_Hook);
 void UpperMonitor_Cmd_Send(UpperMonitor_Handle_Typedef *UpperMonitor_Cmd_Send);

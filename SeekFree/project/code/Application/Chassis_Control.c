@@ -22,7 +22,7 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
-float motor_tube_pid_kp = 6;
+float motor_tube_pid_kp = 12;//
 float motor_tube_pid_ki = 0;
 float motor_tube_pid_kd = 0;
 
@@ -67,8 +67,8 @@ void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init)
     const float motor_angle_pid_max_out = 40;
     const float motor_angle_pid_max_iout = 40;
 		
-		const float motor_tube_pid_max_out = 40;
-    const float motor_tube_pid_max_iout = 40;
+		const float motor_tube_pid_max_out = 60;
+    const float motor_tube_pid_max_iout = 60;
 
     PID_init(&_Chassis_Init->motor_angle_pid, PID_POSITION, motor_angle_pid,motor_angle_pid_max_out,motor_angle_pid_max_iout);
     PID_init(&_Chassis_Init->motor_tube_pid, PID_POSITION, motor_tube_pid,motor_tube_pid_max_out,motor_tube_pid_max_iout);

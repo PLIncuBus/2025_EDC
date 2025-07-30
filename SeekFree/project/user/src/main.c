@@ -2,7 +2,7 @@
  * @Author: PLIncuBus wewean@yeah.net
  * @Date: 2025-07-20 15:14:04
  * @LastEditors: PLIncuBus wewean@yeah.net
- * @LastEditTime: 2025-07-26 17:39:55
+ * @LastEditTime: 2025-07-30 17:21:41
  * @FilePath: \SeekFree\project\user\src\main.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -47,6 +47,7 @@
 #include "phototube.h"
 #include "Path_Planning.h"
 #include "StepMotor.h"
+#include "StepMotor_Control.h"
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
@@ -69,24 +70,30 @@ int main (void)
 
     //BSP初始化
     SYSCFG_DL_I2C_0_init();
-	
+
     //硬件初始化
-    Encoder_Init();
+    Menu_Init(20);		
+		//IMU初始化   参数：中断频率,陀螺仪静置时间
+    IMU_Init(20,2000);
+		Encoder_Init();
 		Motor_Init();
-//		phototube_Init();
+		phototube_Init();
     StepMotor_Init();
+		UpperMonitor_Init();    
+    
+	// 50HZ定时器中断初始化
+    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
+		SystemClock_Interrupt_Init();
     //应用层初始化
-		
+		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
-		Menu_Init(20);
-    //IMU初始化   参数：中断频率,陀螺仪静置时间
-//    IMU_Init(20,2000);
-		UpperMonitor_Init();
-		SystemClock_Interrupt_Init();
+		
+
+		
+		
 		Path_Planning_Init();
-    // 50HZ定时器中断初始化
-    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
+
 		Differential_Wheel_Info.mode = track;
 
 
@@ -96,7 +103,7 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-Differential_Wheel_Info.vx_set = 8;
+//				Differential_Wheel_Info.vx_set = 8;
         // 此处编写需要循环执行的代码
     }
 }
@@ -112,8 +119,9 @@ void _50HZ_Callback(uint32 state, void *ptr)
 			Chassis_Proceed(&Differential_Wheel_Info); 
 			phototube_proceed();
 			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-			
-			VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
+			StepMotor_Control_Proceed(&StepMotor_Control);
+
+
 	//		Chassis_Proceed(&Differential_Wheel_Info); 
 //			phototube_proceed();
 //			Cha_error = (float)readTrackDate(gray_state.state)/23.5;
@@ -121,7 +129,7 @@ void _50HZ_Callback(uint32 state, void *ptr)
 //			Path_Planning_Publish(&Differential_Wheel_Info);
 
 
-//			Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
+			// Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
 			
 
 }

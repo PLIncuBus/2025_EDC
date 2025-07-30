@@ -70,11 +70,11 @@ int16_t  readTrackDate(uint16_t dat)
 {
     
     if (dat == 0xFFFF) {
-        return 0;  
+        return 23.5;  
     }
 
     char x1 = 0, x2 = 0;
-    for (uint8_t i = 0; i < 12; i++)  
+    for (uint8_t i = 11; i >= 0; i--)  
     {
         if (x1 == 0)  
         {
@@ -93,10 +93,8 @@ int16_t  readTrackDate(uint16_t dat)
         }
     }
 
-    if (x1 != 0 && x2 == 0) 
-    {
-        x2 = (12) * 4 + 1;  
-    }
+		if(x1 ==  1){
+		return 23.5;}
 
     return (24.5-((x1 + x2) / 2.0f));  
 		

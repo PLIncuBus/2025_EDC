@@ -15,7 +15,8 @@ Menu_Info_t Hardware_Info_Menu[4];
 Menu_Info_t Motor_PID_SET_Menu[3];
 Menu_Info_t Task1_Menu[2];
 Menu_Info_t Task1_Choose_Menu[1];
-
+Menu_Info_t Task2_Menu[4];
+Menu_Info_t Task2_Choose_Menu[2];
 void Task1(void);
 void Task2(void);
 void Task3(void);
@@ -63,7 +64,7 @@ Menu_Info_t Task_Menu[4] = {
         .min = 0,
         .param = NULL },
         Idle_Menu},
-    {   4      ,   "Task2"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL     ,.Param_Info = {
+    {   4      ,   "Task2"  ,   Type_SubMenu    ,  Main_Menu ,   Task2_Menu    ,   NULL     ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -160,6 +161,33 @@ Menu_Info_t Task1_Menu[2] = {
         Idle_Menu},
 
 };
+
+Menu_Info_t Task2_Menu[4] = {
+        {   4      ,   "Auto"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,  Task2_Auto_Cal    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+        {   4      ,   "Man"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task2_Mannual_Cal    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+        {   4      ,   "CAL"  ,   Type_SubMenu    ,  Task_Menu ,   NULL    ,   Task2_Choose_Menu    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+        {   4      ,   "Proc"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task2_Process    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+};
 /*****第二级菜单END******/
 
 /*****第三级菜单BEGIN******/
@@ -181,12 +209,28 @@ Menu_Info_t Motor_PID_Menu[2] = {
 };
 
 Menu_Info_t Task1_Choose_Menu[1] = {
-        {   3      ,   "Loop"    ,  Type_ParMenu   , Task1_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        {   1      ,   "Loop"    ,  Type_ParMenu   , Task1_Menu ,   NULL    ,   NULL ,.Param_Info = {
         .step = 1,
         .max = 5,
         .min = 0,
         .param = &Task1_Loop_Num},
          Idle_Menu},
+};
+
+Menu_Info_t Task2_Choose_Menu[2] = {
+        {   2      ,   "Yaw"    ,  Type_ParMenu   , Task2_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0.5,
+        .max = 1000,
+        .min = -1000,
+        .param = &StepMotor_Pos_Yaw_set},
+         Idle_Menu},
+        {   2      ,   "Pitch"    ,  Type_ParMenu   , Task2_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 0.5,
+        .max = 1000,
+        .min = -1000,
+        .param = &StepMotor_Pos_Pitch_set},
+         Idle_Menu},
+
 };
 
 /*****第三级菜单END******/
