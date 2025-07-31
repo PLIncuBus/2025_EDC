@@ -18,6 +18,7 @@ typedef enum{
 	track,
 	angle,
 	stop,
+	slow_angle,
 	
 }Chassis_mode_enum;
 

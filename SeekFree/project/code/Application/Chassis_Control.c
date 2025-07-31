@@ -22,7 +22,7 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
-float motor_tube_pid_kp = 8;//
+float motor_tube_pid_kp = 8;
 float motor_tube_pid_ki = 0;
 float motor_tube_pid_kd = 0;
 
@@ -97,14 +97,16 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
 		Encoder_count[1] = 0;
 		_Chassis_Update->motor_encoder_sum[0] = Encoder_count_sum[Encoder1];
 		_Chassis_Update->motor_encoder_sum[1] = Encoder_count_sum[Encoder2];
+		
+
     
     //角度Update
-    if(Angle_Yaw -  Last_Angle_Yaw > 179 ){
-        Angle_Yaw -= 360; 
-    }
-    else if(Angle_Yaw - Last_Angle_Yaw < -179){
-        Angle_Yaw += 360;
-    }
+//    if(Angle_Yaw -  Last_Angle_Yaw > 179 ){
+//        Angle_Yaw -= 360; 
+//    }
+//    else if(Angle_Yaw - Last_Angle_Yaw < -179){
+//        Angle_Yaw += 360;
+//    }
 //		if(Differential_Wheel_Info.angle_set - Last_Angle_set > 179){
 //				Differential_Wheel_Info.angle_set -= 360;
 //		}
@@ -115,6 +117,94 @@ static void Chassis_Update(Differential_Wheel_Info_t *_Chassis_Update)
 	
 }
 
+///**
+// * @brief PID控制
+// * 
+// * @param _Chassis_Control_Loop 
+// */
+//static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loop)
+//{
+//		
+//    _Chassis_Control_Loop->motor_speed_pid[0].Kp = motor1_speed_pid_kp;
+//    _Chassis_Control_Loop->motor_speed_pid[0].Ki = motor1_speed_pid_ki;
+//    _Chassis_Control_Loop->motor_speed_pid[0].Kd = motor1_speed_pid_kd;
+
+//    _Chassis_Control_Loop->motor_speed_pid[1].Kp = motor1_speed_pid_kp;
+//    _Chassis_Control_Loop->motor_speed_pid[1].Ki = motor1_speed_pid_ki;
+//    _Chassis_Control_Loop->motor_speed_pid[1].Kd = motor1_speed_pid_kd;
+
+
+//    _Chassis_Control_Loop->motor_angle_pid.Kp = motor_angle_pid_kp;
+//    _Chassis_Control_Loop->motor_angle_pid.Ki = motor_angle_pid_ki;
+//    _Chassis_Control_Loop->motor_angle_pid.Kd = motor_angle_pid_kd;
+//	
+//		if(_Chassis_Control_Loop->mode == track){
+//			PID_calc(&_Chassis_Control_Loop->motor_tube_pid,Cha_error,0);
+//			_Chassis_Control_Loop->vz_set = _Chassis_Control_Loop->motor_tube_pid.out;
+//		}
+//		else{
+//		PID_calc(&_Chassis_Control_Loop->motor_angle_pid,(int)Angle_Yaw,_Chassis_Control_Loop->angle_set);
+//		_Chassis_Control_Loop->vz_set = _Chassis_Control_Loop->motor_angle_pid.out;}
+//	
+//	
+//		Chassis_Kinematics_Solve(_Chassis_Control_Loop);
+//	
+//    for(uint8_t i = 0 ;i < 2; i ++ )
+//    {
+//        PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->target[i]);		
+//		}
+//		if(_Chassis_Control_Loop->mode == stop){
+//			Motor_Cmd(0,0);
+//		}
+//		else{
+////			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 20 )
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[0].out = 20;
+////				
+////			}
+////			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -20)
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[0].mode = -20;
+////			}
+////			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 20 )
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[1].out = 20;
+////				
+////			}
+////			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -20)
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[1].mode = -20;
+////			}
+////		if(_Chassis_Control_Loop->mode == slow_angle)
+////		{
+////			static uint8_t j = 0;
+////			j ++;
+////			if(j < 2){
+////				Motor_Cmd(10,10);
+////			}
+////			else {
+////				static uint8_t k = 0;
+////				k++;
+////				if(k < 20){
+////					Motor_Cmd(-10,10);
+////				}
+////				else{
+////					_Chassis_Control_Loop->mode = track;
+////					j = 0;
+////					k = 0;
+////				}
+////			}
+
+////				}
+//				
+//		
+
+//    Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);
+//	}
+//	
+////_Chassis_Control_Loop->motor_angle_pid.out + -	_Chassis_Control_Loop->motor_angle_pid.out +_Chassis_Control_Loop->motor_speed_pid[0].out
+//    
+//}
 /**
  * @brief PID控制
  * 
@@ -155,6 +245,24 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
 			Motor_Cmd(0,0);
 		}
 		else{
+			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 20 )
+			{
+				_Chassis_Control_Loop->motor_speed_pid[0].out = 20;
+				
+			}
+			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -20)
+			{
+				_Chassis_Control_Loop->motor_speed_pid[0].out = -20;
+			}
+			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 20 )
+			{
+				_Chassis_Control_Loop->motor_speed_pid[1].out = 20;
+				
+			}
+			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -20)
+			{
+				_Chassis_Control_Loop->motor_speed_pid[1].out = -20;
+			}
     Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);}
 	
 //_Chassis_Control_Loop->motor_angle_pid.out + -	_Chassis_Control_Loop->motor_angle_pid.out +_Chassis_Control_Loop->motor_speed_pid[0].out

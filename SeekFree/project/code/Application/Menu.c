@@ -411,6 +411,7 @@ static void Menu_Behaviour(void)
             if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
             else{
                 Cur_Menu[Cur_Menu_index].Menu_Fun();
+							Cur_Menu[Cur_Menu_index].State = Proc_Menu;
             }
         }
         //跳转子节点
@@ -467,8 +468,13 @@ static void Menu_Behaviour(void)
             if(Cur_Menu[Cur_Menu_index].Menu_Fun == NULL);
             else{
                 Cur_Menu[Cur_Menu_index].Menu_Fun();
+								
             }
 		}
+//		if(Cur_Menu[Cur_Menu_index].type == Type_BehMenu && Cur_Menu[Cur_Menu_index].State == Proc_Menu)
+//		{
+//			Cur_Menu[Cur_Menu_index].Menu_Fun();
+//		}
 		//参数设置
     if(Cur_Menu[Cur_Menu_index].type == Type_ParMenu && Cur_Menu[Cur_Menu_index].State == Proc_Menu)
 		{

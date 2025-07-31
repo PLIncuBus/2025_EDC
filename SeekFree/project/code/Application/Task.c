@@ -10,17 +10,16 @@
 
 /*****Task1 BEGIN*****/
 float Task1_Loop_Num;
+uint8_t wait;
+uint8_t Task1_flag = 0;
+uint8_t Task2_flag = 0;
+uint8_t Task3_flag = 0;
+uint8_t Task4_flag = 0;
 void Task1_Process(void)
 {
-    static uint8_t loop;
-	Differential_Wheel_Info.vx_set = 8;
-		if(Encoder_count_sum[Encoder1] > 2000 && (((int)Angle_Yaw < (5 + 360 *loop ))) || ((int)Angle_Yaw > (-5 + 360 *loop ) )){
-			loop ++;
-		Encoder_count_sum[Encoder1] = 0;
-		}
-		if(loop >= Task1_Loop_Num){
-			Differential_Wheel_Info.mode = stop;
-		}		
+		Task1_flag = 1;	
+
+
 }
 /*****Task1 END*****/
 
@@ -30,15 +29,24 @@ void Task1_Process(void)
 void Task2_Auto_Cal(void)
 {
 	StepMotor_Control.mode = StepMotor_Control_Cal_mode;
+	Differential_Wheel_Info.mode = stop;
 }
 //手动校准
 void Task2_Mannual_Cal(void)
 {
 	StepMotor_Control.mode = StepMotor_Control_set_mode;
+	Differential_Wheel_Info.mode = stop;
 }
+//Process
+#define Task2_Error_Deadline 10
 void Task2_Process(void)
 {
-	Laser(0);
+	StepMotor_Control.mode = StepMotor_Control_Cal_mode;
+	Differential_Wheel_Info.mode = stop;
+	if(abs((int)StepMotor_Control.speed_pid[0].error) < Task2_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task2_Error_Deadline ){
+		Laser(0);
+	}
+	
 }
 /*****Task2 END*****/
 
@@ -49,6 +57,7 @@ void Task2_Process(void)
 void Task3_Process(void)
 {
 	StepMotor_Control.mode = StepMotor_Control_Auto_Aim_mode;
+	Differential_Wheel_Info.mode = stop;
 	if(abs((int)StepMotor_Control.speed_pid[0].error) < Task3_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task3_Error_Deadline ){
 		Laser(0);
 	}

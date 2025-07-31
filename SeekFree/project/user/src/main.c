@@ -82,7 +82,7 @@ int main (void)
 		UpperMonitor_Init();    
     
 	// 50HZ定时器中断初始化
-//    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
+    pit_ms_init( PIT_TIM_A1 , 35 , _50HZ_Callback , NULL ); 
 //		pit_ms_init( PIT_TIM_G12,  20,_20MS_Callback,NULL);
 //		pit_ms_init( PIT_TIM_G8,  20,_20MS_1_Callback,NULL);
 //		SystemClock_Interrupt_Init();
@@ -96,7 +96,7 @@ int main (void)
 		
 //		Path_Planning_Init();
 
-		Differential_Wheel_Info.mode = track;
+		Differential_Wheel_Info.mode = stop;
 		StepMotor_Control.mode = StepMotor_Initial_Mode;
 
 
@@ -108,20 +108,46 @@ int main (void)
 					
 					Menu_Process();
 					IMU_Attitude_Process();			
-					phototube_proceed();
-					Cha_error = (float)readTrackDate(gray_state.state)/23.5;
-					 
-
-						//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
+					Cha_error = (float)readTrackDate((uint16_t)gray_state.state)/23.5;
+					
+//		//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 					Chassis_Proceed(&Differential_Wheel_Info);
 					StepMotor_Control_Proceed(&StepMotor_Control);
-//				Differential_Wheel_Info.vx_set = 5;
-        // 此处编写需要循环执行的代码
+
+				
+//				Differential_Wheel_Info.vx_set = 9;
+//        // 此处编写需要循环执行的代码
+			
+			if(Task1_flag){
+				
+				static uint8_t wait;
+				static uint8_t loop;
+				Differential_Wheel_Info.mode = track;
+				if(wait < 10){
+					wait ++;
+					Differential_Wheel_Info.vx_set = 2;
+				}
+				else{
+				Differential_Wheel_Info.vx_set = 10;}
+			
+				if((Encoder_count_sum[Encoder1] > 2500) && (abs((int)Angle_Yaw) < 10  )) {
+					loop ++;
+				Encoder_count_sum[Encoder1] = 0;
+				}
+				if(loop >= Task1_Loop_Num){
+					Differential_Wheel_Info.mode = stop;
+				}	
+				
+				
+			}
     }
 }
 
-
-	
+static void _50HZ_Callback(uint32 state, void *ptr)
+{
+		phototube_proceed();
+		
+}
 //			Menu_Process();
 //			IMU_Attitude_Process();			
 //			phototube_proceed();
@@ -130,5 +156,5 @@ int main (void)
 
 
 //			Path_Planning_Publish(&Differential_Wheel_Info);
-// Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
+// 			Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
 

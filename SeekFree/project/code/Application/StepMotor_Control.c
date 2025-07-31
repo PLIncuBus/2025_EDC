@@ -35,7 +35,7 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		static uint16_t Last_Vision_Target[2]; 
 		static uint16_t Last_Vision_Big_Target[2];
 		static StepMotor_Control_enum Last_mode = StepMotor_Initial_Mode;
-		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Cal_mode;
+		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Null_mode;
 	
 	
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);

@@ -5,8 +5,12 @@
 #include "Chassis_Control.h"
 #include "StepMotor_Control.h"
 #include "Laser.h"
+#include "Motor.h"
 extern float Task1_Loop_Num;
-
+extern uint8_t Task1_flag;
+extern uint8_t Task2_flag;
+extern uint8_t Task3_flag;
+extern uint8_t Task4_flag;
 void Task1_Process(void);
 
 void Task2_Process(void);

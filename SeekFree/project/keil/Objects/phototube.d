@@ -131,4 +131,11 @@
   ..\..\libraries\zf_common\zf_common_debug.h \
   ..\..\libraries\zf_components\seekfree_assistant.h \
   ..\..\libraries\zf_components\seekfree_assistant_interface.h \
-  ..\code\BSP\BSP_I2C.h
+  ..\code\BSP\BSP_I2C.h ..\code\Application\Chassis_Control.h \
+  ..\code\Algorithm\PID.h ..\code\Hardware\Encoder.h \
+  ..\code\Hardware\Motor.h ..\code\Hardware\IMU.h \
+  ..\code\Algorithm\MyMath.h ..\code\Application\Menu.h \
+  ..\code\Application\Chassis_Control.h ..\code\Hardware\phototube.h \
+  ..\code\Hardware\StepMotor.h ..\code\Application\Task.h \
+  ..\code\Application\StepMotor_Control.h \
+  ..\code\Application\UpperMonitor.h ..\code\Hardware\Laser.h

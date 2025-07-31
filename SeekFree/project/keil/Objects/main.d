@@ -134,10 +134,10 @@
   ..\code\Algorithm\MyMath.h ..\code\Hardware\Encoder.h \
   ..\code\Hardware\Motor.h ..\code\Application\Chassis_Control.h \
   ..\code\Algorithm\PID.h ..\code\Hardware\phototube.h \
-  ..\code\BSP\BSP_I2C.h ..\code\Hardware\StepMotor.h \
-  ..\code\Application\Task.h ..\code\Application\StepMotor_Control.h \
+  ..\code\BSP\BSP_I2C.h ..\code\Application\Chassis_Control.h \
+  ..\code\Hardware\StepMotor.h ..\code\Application\Task.h \
+  ..\code\Application\StepMotor_Control.h \
   ..\code\Application\UpperMonitor.h ..\code\Hardware\Laser.h \
-  ..\code\Application\Chassis_Control.h \
   ..\code\Application\UpperMonitor.h ..\code\Application\Path_Planning.h \
   ..\code\Algorithm\Linear_Interpolation.h \
   ..\code\Hardware\SystemClock.h ..\code\Application\StepMotor_Control.h
