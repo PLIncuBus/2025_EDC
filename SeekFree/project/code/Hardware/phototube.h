@@ -36,6 +36,8 @@ typedef union
 }_gray_state; 
 
 
+	
+
 extern float gray_status[2],gray_status_backup[2][20];
 extern uint32_t gray_status_worse;
 extern _gray_state gray_state; 

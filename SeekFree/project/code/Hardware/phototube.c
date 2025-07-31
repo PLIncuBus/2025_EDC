@@ -8,11 +8,29 @@ uint32_t gray_status_worse=0;	//灰度管异常状态计数器
 float Cha_error;
 int16_t result;
 
-
+gpio_pin_enum gray_bits[12] = {A28,
+															 B26,
+															 B6,
+															 B27,
+															 B24,
+															 B5,
+															 B25,
+															 A17,
+															 B10,
+															 B4,
+															 B20,
+															 A16
+};
 
 void phototube_Init(void)
 {
-    while(!I2C_CheckDevice(0x20));
+//    while(!I2C_CheckDevice(0x20));
+	for(uint8_t i = 0; i < 12;i ++)
+	{
+			gpio_init(gray_bits[i], GPI, GPIO_HIGH, GPI_PULL_DOWN);
+	}
+
+
 }
 
 void gpio_input_check_channel_12_linewidth_20mm(void)
@@ -109,8 +127,16 @@ int16_t  readTrackDate(uint16_t dat)
 
 void phototube_proceed(void)
 {
-	
-    mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
+for (int8_t i = 0; i < 12; i++) {
+    if (gpio_get_level(gray_bits[i])) {
+       gray_state.state |= (1 << i);  // ?? 
+    } else {
+       gray_state.state &= ~(1 << i);   // ?? 
+    }}
+for(int8_t j = 12 ; j < 16 ; j++){
+		gray_state.state |= (1 << j); 
+}
+//    mspm0_i2c_read(pca9555_Slave_Addr,pca9555_INPUT_PORT_REGISTER0,2,&gray_state.state);
 //		result =  gray_state.state;
 //		gpio_input_check_channel_12_linewidth_20mm();
 //		Cha_error = readTrackDate(gray_state.state);

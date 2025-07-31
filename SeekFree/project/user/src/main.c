@@ -82,7 +82,7 @@ int main (void)
 		UpperMonitor_Init();    
     
 	// 50HZ定时器中断初始化
-    pit_ms_init( PIT_TIM_A1 , 35 , _50HZ_Callback , NULL ); 
+//    pit_ms_init( PIT_TIM_A1 , 10 , _50HZ_Callback , NULL ); 
 //		pit_ms_init( PIT_TIM_G12,  20,_20MS_Callback,NULL);
 //		pit_ms_init( PIT_TIM_G8,  20,_20MS_1_Callback,NULL);
 //		SystemClock_Interrupt_Init();
@@ -107,13 +107,14 @@ int main (void)
         // 此处编写需要循环执行的代码
 					
 					Menu_Process();
+					phototube_proceed();
 					IMU_Attitude_Process();			
 					Cha_error = (float)readTrackDate((uint16_t)gray_state.state)/23.5;
 					
 //		//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 					Chassis_Proceed(&Differential_Wheel_Info);
 					StepMotor_Control_Proceed(&StepMotor_Control);
-
+					;
 				
 //				Differential_Wheel_Info.vx_set = 9;
 //        // 此处编写需要循环执行的代码
@@ -123,7 +124,7 @@ int main (void)
 				static uint8_t wait;
 				static uint8_t loop;
 				Differential_Wheel_Info.mode = track;
-				if(wait < 10){
+				if(wait < 30){
 					wait ++;
 					Differential_Wheel_Info.vx_set = 2;
 				}
@@ -143,11 +144,11 @@ int main (void)
     }
 }
 
-static void _50HZ_Callback(uint32 state, void *ptr)
-{
-		phototube_proceed();
+//static void _50HZ_Callback(uint32 state, void *ptr)
+//{
 		
-}
+		
+//}
 //			Menu_Process();
 //			IMU_Attitude_Process();			
 //			phototube_proceed();

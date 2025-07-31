@@ -91,7 +91,7 @@ extern "C" {
 #define I2C_0_INST                                                          I2C1
 #define I2C_0_INST_IRQHandler                                    I2C1_IRQHandler
 #define I2C_0_INST_INT_IRQN                                        I2C1_INT_IRQn
-#define I2C_0_BUS_SPEED_HZ                                                400000
+#define I2C_0_BUS_SPEED_HZ                                               1000000
 #define GPIO_I2C_0_SDA_PORT                                                GPIOB
 #define GPIO_I2C_0_SDA_PIN                                         DL_GPIO_PIN_3
 #define GPIO_I2C_0_IOMUX_SDA                                     (IOMUX_PINCM16)
