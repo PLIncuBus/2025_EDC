@@ -61,13 +61,13 @@
 static void _50HZ_Callback(uint32 state, void *ptr);
 static void _20MS_Callback(uint32 state, void *ptr);
 static void _20MS_1_Callback(uint32 state, void *ptr);
-static uint8_t _10MS_Flag,_20MS_Flag = 0;
+
 int main (void)
 {
     clock_init(SYSTEM_CLOCK_80M);   // 时钟配置及系统初始化<务必保留>
     debug_init();					// 调试串口信息初始化
 	  // 此处编写用户代码 例如外设初始化代码等
-
+		
     //BSP初始化
     SYSCFG_DL_I2C_0_init();
 
@@ -90,14 +90,14 @@ int main (void)
 		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
-		
+//		system_delay_ms(5000);
 
 		
 		
-		Path_Planning_Init();
+//		Path_Planning_Init();
 
 		Differential_Wheel_Info.mode = track;
-		StepMotor_Control.mode = StepMotor_Control_Vision_mode;
+		StepMotor_Control.mode = StepMotor_Initial_Mode;
 
 
 
@@ -120,20 +120,7 @@ int main (void)
     }
 }
 
-//void _20MS_Callback(uint32 state, void *ptr)
-//{
 
-//	
-
-//}
-//void _50HZ_Callback(uint32 state, void *ptr)
-//{
-//		static loop = 0;
-//	_10MS_Flag = 1;
-//	if(loop > 1){
-//		_20MS_Flag =1;
-//		loop = 0;
-//	}
 	
 //			Menu_Process();
 //			IMU_Attitude_Process();			
@@ -144,12 +131,4 @@ int main (void)
 
 //			Path_Planning_Publish(&Differential_Wheel_Info);
 // Gimbal_Set_Angle(gimbal_data.Target_Yaw,gimbal_data.Target_Pitch);
-			
 
-//}
-
-//void _20MS_1_Callback(uint32 state, void *ptr)
-//{
-////	    
-//	
-//}

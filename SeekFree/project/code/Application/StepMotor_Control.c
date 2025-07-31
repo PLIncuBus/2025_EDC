@@ -1,5 +1,4 @@
 #include "StepMotor_Control.h"
-float errorx,errory;
 StepMotor_Control_Info_t StepMotor_Control;
 int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
 float yaw_speed_pid_kp = 0.1;
@@ -8,8 +7,8 @@ float yaw_speed_pid_kd = 0;
 float pitch_speed_pid_kp = 0.07;
 float pitch_speed_pid_ki = 0;
 float pitch_speed_pid_kd = 0;
-float Task2_Cal_Target[0] = {1,1};
-#define Vision_Error_DeadLine 50
+float Laser_Vision_Pos[2] = {487,232};
+
 
 
 void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init)
@@ -35,6 +34,10 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 {
 		static uint16_t Last_Vision_Target[2]; 
 		static uint16_t Last_Vision_Big_Target[2];
+		static StepMotor_Control_enum Last_mode = StepMotor_Initial_Mode;
+		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Cal_mode;
+	
+	
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
 		//values 赋值
 		StepMotor_Control.Vision_Big_Target[0] = Vision_values[0];
@@ -44,45 +47,65 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		StepMotor_Control.Vision_Now[0]        = Vision_values[4];
 		StepMotor_Control.Vision_Now[1]        = Vision_values[5];
 		
-		if(StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0){
-			for(uint8_t i = 0;i < 2; i ++){
-			StepMotor_Control.Vision_Target[i] = Last_Vision_Big_Target[i];}//Last_Vision_Target[i];}
+	
+		if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 ) && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+			StepMotor_Control.mode = StepMotor_Control_Stop_mode;
+		}else if(Last_mode == StepMotor_Control_Stop_mode && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+			StepMotor_Control.mode = Last_Keep_mode;
 		}
-//		if(StepMotor_Control.Vision_Target[0] == 0 && StepMotor_Control.Vision_Target[1] == 0){
-//						
-//			_StepMotor_Update->mode = StepMotor_Control_Auto_Aim_mode;
-//		}
+		else {
+		}
 
+		
 		for(uint8_t j = 0;j < 2; j ++){
 		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
 		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
+		}
+		Last_mode = StepMotor_Control.mode;
+		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
+				Last_Keep_mode = StepMotor_Control.mode;
 		}
 	
 }
 
 void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
 {
-    for(uint8_t i = 0 ;i < 2; i ++ )
-    {
-        PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Now[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
+	if(_StepMotor_Control_Loop->mode == StepMotor_Control_Auto_Aim_mode){
+		_StepMotor_Control_Loop->speed_pid[0].Kp = 0.5;
+		Gimbal_Set_Speed(10,0);if(_StepMotor_Control_Loop->Vision_Big_Target[0] != 0 && _StepMotor_Control_Loop->Vision_Big_Target[1] != 0 ){
+			static uint8_t loop;
+			if(loop > 5){
+			Gimbal_Set_Speed(0,0);
+				loop = 0;
+			_StepMotor_Control_Loop->mode = StepMotor_Control_Cal_mode;
+				_StepMotor_Control_Loop->speed_pid[0].Kp = yaw_speed_pid_kp;
+			}
+		}
 	}
-
-	if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
+		
+	
+	
+	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
 		Gimbal_Set_Angle(StepMotor_Pos_Yaw_set,StepMotor_Pos_Yaw_set);
 	}
 	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Cal_mode){
-		static float out[2];
 		for(uint8_t i = 0 ;i < 2; i ++ )
-    	{
-        	PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Target[i],(float)Task2_Cal_Target[i]);		
+    {
+        	PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)Laser_Vision_Pos[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
 		}
-		out[0] = out[0] + _StepMotor_Control_Loop->speed_pid[0].out;
-		out[1] = out[1] + _StepMotor_Control_Loop->speed_pid[1].out;
+		Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
 
 	}
-	else{
-	 Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
-	 }
+	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Stop_mode){
+		Gimbal_Set_Speed(0,0);
+	}
+	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Vision_mode){    
+	for(uint8_t i = 0 ;i < 2; i ++ )
+  {
+      PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Now[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
+	}
+			Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
+	}
 
 }	
 

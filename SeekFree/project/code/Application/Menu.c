@@ -17,6 +17,7 @@ Menu_Info_t Task1_Menu[2];
 Menu_Info_t Task1_Choose_Menu[1];
 Menu_Info_t Task2_Menu[4];
 Menu_Info_t Task2_Choose_Menu[2];
+Menu_Info_t Task3_Menu[1];
 void Task1(void);
 void Task2(void);
 void Task3(void);
@@ -70,7 +71,7 @@ Menu_Info_t Task_Menu[4] = {
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   4      ,   "Task3"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL    ,.Param_Info = {
+    {   4      ,   "Task3"  ,   Type_SubMenu    ,  Main_Menu ,   Task3_Menu    ,  NULL   ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -188,6 +189,16 @@ Menu_Info_t Task2_Menu[4] = {
         .param = NULL },
         Idle_Menu},
 };
+Menu_Info_t Task3_Menu[1] = {
+				{   1      ,   "Proc"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task3_Process    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+	
+};
+
 /*****第二级菜单END******/
 
 /*****第三级菜单BEGIN******/

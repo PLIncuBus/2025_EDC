@@ -87,7 +87,7 @@ int16_t  readTrackDate(uint16_t dat)
         {
             if ((dat & (1 << i)) == 0)  
             {
-                x2 = (i - 1) * 4 + 1;
+                x2 = (i + 1) * 4 + 1;
                 break;
             }
         }

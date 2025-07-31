@@ -14,8 +14,9 @@ void Task1_Process(void)
 {
     static uint8_t loop;
 	Differential_Wheel_Info.vx_set = 8;
-		if(Encoder_count_sum[Encoder1] > 2000 && (int)(Angle_Yaw < 90)){
+		if(Encoder_count_sum[Encoder1] > 2000 && (((int)Angle_Yaw < (5 + 360 *loop ))) || ((int)Angle_Yaw > (-5 + 360 *loop ) )){
 			loop ++;
+		Encoder_count_sum[Encoder1] = 0;
 		}
 		if(loop >= Task1_Loop_Num){
 			Differential_Wheel_Info.mode = stop;
@@ -43,11 +44,14 @@ void Task2_Process(void)
 
 
 
-
+#define Task3_Error_Deadline 10
 /*****Task3 BEGIN*****/
 void Task3_Process(void)
 {
-
+	StepMotor_Control.mode = StepMotor_Control_Auto_Aim_mode;
+	if(abs((int)StepMotor_Control.speed_pid[0].error) < Task3_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task3_Error_Deadline ){
+		Laser(0);
+	}
 }
 /*****Task3 BEGIN*****/
 
