@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\SeekFree_MSPM0G3507_Device_Library.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\SeekFree_MSPM0G3507_Device_Library.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Fri Aug  1 05:29:16 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Fri Aug  1 06:35:32 2025
 <BR><P>
 <H3>Maximum Stack Usage =       1640 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1734,8 +1734,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[14c]"></a>StepMotor_Control_Loop</STRONG> (Thumb, 416 bytes, Stack size 64 bytes, stepmotor_control.o(.text.StepMotor_Control_Loop))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1000 + Unknown Stack Size
+<P><STRONG><a name="[14c]"></a>StepMotor_Control_Loop</STRONG> (Thumb, 440 bytes, Stack size 72 bytes, stepmotor_control.o(.text.StepMotor_Control_Loop))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1008 + Unknown Stack Size
 <LI>Call Chain = StepMotor_Control_Loop &rArr; Gimbal_Set_Angle &rArr; StepMotor_SetPosition &rArr; uart_write_buffer &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
@@ -1749,7 +1749,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[14d]"></a>StepMotor_Control_Proceed</STRONG> (Thumb, 22 bytes, Stack size 16 bytes, stepmotor_control.o(.text.StepMotor_Control_Proceed))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1016 + Unknown Stack Size
+<BR><BR>[Stack]<UL><LI>Max Depth = 1024 + Unknown Stack Size
 <LI>Call Chain = StepMotor_Control_Proceed &rArr; StepMotor_Control_Loop &rArr; Gimbal_Set_Angle &rArr; StepMotor_SetPosition &rArr; uart_write_buffer &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Control_Loop
@@ -3682,7 +3682,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Proceed
 </UL>
 
-<P><STRONG><a name="[14e]"></a>StepMotor_Update</STRONG> (Thumb, 208 bytes, Stack size 16 bytes, stepmotor_control.o(.text.StepMotor_Update))
+<P><STRONG><a name="[14e]"></a>StepMotor_Update</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, stepmotor_control.o(.text.StepMotor_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = StepMotor_Update &rArr; VisionMonitor_parse_rect_data &rArr; atoi &rArr; strtol &rArr; _strtoul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VisionMonitor_parse_rect_data

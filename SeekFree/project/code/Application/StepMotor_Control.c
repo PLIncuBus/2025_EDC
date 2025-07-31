@@ -1,13 +1,13 @@
 #include "StepMotor_Control.h"
 StepMotor_Control_Info_t StepMotor_Control;
 int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
-float yaw_speed_pid_kp = 0.1;
+float yaw_speed_pid_kp = 0.12;
 float yaw_speed_pid_ki = 0;
 float yaw_speed_pid_kd = 0; 
 float pitch_speed_pid_kp = 0.07;
 float pitch_speed_pid_ki = 0;
 float pitch_speed_pid_kd = 0;
-float Laser_Vision_Pos[2] = {487,232};
+float Laser_Vision_Pos[2] = {403,217};
 
 
 
@@ -35,7 +35,7 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		static uint16_t Last_Vision_Target[2]; 
 		static uint16_t Last_Vision_Big_Target[2];
 		static StepMotor_Control_enum Last_mode = StepMotor_Initial_Mode;
-		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Null_mode;
+		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Cal_mode;//Null
 	
 	
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
@@ -48,23 +48,23 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		StepMotor_Control.Vision_Now[1]        = Vision_values[5];
 		
 	
-		if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 ) && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
-			StepMotor_Control.mode = StepMotor_Control_Stop_mode;
-		}else if(Last_mode == StepMotor_Control_Stop_mode && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
-			StepMotor_Control.mode = Last_Keep_mode;
-		}
-		else {
-		}
+//		if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 ) && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+//			StepMotor_Control.mode = StepMotor_Control_Stop_mode;
+//		}else if(Last_mode == StepMotor_Control_Stop_mode && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+//			StepMotor_Control.mode = Last_Keep_mode;
+//		}
+//		else {
+//		}
 
 		
-		for(uint8_t j = 0;j < 2; j ++){
-		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
-		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
-		}
-		Last_mode = StepMotor_Control.mode;
-		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
-				Last_Keep_mode = StepMotor_Control.mode;
-		}
+//		for(uint8_t j = 0;j < 2; j ++){
+//		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
+//		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
+//		}
+//		Last_mode = StepMotor_Control.mode;
+//		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
+//				Last_Keep_mode = StepMotor_Control.mode;
+//		}
 	
 }
 
@@ -86,14 +86,14 @@ void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
 	
 	
 	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
-		Gimbal_Set_Angle(StepMotor_Pos_Yaw_set,StepMotor_Pos_Yaw_set);
+		Gimbal_Set_Angle(StepMotor_Pos_Yaw_set,-StepMotor_Pos_Pitch_set);
 	}
 	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Cal_mode){
 		for(uint8_t i = 0 ;i < 2; i ++ )
     {
         	PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)Laser_Vision_Pos[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
 		}
-		Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
+		Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,-_StepMotor_Control_Loop->speed_pid[1].out);
 
 	}
 	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Stop_mode){
@@ -104,7 +104,7 @@ void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
   {
       PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)_StepMotor_Control_Loop->Vision_Now[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);		
 	}
-			Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,_StepMotor_Control_Loop->speed_pid[1].out);
+			Gimbal_Set_Speed(_StepMotor_Control_Loop->speed_pid[0].out,-_StepMotor_Control_Loop->speed_pid[1].out);
 	}
 
 }	

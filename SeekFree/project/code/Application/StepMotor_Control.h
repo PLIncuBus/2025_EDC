@@ -7,7 +7,7 @@
 #include "UpperMonitor.h"
 #include "StepMotor_Control.h"
 
-#define StepMotor_Initial_Mode StepMotor_Control_Stop_mode
+#define StepMotor_Initial_Mode StepMotor_Control_Cal_mode
 
 
 typedef enum{
