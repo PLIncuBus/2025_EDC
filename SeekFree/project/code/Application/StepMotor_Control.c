@@ -35,7 +35,7 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		static uint16_t Last_Vision_Target[2]; 
 		static uint16_t Last_Vision_Big_Target[2];
 		static StepMotor_Control_enum Last_mode = StepMotor_Initial_Mode;
-		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Cal_mode;//Null
+		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Null_mode;//Cal
 	
 	
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
@@ -48,23 +48,23 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		StepMotor_Control.Vision_Now[1]        = Vision_values[5];
 		
 	
-//		if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 ) && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
-//			StepMotor_Control.mode = StepMotor_Control_Stop_mode;
-//		}else if(Last_mode == StepMotor_Control_Stop_mode && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
-//			StepMotor_Control.mode = Last_Keep_mode;
-//		}
-//		else {
-//		}
+		if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 ) && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+			StepMotor_Control.mode = StepMotor_Control_Stop_mode;
+		}else if(Last_mode == StepMotor_Control_Stop_mode && StepMotor_Control.mode != StepMotor_Control_Auto_Aim_mode){
+			StepMotor_Control.mode = Last_Keep_mode;
+		}
+		else {
+		}
 
 		
-//		for(uint8_t j = 0;j < 2; j ++){
-//		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
-//		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
-//		}
-//		Last_mode = StepMotor_Control.mode;
-//		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
-//				Last_Keep_mode = StepMotor_Control.mode;
-//		}
+		for(uint8_t j = 0;j < 2; j ++){
+		Last_Vision_Target[j] = StepMotor_Control.Vision_Target[j];
+		Last_Vision_Big_Target[j] = StepMotor_Control.Vision_Big_Target[j];
+		}
+		Last_mode = StepMotor_Control.mode;
+		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
+				Last_Keep_mode = StepMotor_Control.mode;
+		}
 	
 }
 

@@ -22,7 +22,7 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
-float motor_tube_pid_kp = 8;
+float motor_tube_pid_kp = 12;
 float motor_tube_pid_ki = 0;
 float motor_tube_pid_kd = 0;
 
@@ -245,23 +245,23 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
 			Motor_Cmd(0,0);
 		}
 		else{
-			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 20 )
+			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 28 )
 			{
-				_Chassis_Control_Loop->motor_speed_pid[0].out = 20;
+				_Chassis_Control_Loop->motor_speed_pid[0].out = 28;
 				
 			}
-			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -20)
+			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -28)
 			{
-				_Chassis_Control_Loop->motor_speed_pid[0].out = -20;
+				_Chassis_Control_Loop->motor_speed_pid[0].out = -28;
 			}
-			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 20 )
+			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 28 )
 			{
-				_Chassis_Control_Loop->motor_speed_pid[1].out = 20;
+				_Chassis_Control_Loop->motor_speed_pid[1].out = 28;
 				
 			}
-			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -20)
+			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -28)
 			{
-				_Chassis_Control_Loop->motor_speed_pid[1].out = -20;
+				_Chassis_Control_Loop->motor_speed_pid[1].out = -28;
 			}
     Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);}
 	

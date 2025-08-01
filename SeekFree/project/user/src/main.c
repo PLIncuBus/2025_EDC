@@ -90,7 +90,7 @@ int main (void)
 		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
-//		system_delay_ms(5000);
+		system_delay_ms(5000);
 
 		
 		
@@ -114,9 +114,9 @@ int main (void)
 //		//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 					Chassis_Proceed(&Differential_Wheel_Info);
 					StepMotor_Control_Proceed(&StepMotor_Control);
-					;
+
 				
-//				Differential_Wheel_Info.vx_set = 9;
+				Differential_Wheel_Info.vx_set = 10;
 //        // 此处编写需要循环执行的代码
 			
 			if(Task1_flag){
