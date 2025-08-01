@@ -90,7 +90,7 @@ int main (void)
 		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
-		system_delay_ms(5000);
+//		system_delay_ms(5000);
 
 		
 		
@@ -112,7 +112,7 @@ int main (void)
 					Cha_error = (float)readTrackDate((uint16_t)gray_state.state)/23.5;
 					
 //		//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
-					Chassis_Proceed(&Differential_Wheel_Info);
+					
 					StepMotor_Control_Proceed(&StepMotor_Control);
 
 				
@@ -122,14 +122,14 @@ int main (void)
 			if(Task1_flag){
 				
 				static uint8_t wait;
-				static uint8_t loop;
+				static uint8_t loop;Chassis_Proceed(&Differential_Wheel_Info);
 				Differential_Wheel_Info.mode = track;
-				if(wait < 30){
-					wait ++;
-					Differential_Wheel_Info.vx_set = 2;
-				}
-				else{
-				Differential_Wheel_Info.vx_set = 10;}
+//				if(wait < 30){
+//					wait ++;
+//					Differential_Wheel_Info.vx_set = 2;
+//				}
+//				else{
+				Differential_Wheel_Info.vx_set = 9.5;//}
 			
 				if((Encoder_count_sum[Encoder1] > 2500) && (abs((int)Angle_Yaw) < 10  )) {
 					loop ++;

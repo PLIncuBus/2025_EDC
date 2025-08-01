@@ -1,9 +1,18 @@
 ./objects/dl_aesadv.o: ..\..\libraries\sdk\ti\driverlib\dl_aesadv.c \
   ..\..\libraries\sdk\ti\driverlib\dl_aesadv.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\..\libraries\sdk\ti\devices\msp\msp.h \
   ..\..\libraries\sdk\ti\devices\DeviceFamily.h \
   ..\..\libraries\sdk\ti\devices\msp\m0p\mspm0g350x.h \
   ..\..\libraries\sdk\third_party\CMSIS\Core\Include\core_cm0plus.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_version.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_compiler.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\cmsis_armclang.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\arm_compat.h \
+  D:\Keil5\ARM\ARMCLANG\Bin\..\include\arm_acle.h \
+  ..\..\libraries\sdk\third_party\CMSIS\Core\Include\mpu_armv7.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_adc12.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_aes.h \
   ..\..\libraries\sdk\ti\devices\msp\peripherals\hw_comp.h \
