@@ -3,6 +3,8 @@
 float GyroOffsetYdata=0, GyroOffsetZdata=0,GyroOffsetXdata=0;	//陀螺仪零漂值
 float Acc_x=0, Acc_y=0, Acc_z=0, Gyro_x=0, Gyro_y=0, Gyro_z=0,Gyro_x_v = 0 ,Gyro_y_v = 0,Gyro_z_v=0;				//储存单位转换之后的数据
 float Angle_Yaw=0;              													// 偏航角
+float Gimbal_Angle_Yaw;
+float Gimbal_Angle_Pitch;
 float pitch=0;
 float roll=0;
 static float I_ex=0, I_ey=0, I_ez=0;  														// 误差积分
@@ -19,15 +21,19 @@ static float delta_T = 0.010; // 采样周期ms 这个要和中断周期对应�
 
 void JY61P_Callback(uint32 state, void *ptr);
 struct Angle YawAngle;
+struct Angle GimbalAngle;
 /**
  * @brief jy61p初始化
  * 
  */
 soft_iic_info_struct JY61P_iic_struct;
+soft_iic_info_struct JY61P2_iic_struct;
 void JY61P_Init(uint8_t Timer , uint16_t Offset_Time)
 {		
 		#if(JY61P_Mode == 1)
 		soft_iic_init(&JY61P_iic_struct,JY61P_DEV_ADDR, JY61P_SOFT_IIC_DELAY, JY61P_SCL_PIN, JY61P_SDA_PIN);
+		soft_iic_init(&JY61P2_iic_struct,JY61P2_DEV_ADDR, JY61P_SOFT_IIC_DELAY, JY61P_SCL_PIN, JY61P_SDA_PIN);
+
 		system_delay_ms(2000);
     #elif(JY61P_Mode == 0)
 		uart_init(JY61P_UART_INDEX,JY61P_UART_BAUNDRATE,JY61P_UART_TX_PIN,JY61P_UART_RX_PIN);
@@ -81,9 +87,13 @@ void JY61P_Callback(uint32 state, void *ptr)
 
 #if(JY61P_Mode == 1)
 uint16_t JY61P_iic_buff;
+uint16_t JY61P2_iic_buff;
 void JY61P_IIC(){
-	JY61P_iic_buff = soft_iic_read_16bit_register(&JY61P_iic_struct,JY61P_ANGLE_ADDR);
+//	JY61P_iic_buff = soft_iic_read_16bit_register(&JY61P_iic_struct,JY61P_ANGLE_ADDR);
 		YawAngle.Angle[2] = (int16_t)soft_iic_read_16bit_register(&JY61P_iic_struct,JY61P_ANGLE_ADDR);
+//	JY61P2_iic_buff = soft_iic_read_16bit_register(&JY61P2_iic_struct,JY61P_ANGLE_ADDR);
+		GimbalAngle.Angle[2] = (int16_t)soft_iic_read_16bit_register(&JY61P2_iic_struct,JY61P_ANGLE_ADDR);
+		GimbalAngle.Angle[1] = (int16_t)soft_iic_read_16bit_register(&JY61P2_iic_struct,JY61P_PITCH_ADDR);
 }
 
 #endif
@@ -97,6 +107,8 @@ void JY61P_Analysis_Process(void){
 //		YawAngle.Angle[2] = (int16_t)JY61P_iic_buff;
 	#endif
     Angle_Yaw = (float)YawAngle.Angle[2]/32768*180; 
+		Gimbal_Angle_Yaw = (float)GimbalAngle.Angle[2]/32768*180;
+    Gimbal_Angle_Pitch = (float)GimbalAngle.Angle[1]/32768*180;
 }
 
 

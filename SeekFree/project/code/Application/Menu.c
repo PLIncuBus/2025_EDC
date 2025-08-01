@@ -18,6 +18,7 @@ Menu_Info_t Task1_Choose_Menu[1];
 Menu_Info_t Task2_Menu[4];
 Menu_Info_t Task2_Choose_Menu[2];
 Menu_Info_t Task3_Menu[1];
+Menu_Info_t Task4_Menu[1];
 void Task1(void);
 void Task2(void);
 void Task3(void);
@@ -77,7 +78,7 @@ Menu_Info_t Task_Menu[4] = {
         .min = 0,
         .param = NULL },
          Idle_Menu},
-    {   4      ,   "Task4"  ,   Type_SubMenu    ,  Main_Menu ,   NULL    ,   NULL    ,.Param_Info = {
+    {   4      ,   "Task4"  ,   Type_SubMenu    ,  Main_Menu ,   Task4_Menu    ,   NULL    ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
@@ -198,6 +199,15 @@ Menu_Info_t Task3_Menu[1] = {
         Idle_Menu},
 	
 };
+Menu_Info_t Task4_Menu[1] = {
+				{   1      ,   "Proc"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task4_Process    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+	
+};
 
 /*****第二级菜单END******/
 
@@ -276,10 +286,10 @@ void IMU_Info_Show(void)
 {
     Menu_ShowStr(0,0,"YawAngle");
     Menu_ShowFloat(0,16,Angle_Yaw,3,5);
-	Menu_ShowStr(0,32,"Roll");
-    Menu_ShowFloat(0,48,roll,3,3);
-	Menu_ShowStr(0,64,"Pitch");
-	Menu_ShowFloat(0,80,pitch,3,3);
+	Menu_ShowStr(0,32,"GIMBAL_Yaw");
+    Menu_ShowFloat(0,48,Gimbal_Angle_Yaw,3,3);
+	Menu_ShowStr(0,64,"Gimbal_Pitch");
+	Menu_ShowFloat(0,80,Gimbal_Angle_Pitch,3,3);
 
 }
 void Chassis_Info_Show(void)

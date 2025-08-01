@@ -22,7 +22,7 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
-float motor_tube_pid_kp = 13;
+float motor_tube_pid_kp = 15;
 float motor_tube_pid_ki = 0;
 float motor_tube_pid_kd = 0;
 

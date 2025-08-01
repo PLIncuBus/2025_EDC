@@ -140,4 +140,5 @@
   ..\code\Application\UpperMonitor.h ..\code\Hardware\Laser.h \
   ..\code\Application\UpperMonitor.h ..\code\Application\Path_Planning.h \
   ..\code\Algorithm\Linear_Interpolation.h \
-  ..\code\Hardware\SystemClock.h ..\code\Application\StepMotor_Control.h
+  ..\code\Hardware\SystemClock.h ..\code\Application\StepMotor_Control.h \
+  ..\code\Application\Task.h

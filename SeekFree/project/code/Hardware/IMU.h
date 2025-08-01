@@ -28,7 +28,9 @@ struct Angle
 #define JY61P_SCL_PIN                 (A1)
 #define JY61P_SDA_PIN							    (A0)
 #define JY61P_DEV_ADDR                (0x50) 
+#define JY61P2_DEV_ADDR								(0x49)
 #define JY61P_ANGLE_ADDR							(0x3F)
+#define JY61P_PITCH_ADDR							(0x3E)
 #define JY61P_UART_INDEX              (UART_1)
 #define JY61P_UART_BAUNDRATE          (115200)
 #define JY61P_UART_TX_PIN             (UART1_TX_A8)
@@ -58,7 +60,8 @@ extern float GyroOffsetZdata ;
 extern float pitch;
 extern float roll;
 extern float Angle_Yaw;
-
+extern float Gimbal_Angle_Yaw;
+extern float Gimbal_Angle_Pitch;
 
 
 void IMU_Init(uint8_t Timer , uint16_t Offset_Time);

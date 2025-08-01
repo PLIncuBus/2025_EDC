@@ -4,6 +4,6 @@
 
 #include "zf_common_headfile.h"
 
-#define Laser(x)  gpio_set_level(B21,x)
+#define Laser(x)  gpio_set_level(B7,x)
 
 #endif
