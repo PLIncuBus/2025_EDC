@@ -101,7 +101,7 @@ void UpperMonitor_Motor_PID_Send_Hook(UpperMonitor_Handle_Typedef *UpperMonitor_
 
     #endif   
 }
-uint16_t Vision_values[6] = {0};
+uint16_t Vision_values[8] = {0};
 void VisionMonitor_parse_rect_data(const char *data)
 {
 	
@@ -117,12 +117,12 @@ void VisionMonitor_parse_rect_data(const char *data)
 			char *token = strtok(buffer, ",");
 			int count = 0;
 
-			while (token != NULL && count < 6) {
+			while (token != NULL && count < 8) {
 				Vision_values[count++] = (uint16_t)atoi(token);
 				token = strtok(NULL, ",");
 			}
 
-		if (count != 6) {Vision_RxFlag=0;
+		if (count != 8) {Vision_RxFlag=0;
 			return;
 		}
 		

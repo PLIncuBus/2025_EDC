@@ -1,8 +1,8 @@
 #include "Laser.h"
 
-void Laser_Int(void)
+void Laser_Init(void)
 {
     gpio_init(B7, GPO, GPIO_HIGH, GPO_PUSH_PULL);
-    Laser(1);
+    Laser(0);
 }
 

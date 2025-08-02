@@ -17,7 +17,8 @@ Menu_Info_t Task1_Menu[2];
 Menu_Info_t Task1_Choose_Menu[1];
 Menu_Info_t Task2_Menu[4];
 Menu_Info_t Task2_Choose_Menu[2];
-Menu_Info_t Task3_Menu[1];
+Menu_Info_t Task3_Menu[2];
+Menu_Info_t Task3_Dir_Menu[1];
 Menu_Info_t Task4_Menu[1];
 void Task1(void);
 void Task2(void);
@@ -27,6 +28,12 @@ void IMU_Info_Show(void);
 void Chassis_Info_Show(void);
 void Tube_Info_Show(void);
 void Task1_Circle_Info_Show(void);
+
+void gai()
+{
+	Yaw_dir = 1;
+}
+
 /*****第一级主菜单BEGIN*****/
 
 Menu_Info_t Main_Menu[4] = {    
@@ -190,13 +197,22 @@ Menu_Info_t Task2_Menu[4] = {
         .param = NULL },
         Idle_Menu},
 };
-Menu_Info_t Task3_Menu[1] = {
-				{   1      ,   "Proc"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task3_Process    ,.Param_Info = {
+Menu_Info_t Task3_Menu[2] = {
+				{   2      ,   "Proc"  ,   Type_BehMenu    ,  Task_Menu ,   NULL    ,   Task3_Process    ,.Param_Info = {
         .step = 0,
         .max = 0,
         .min = 0,
         .param = NULL },
         Idle_Menu},
+
+				{   2      ,   "Dir"  ,   Type_BehMenu    ,  Task_Menu ,   NULL  ,   gai    ,.Param_Info = {
+        .step = 0,
+        .max = 0,
+        .min = 0,
+        .param = NULL },
+        Idle_Menu},
+				
+
 	
 };
 Menu_Info_t Task4_Menu[1] = {
@@ -212,6 +228,17 @@ Menu_Info_t Task4_Menu[1] = {
 /*****第二级菜单END******/
 
 /*****第三级菜单BEGIN******/
+
+
+Menu_Info_t Task3_Dir_Menu[1] = {
+	        {   1      ,   "Dir"    ,  Type_ParMenu   , Task3_Menu ,   NULL    ,   NULL ,.Param_Info = {
+        .step = 1,
+        .max = 1,
+        .min = -1,
+        .param = &Yaw_dir},
+         Idle_Menu},
+	
+};
 
 Menu_Info_t Motor_PID_Menu[2] = {
 

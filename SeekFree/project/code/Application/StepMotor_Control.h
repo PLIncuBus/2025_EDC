@@ -24,7 +24,8 @@ typedef enum{
     StepMotor_Control_Cal_mode,
 		StepMotor_Control_Auto_Aim_mode,
 		StepMotor_Control_Stop_mode,
-		StepMotor_Control_Null_mode
+		StepMotor_Control_Null_mode,
+	StepMotor_Control_fix_mode
 }StepMotor_Control_enum;
 
 
@@ -37,9 +38,11 @@ typedef struct {
 		pid_type_def speed_inner_pid[2];
 		pid_type_def angle_inner_pid[2];
     StepMotor_Control_enum mode;
+		uint16_t dis;
     
 }StepMotor_Control_Info_t;
 
+extern int8_t Yaw_dir;
 extern StepMotor_Control_Info_t StepMotor_Control;
 extern int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
 extern float WZ_yaw,WZ_pitch;

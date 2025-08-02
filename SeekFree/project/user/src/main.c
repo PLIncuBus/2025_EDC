@@ -49,6 +49,7 @@
 #include "StepMotor.h"
 #include "StepMotor_Control.h"
 #include "Task.h"
+#include "Laser.h"
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭上面所有打开的文件
@@ -80,7 +81,8 @@ int main (void)
 		Motor_Init();
 		phototube_Init();
     StepMotor_Init();
-		UpperMonitor_Init();    
+		UpperMonitor_Init();   
+		Laser_Init();	
     
 	// 50HZ定时器中断初始化
 //    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
@@ -106,9 +108,8 @@ int main (void)
     while(true)
     {
         // 此处编写需要循环执行的代码
-					
-					Menu_Process();
 
+					Menu_Process();
 					phototube_proceed();
 					system_delay_ms(20);
 					IMU_Attitude_Process();			
@@ -146,27 +147,22 @@ int main (void)
 				
 			}
 			else if(Task2_flag){
+
 					StepMotor_Control.mode = StepMotor_Control_Cal_mode;
 					Differential_Wheel_Info.mode = stop;
-					if(abs((int)StepMotor_Control.speed_pid[0].error) < Task2_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task2_Error_Deadline ){
-							Laser(0);
-					}			
+			
 			}
 			else if(Task3_flag){
+
 					
 					Differential_Wheel_Info.mode = stop;
-					if(abs((int)StepMotor_Control.speed_pid[0].error) < Task3_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task3_Error_Deadline ){
-						Laser(0);
-					}
 				
 			}
 			else if(Task4_flag){
 				static uint8_t wait;
 				static uint8_t loop;
 				StepMotor_Control.mode = StepMotor_Control_Cal_mode;
-				if(abs((int)StepMotor_Control.speed_pid[0].error) < Task3_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task3_Error_Deadline ){
-						Laser(0);
-				}
+				Laser(1);			
 				Chassis_Proceed(&Differential_Wheel_Info);
 				Differential_Wheel_Info.mode = track;
 //				if(wait < 30){
@@ -174,8 +170,7 @@ int main (void)
 //					Differential_Wheel_Info.vx_set = 2;
 //				}
 //				else{
-				Differential_Wheel_Info.vx_set = 9.5;//}
-				Differential_Wheel_Info.mode = track;
+				Differential_Wheel_Info.vx_set = 12;//}
 				if((Encoder_count_sum[Encoder1] > 2500) && (abs((int)Angle_Yaw) < 10  )) {
 					loop ++;
 				Encoder_count_sum[Encoder1] = 0;

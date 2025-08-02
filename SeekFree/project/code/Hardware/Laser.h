@@ -6,4 +6,6 @@
 
 #define Laser(x)  gpio_set_level(B7,x)
 
+void Laser_Init(void);
+
 #endif

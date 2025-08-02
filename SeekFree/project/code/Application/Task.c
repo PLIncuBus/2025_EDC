@@ -55,12 +55,12 @@ void Task2_Process(void)
 
 
 
-#define Task3_Error_Deadline 10
+//#define Task3_Error_Deadline 10
 /*****Task3 BEGIN*****/
 void Task3_Process(void)
 {
-	yaw_speed_pid_kp = 0.03;
-	yaw_speed_pid_ki = 0;
+	yaw_speed_pid_kp = 0.035;
+	yaw_speed_pid_ki = 0.;
 	yaw_speed_pid_kd = 0; 
 	pitch_speed_pid_kp = 0.05;
 	pitch_speed_pid_ki = 0;
