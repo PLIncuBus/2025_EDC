@@ -88,7 +88,7 @@ int16_t  readTrackDate(uint16_t dat)
 {
     
     if (dat == 0xFFFF) {
-        return -35;  
+        return -45;  
     }
 
     char x1 = 0, x2 = 0;
@@ -111,7 +111,7 @@ int16_t  readTrackDate(uint16_t dat)
         }
     }
     if (dat == 0xF000) {
-        return -35;  
+        return -45;  
     }
 //		if(x1 ==  1){
 //		return -23.5;}
@@ -120,7 +120,7 @@ int16_t  readTrackDate(uint16_t dat)
 //			Differential_Wheel_Info.mode = slow_angle;
 //		}
 
-    return (21-((x1 + x2) / 2.0f));  
+    return (22.5-((x1 + x2) / 2.0f));  
 		
 }
 

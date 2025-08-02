@@ -21,31 +21,52 @@ Target DLL:      CMSIS_AGDI.dll V1.33.0.0
 Dialog DLL:      TARMCM1.DLL V1.14.4.0
  
 <h2>Project:</h2>
-D:\电赛_project\2025_EDC\2025_EDC\SeekFree\project\keil\SeekFree_MSPM0G3507_Device_Library.uvprojx
-Project File Date:  08/01/2025
+D:\电赛_project\CAO\2025_EDC\SeekFree\project\keil\SeekFree_MSPM0G3507_Device_Library.uvprojx
+Project File Date:  08/02/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'D:\Keil5\ARM\ARMCLANG\Bin'
 Build target 'SeekFree_MSPM0G3507_Device_Library'
-../code/Application/StepMotor_Control.c(111): warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+compiling Task.c...
+../code/Application/StepMotor_Control.c(123): warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
                         if(abs(Gimbal_Angle_Yaw) < 5 && abs(Gimbal_Angle_Yaw) < 5){
                            ^
-../code/Application/StepMotor_Control.c(111): note: use function 'fabsf' instead
+../code/Application/StepMotor_Control.c(123): note: use function 'fabsf' instead
                         if(abs(Gimbal_Angle_Yaw) < 5 && abs(Gimbal_Angle_Yaw) < 5){
                            ^~~
                            fabsf
-../code/Application/StepMotor_Control.c(111): warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
+../code/Application/StepMotor_Control.c(123): warning: using integer absolute value function 'abs' when argument is of floating point type [-Wabsolute-value]
                         if(abs(Gimbal_Angle_Yaw) < 5 && abs(Gimbal_Angle_Yaw) < 5){
                                                         ^
-../code/Application/StepMotor_Control.c(111): note: use function 'fabsf' instead
+../code/Application/StepMotor_Control.c(123): note: use function 'fabsf' instead
                         if(abs(Gimbal_Angle_Yaw) < 5 && abs(Gimbal_Angle_Yaw) < 5){
                                                         ^~~
                                                         fabsf
 2 warnings generated.
 compiling StepMotor_Control.c...
+../code/Application/Menu.c(39): warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+    {   4      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+                                                                                                                             ^
+../code/Application/Menu.c(39): note: previous initialization is here
+    {   4      ,   "Task"   ,   Type_SubMenu    ,   NULL    ,   Task_Menu   ,   NULL    , .Param_Info.max = 0, .Param_Info = {
+                                                                                                     ^~~~~~~~
+../code/Application/Menu.c(180): warning: incompatible pointer types initializing 'void (*)()' with an expression of type 'Menu_Info_t [2]' [-Wincompatible-pointer-types]
+        {   4      ,   "CAL"  ,   Type_SubMenu    ,  Task_Menu ,   NULL    ,   Task2_Choose_Menu    ,.Param_Info = {
+                                                                               ^~~~~~~~~~~~~~~~~
+../code/Application/Menu.c(224): warning: initializer-string for char array is too long [-Wexcess-initializers]
+        {   2      ,   "Position" , Type_SubMenu    , PID_Menu ,   NULL    ,   NULL ,.Param_Info = {
+                       ^~~~~~~~~~
+../code/Application/Menu.c(246): warning: incompatible pointer types initializing 'float *' with an expression of type 'int16_t *' (aka 'short *') [-Wincompatible-pointer-types]
+        .param = &StepMotor_Pos_Yaw_set},
+                 ^~~~~~~~~~~~~~~~~~~~~~
+../code/Application/Menu.c(252): warning: incompatible pointer types initializing 'float *' with an expression of type 'int16_t *' (aka 'short *') [-Wincompatible-pointer-types]
+        .param = &StepMotor_Pos_Pitch_set},
+                 ^~~~~~~~~~~~~~~~~~~~~~~~
+5 warnings generated.
+compiling Menu.c...
 linking...
-Program Size: Code=40468 RO-data=3816 RW-data=1696 ZI-data=4592  
-".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=40512 RO-data=3812 RW-data=1704 ZI-data=4584  
+".\Objects\SeekFree_MSPM0G3507_Device_Library.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +78,7 @@ Package Vendor: TexasInstruments
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

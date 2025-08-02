@@ -42,6 +42,12 @@ void Task2_Mannual_Cal(void)
 
 void Task2_Process(void)
 {
+	yaw_speed_pid_kp = 0.03;
+	yaw_speed_pid_ki = 0;
+	yaw_speed_pid_kd = 0; 
+	pitch_speed_pid_kp = 0.05;
+	pitch_speed_pid_ki = 0;
+	pitch_speed_pid_kd = 0;
 	Task2_flag = 1;
 	
 }
@@ -53,6 +59,13 @@ void Task2_Process(void)
 /*****Task3 BEGIN*****/
 void Task3_Process(void)
 {
+	yaw_speed_pid_kp = 0.03;
+	yaw_speed_pid_ki = 0;
+	yaw_speed_pid_kd = 0; 
+	pitch_speed_pid_kp = 0.05;
+	pitch_speed_pid_ki = 0;
+	pitch_speed_pid_kd = 0;
+	StepMotor_Control.mode = StepMotor_Control_Auto_Aim_mode;
 	Task3_flag = 1;
 }
 /*****Task3 BEGIN*****/

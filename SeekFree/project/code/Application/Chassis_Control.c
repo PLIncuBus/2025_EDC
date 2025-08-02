@@ -22,8 +22,8 @@ float motor_angle_pid_kp = 0.25;
 float motor_angle_pid_ki = 0;
 float motor_angle_pid_kd = 0;
 
-float motor_tube_pid_kp = 15;
-float motor_tube_pid_ki = 0;
+float motor_tube_pid_kp = 10;
+float motor_tube_pid_ki = 0.03;
 float motor_tube_pid_kd = 0;
 
 static void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve);
@@ -61,14 +61,14 @@ void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init)
 
 
     //PID限幅
-    const float motor_speed_pid_max_out = 60;
-    const float motor_speed_pid_max_iout = 60;
+    const float motor_speed_pid_max_out = 28;
+    const float motor_speed_pid_max_iout = 30;
 
     const float motor_angle_pid_max_out = 40;
     const float motor_angle_pid_max_iout = 40;
 		
-		const float motor_tube_pid_max_out = 60;
-    const float motor_tube_pid_max_iout = 60;
+		const float motor_tube_pid_max_out = 100;
+    const float motor_tube_pid_max_iout = 100;
 
     PID_init(&_Chassis_Init->motor_angle_pid, PID_POSITION, motor_angle_pid,motor_angle_pid_max_out,motor_angle_pid_max_iout);
     PID_init(&_Chassis_Init->motor_tube_pid, PID_POSITION, motor_tube_pid,motor_tube_pid_max_out,motor_tube_pid_max_iout);
@@ -241,29 +241,30 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
     {
         PID_calc(&_Chassis_Control_Loop->motor_speed_pid[i],(float)_Chassis_Control_Loop->motor_encoder[i],_Chassis_Control_Loop->target[i]);		
 		}
+		Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);
 		if(_Chassis_Control_Loop->mode == stop){
 			Motor_Cmd(0,0);
 		}
-		else{
-			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 23 )
-			{
-				_Chassis_Control_Loop->motor_speed_pid[0].out = 23;
-				
-			}
-			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -23)
-			{
-				_Chassis_Control_Loop->motor_speed_pid[0].out = -23;
-			}
-			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 23 )
-			{
-				_Chassis_Control_Loop->motor_speed_pid[1].out = 23;
-				
-			}
-			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -23)
-			{
-				_Chassis_Control_Loop->motor_speed_pid[1].out = -23;
-			}
-    Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);}
+//		else{
+////			if(_Chassis_Control_Loop->motor_speed_pid[0].out > 23 )
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[0].out = 23;
+////				
+////			}
+////			else if(_Chassis_Control_Loop->motor_speed_pid[0].out < -23)
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[0].out = -23;
+////			}
+////			if(_Chassis_Control_Loop->motor_speed_pid[1].out > 23 )
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[1].out = 23;
+////				
+////			}
+////			else if(_Chassis_Control_Loop->motor_speed_pid[1].out < -23)
+////			{
+////				_Chassis_Control_Loop->motor_speed_pid[1].out = -23;
+////			}
+//    Motor_Cmd(_Chassis_Control_Loop->motor_speed_pid[0].out, _Chassis_Control_Loop->motor_speed_pid[1].out);}
 	
 //_Chassis_Control_Loop->motor_angle_pid.out + -	_Chassis_Control_Loop->motor_angle_pid.out +_Chassis_Control_Loop->motor_speed_pid[0].out
     

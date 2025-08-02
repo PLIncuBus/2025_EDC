@@ -1,10 +1,10 @@
 #include "StepMotor_Control.h"
 StepMotor_Control_Info_t StepMotor_Control;
 int16_t StepMotor_Pos_Yaw_set,StepMotor_Pos_Pitch_set;
-float yaw_speed_pid_kp = 0.08;
-float yaw_speed_pid_ki = 0;
+float yaw_speed_pid_kp = 0.05;
+float yaw_speed_pid_ki = 0.002;
 float yaw_speed_pid_kd = 0; 
-float pitch_speed_pid_kp = 0.05;
+float pitch_speed_pid_kp = 0.04;
 float pitch_speed_pid_ki = 0;
 float pitch_speed_pid_kd = 0;
 float inner_yaw_speed_pid_kp = 1.6;
@@ -13,7 +13,7 @@ float inner_yaw_speed_pid_kd = 0;
 float inner_pitch_speed_pid_kp = 1.2;
 float inner_pitch_speed_pid_ki = 0;
 float inner_pitch_speed_pid_kd = 0;
-float Laser_Vision_Pos[2] = {388,236};
+float Laser_Vision_Pos[2] = {382,298};
 
 
 
@@ -58,7 +58,10 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 		static uint16_t Last_Vision_Big_Target[2];
 		static StepMotor_Control_enum Last_mode = StepMotor_Initial_Mode;
 		static StepMotor_Control_enum Last_Keep_mode = StepMotor_Control_Null_mode;//Cal
+		
 	
+	
+		
 	
 		VisionMonitor_parse_rect_data((char*)Vision_RxPacket);
 		//values 赋值
@@ -106,13 +109,22 @@ void StepMotor_Control_Loop(StepMotor_Control_Info_t *_StepMotor_Control_Loop)
 ////		Gimbal_Set_Angle(0,0);
 //		_StepMotor_Control_Loop->mode = StepMotor_Control_Cal_mode;
 //	}
+	_StepMotor_Control_Loop->speed_pid[0].Kp = yaw_speed_pid_kp;
+	_StepMotor_Control_Loop->speed_pid[0].Ki = yaw_speed_pid_ki;
+	_StepMotor_Control_Loop->speed_pid[0].Kd = yaw_speed_pid_kd;
+	_StepMotor_Control_Loop->speed_pid[1].Kp = pitch_speed_pid_kp;
+	_StepMotor_Control_Loop->speed_pid[1].Ki = pitch_speed_pid_ki;
+	_StepMotor_Control_Loop->speed_pid[1].Kd = pitch_speed_pid_kp;
+
+	
+		
 		if(_StepMotor_Control_Loop->mode == StepMotor_Control_Auto_Aim_mode){
 
 			if(abs(Gimbal_Angle_Yaw) < 5 && abs(Gimbal_Angle_Yaw) < 5){
 				_StepMotor_Control_Loop->mode = StepMotor_Control_Cal_mode;
 			
 			}
-					PID_calc(&_StepMotor_Control_Loop->speed_inner_pid[0],(float)Gimbal_Angle_Yaw,0);
+		PID_calc(&_StepMotor_Control_Loop->speed_inner_pid[0],(float)Gimbal_Angle_Yaw,0);
 		PID_calc(&_StepMotor_Control_Loop->speed_inner_pid[1],(float)Gimbal_Angle_Pitch,0);
 		Gimbal_Set_Speed(-_StepMotor_Control_Loop->speed_inner_pid[0].out,_StepMotor_Control_Loop->speed_inner_pid[1].out);
 

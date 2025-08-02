@@ -83,7 +83,7 @@ int main (void)
 		UpperMonitor_Init();    
     
 	// 50HZ定时器中断初始化
-//    pit_ms_init( PIT_TIM_A1 , 10 , _50HZ_Callback , NULL ); 
+//    pit_ms_init( PIT_TIM_A1 , 20 , _50HZ_Callback , NULL ); 
 //		pit_ms_init( PIT_TIM_G12,  20,_20MS_Callback,NULL);
 //		pit_ms_init( PIT_TIM_G8,  20,_20MS_1_Callback,NULL);
 //		SystemClock_Interrupt_Init();
@@ -91,7 +91,7 @@ int main (void)
 		StepMotor_Control_Init(&StepMotor_Control);
     Chassis_Init(&Differential_Wheel_Info);
     //菜单初始化  参数：中断频率
-		system_delay_ms(5000);
+//		system_delay_ms(5000);
 
 		
 		
@@ -110,29 +110,30 @@ int main (void)
 					Menu_Process();
 
 					phototube_proceed();
+					system_delay_ms(20);
 					IMU_Attitude_Process();			
 					Cha_error = (float)readTrackDate((uint16_t)gray_state.state)/23.5;
 					
 //		//			UpperMonitor_Cmd_Send(&UpperMonitor_Handle);
 					
 					StepMotor_Control_Proceed(&StepMotor_Control);
-
+					
 				
-				Differential_Wheel_Info.vx_set = 10;
+			
 //        // 此处编写需要循环执行的代码
 			
 			if(Task1_flag){
-				
+				Chassis_Proceed(&Differential_Wheel_Info);
 				static uint8_t wait;
 				static uint8_t loop;
-				Chassis_Proceed(&Differential_Wheel_Info);
+				
 				Differential_Wheel_Info.mode = track;
 //				if(wait < 30){
 //					wait ++;
 //					Differential_Wheel_Info.vx_set = 2;
 //				}
 //				else{
-				Differential_Wheel_Info.vx_set = 9.5;//}
+					Differential_Wheel_Info.vx_set = 12;//}
 			
 				if((Encoder_count_sum[Encoder1] > 2500) && (abs((int)Angle_Yaw) < 10  )) {
 					loop ++;
@@ -152,7 +153,7 @@ int main (void)
 					}			
 			}
 			else if(Task3_flag){
-					StepMotor_Control.mode = StepMotor_Control_Auto_Aim_mode;
+					
 					Differential_Wheel_Info.mode = stop;
 					if(abs((int)StepMotor_Control.speed_pid[0].error) < Task3_Error_Deadline && abs((int)StepMotor_Control.speed_pid[1].error) < Task3_Error_Deadline ){
 						Laser(0);
@@ -190,10 +191,13 @@ int main (void)
 
 //static void _50HZ_Callback(uint32 state, void *ptr)
 //{
-		
-		
+//						phototube_proceed();
+////					IMU_Attitude_Process();			
+//					Cha_error = (float)readTrackDate((uint16_t)gray_state.state)/23.5;
+//		Chassis_Proceed(&Differential_Wheel_Info);
+//		
 //}
-//			Menu_Process();
+////			Menu_Process();
 //			IMU_Attitude_Process();			
 //			phototube_proceed();
 //			Cha_error = (float)readTrackDate(gray_state.state)/23.5;

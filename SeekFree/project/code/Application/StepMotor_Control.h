@@ -11,6 +11,13 @@
 #define StepMotor_Initial_Mode StepMotor_Control_Null_mode
 
 
+
+extern float yaw_speed_pid_kp  ;
+extern float yaw_speed_pid_ki ; 
+extern float yaw_speed_pid_kd  ;
+extern float pitch_speed_pid_kp ;
+extern float pitch_speed_pid_ki; 
+extern float pitch_speed_pid_kd ;
 typedef enum{
     StepMotor_Control_set_mode,
     StepMotor_Control_Vision_mode,
