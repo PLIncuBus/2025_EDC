@@ -48,6 +48,7 @@ extern float motor2_speed_pid_ki;
 extern float motor2_speed_pid_kd; 
 extern Differential_Wheel_Info_t Differential_Wheel_Info;
 
+void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve);
 
 void Chassis_Init(Differential_Wheel_Info_t *_Chassis_Init);
 void Chassis_Proceed(Differential_Wheel_Info_t *_Chassis_Proceed);

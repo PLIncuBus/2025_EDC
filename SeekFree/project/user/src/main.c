@@ -160,17 +160,35 @@ int main (void)
 			}
 			else if(Task4_flag){
 				static uint8_t wait;
-				static uint8_t loop;
-				StepMotor_Control.mode = StepMotor_Control_Cal_mode;
-				Laser(1);			
-				Chassis_Proceed(&Differential_Wheel_Info);
+				static uint8_t loop ;
+				StepMotor_Control.mode = StepMotor_Control_Cal_mode;		
+				
 				Differential_Wheel_Info.mode = track;
-//				if(wait < 30){
-//					wait ++;
-//					Differential_Wheel_Info.vx_set = 2;
-//				}
+				Task4_Loop_Num =1;
+
+				if(abs(readTrackDate(((uint16_t)gray_state.state))) > 20){
+					
+					yaw_speed_pid_kp = 0.06;
+					yaw_speed_pid_ki = 0;
+					yaw_speed_pid_kd = 0;
+					Differential_Wheel_Info.motor_speed_pid[0].max_out = 15;
+					Differential_Wheel_Info.motor_speed_pid[1].max_out = 15;
+					Differential_Wheel_Info.vx_set = 5;
+					if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 )){
+							Gimbal_Set_Speed(40,0);	
+					}
+					Chassis_Proceed(&Differential_Wheel_Info);
+				}else{Chassis_Proceed(&Differential_Wheel_Info);				if(wait < 150){
+					wait ++;}
+					Differential_Wheel_Info.motor_speed_pid[0].max_out = 28;
+					Differential_Wheel_Info.motor_speed_pid[1].max_out = 28;
+					Differential_Wheel_Info.vx_set = 12;
+					yaw_speed_pid_kp = 0.05;
+					yaw_speed_pid_ki = 0;
+					yaw_speed_pid_kd = 0;
+				}
 //				else{
-				Differential_Wheel_Info.vx_set = 12;//}
+//				Differential_Wheel_Info.vx_set = 12;//}
 				if((Encoder_count_sum[Encoder1] > 2500) && (abs((int)Angle_Yaw) < 10  )) {
 					loop ++;
 				Encoder_count_sum[Encoder1] = 0;

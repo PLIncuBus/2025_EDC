@@ -25,7 +25,8 @@ typedef enum{
 		StepMotor_Control_Auto_Aim_mode,
 		StepMotor_Control_Stop_mode,
 		StepMotor_Control_Null_mode,
-	StepMotor_Control_fix_mode
+	StepMotor_Control_fix_mode,
+	StepMotor_Control_oh_mode
 }StepMotor_Control_enum;
 
 

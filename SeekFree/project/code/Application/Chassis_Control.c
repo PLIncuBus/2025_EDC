@@ -26,7 +26,7 @@ float motor_tube_pid_kp = 14;
 float motor_tube_pid_ki = 0.03;
 float motor_tube_pid_kd = 0;
 
-static void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve);
+void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve);
 Differential_Wheel_Info_t Differential_Wheel_Info;
 
 
@@ -274,7 +274,7 @@ static void Chassis_Control_Loop(Differential_Wheel_Info_t *_Chassis_Control_Loo
  * 
  * @param _Chassis_Proceed 
  */
-static void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve)
+void Chassis_Kinematics_Solve(Differential_Wheel_Info_t *_Chassis_Kinematics_Solve)
 {
 	_Chassis_Kinematics_Solve->target[0] = _Chassis_Kinematics_Solve->vx_set - _Chassis_Kinematics_Solve->vz_set*DIFFRERENTIAL_WHEEL_BASE/2;
 	_Chassis_Kinematics_Solve->target[1] = _Chassis_Kinematics_Solve->vx_set + _Chassis_Kinematics_Solve->vz_set*DIFFRERENTIAL_WHEEL_BASE/2;	

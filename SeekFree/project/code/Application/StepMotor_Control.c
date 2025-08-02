@@ -53,6 +53,7 @@ void StepMotor_Control_Init(StepMotor_Control_Info_t *_StepMotor_Control_Init)
 
     }
 }
+float StepMotor_Last_Angle_Yaw;
 static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 {
 		static uint16_t Last_Vision_Target[2]; 
@@ -92,7 +93,7 @@ static void StepMotor_Update(StepMotor_Control_Info_t *_StepMotor_Update)
 //		if(StepMotor_Control.mode != StepMotor_Control_Stop_mode){
 //				Last_Keep_mode = StepMotor_Control.mode;
 //		}
-	
+	StepMotor_Last_Angle_Yaw = Angle_Yaw;
 }
 int8_t Yaw_dir = -1;
 
@@ -170,7 +171,10 @@ else if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
 	}
 	else if(_StepMotor_Control_Loop->mode == StepMotor_Control_Cal_mode){
 		static float temp[2];
-						static uint8_t shit;
+		static float delta;
+		static uint8_t shit;
+
+		delta = Angle_Yaw - Gimbal_Angle_Yaw;
 		for(uint8_t i = 0 ;i < 2; i ++ )
     {
         	PID_calc(&_StepMotor_Control_Loop->speed_pid[i],(float)Laser_Vision_Pos[i],(float)_StepMotor_Control_Loop->Vision_Big_Target[i]);
@@ -178,7 +182,10 @@ else if(_StepMotor_Control_Loop->mode == StepMotor_Control_set_mode){
 		}
 		temp[0] = (float)Gimbal_Angle_Yaw - (float)_StepMotor_Control_Loop->speed_pid[0].out;
 		temp[1] = (float)Gimbal_Angle_Pitch - (float)_StepMotor_Control_Loop->speed_pid[1].out;
-
+		if(_StepMotor_Control_Loop->mode == StepMotor_Control_oh_mode)
+		{
+//			temp[0] += (delta+30); 
+		}
 		PID_calc(&_StepMotor_Control_Loop->speed_inner_pid[0],(float)Gimbal_Angle_Yaw,temp[0]);
 		PID_calc(&_StepMotor_Control_Loop->speed_inner_pid[1],(float)Gimbal_Angle_Pitch,temp[1]);
 		Gimbal_Set_Speed(-_StepMotor_Control_Loop->speed_inner_pid[0].out,_StepMotor_Control_Loop->speed_inner_pid[1].out);
