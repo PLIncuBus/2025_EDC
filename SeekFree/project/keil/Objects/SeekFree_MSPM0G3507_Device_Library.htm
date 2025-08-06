@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\SeekFree_MSPM0G3507_Device_Library.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\SeekFree_MSPM0G3507_Device_Library.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Sun Aug  3 06:06:17 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Sun Aug  3 06:47:17 2025
 <BR><P>
 <H3>Maximum Stack Usage =       1648 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1520,8 +1520,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_delay_ms
 <LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_SetSpeed
 </UL>
-<BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Control_Loop
+<BR>[Called By]<UL><LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Control_Loop
 </UL>
 
 <P><STRONG><a name="[1]"></a>IMU_Info_Show</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, menu.o(.text.IMU_Info_Show))
@@ -1569,8 +1568,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 888 + Unknown Stack Size
 <LI>Call Chain = Laser_Init &rArr; gpio_init &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
+<BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
+<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1764,10 +1763,10 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 1000 + Unknown Stack Size
 <LI>Call Chain = StepMotor_Control_Loop &rArr; Gimbal_Set_Angle &rArr; StepMotor_SetPosition &rArr; uart_write_buffer &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_delay_ms
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Speed
+<BR>[Calls]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_delay_ms
+<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;abs
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Speed
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Angle
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_calc
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
@@ -2218,8 +2217,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 872 + Unknown Stack Size
 <LI>Call Chain = gpio_init &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_assert_handler
+<BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_assert_handler
+<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
 </UL>
 <BR>[Called By]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;soft_iic_init
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exti_init
@@ -2235,6 +2234,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_set_level
 </UL>
 <BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_init
+<LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Laser_Init
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Control_Loop
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Cmd
@@ -2414,7 +2414,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Menu_Process
 </UL>
 
-<P><STRONG><a name="[6d]"></a>main</STRONG> (Thumb, 592 bytes, Stack size 32 bytes, main.o(.text.main))
+<P><STRONG><a name="[6d]"></a>main</STRONG> (Thumb, 568 bytes, Stack size 32 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1648 + Unknown Stack Size
 <LI>Call Chain = main &rArr; Menu_Process &rArr; Menu_Behaviour &rArr; ips114_show_float &rArr; ips114_show_string &rArr; ips114_show_char &rArr; ips114_set_region &rArr; debug_assert_handler &rArr; debug_output &rArr; sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
@@ -2422,6 +2422,7 @@ Global Symbols
 <LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readTrackDate
 <LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phototube_proceed
 <LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phototube_Init
+<LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_init
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clock_init
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpperMonitor_Init
@@ -2435,7 +2436,6 @@ Global Symbols
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Laser_Init
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JY61P_Init
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JY61P_Analysis_Process
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Speed
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Init
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Proceed
 <LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Init
@@ -2651,12 +2651,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[155]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Init
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JY61P_Init
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Speed
 <LI><a href="#[120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ips114_init
 <LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Reset
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_JiaoZhun
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Enable
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StepMotor_Control_Loop
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Speed
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Set_Angle
 </UL>
 

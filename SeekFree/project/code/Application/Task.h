@@ -8,8 +8,8 @@
 #include "Motor.h"
 
 
-#define Task2_Error_Deadline 10
-#define Task3_Error_Deadline 10
+#define Task2_Error_Deadline 16
+#define Task3_Error_Deadline 16
 
 extern float Task1_Loop_Num;
 extern float Task4_Loop_Num;

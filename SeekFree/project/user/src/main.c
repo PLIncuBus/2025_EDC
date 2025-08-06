@@ -161,6 +161,7 @@ int main (void)
 			else if(Task4_flag){
 				static uint8_t wait;
 				static uint8_t loop ;
+				Laser(1);
 				StepMotor_Control.mode = StepMotor_Control_Cal_mode;		
 				
 				Differential_Wheel_Info.mode = track;
@@ -174,9 +175,9 @@ int main (void)
 					Differential_Wheel_Info.motor_speed_pid[0].max_out = 15;
 					Differential_Wheel_Info.motor_speed_pid[1].max_out = 15;
 					Differential_Wheel_Info.vx_set = 5;
-					if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 )){
-							Gimbal_Set_Speed(40,0);	
-					}
+//					if((StepMotor_Control.Vision_Big_Target[0] == 0 || StepMotor_Control.Vision_Big_Target[1] == 0 )){
+//							Gimbal_Set_Speed(40,0);	
+//					}
 					Chassis_Proceed(&Differential_Wheel_Info);
 				}else{Chassis_Proceed(&Differential_Wheel_Info);				if(wait < 150){
 					wait ++;}
